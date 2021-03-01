@@ -2,12 +2,12 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:flutter/material.dart';
 
-class ChagePassrowd extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   @override
-  _ChagePassrowdState createState() => _ChagePassrowdState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _ChagePassrowdState extends State<ChagePassrowd> {
+class _ResetPasswordState extends State<ResetPassword> {
   final _formKey = GlobalKey<FormState>();
   bool obscurePassword = true;
   bool obscureconPassword = true;
@@ -21,35 +21,25 @@ class _ChagePassrowdState extends State<ChagePassrowd> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Stack(
+          child: ListView(
+            shrinkWrap: true,
+            primary: true,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             children: [
-              CustomAppBar(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/logo.png'),
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              LogoContainar(),
+              SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.only(top: 220, left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Create a new password",
+                        "Reset Password",
                         style: AppTheme.heading.copyWith(
                           color: customColor,
-                          fontSize: 25,
+                          fontSize: 15,
                         ),
                       ),
                       SizedBox(height: 40),
@@ -82,10 +72,12 @@ class _ChagePassrowdState extends State<ChagePassrowd> {
                           obscureconPassword,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      CustomButton(
-                        text: 'send',
-                        onPress: () {},
+                      SizedBox(height: 50),
+                      Center(
+                        child: CustomButton(
+                          text: 'send',
+                          onPress: () {},
+                        ),
                       ),
                     ],
                   ),

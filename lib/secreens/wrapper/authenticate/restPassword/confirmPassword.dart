@@ -1,10 +1,9 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/secreens/wrapper/authenticate/restPassword/resetPassword.dart';
 import 'package:flutter/material.dart';
 
 import 'package:code_fields/code_fields.dart';
-
-import 'chagePassword.dart';
 
 class ConfirmPassword extends StatefulWidget {
   @override
@@ -87,7 +86,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                         onPress: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => ChagePassrowd(),
+                              builder: (_) => ResetPassword(),
                             ),
                           );
                         },
