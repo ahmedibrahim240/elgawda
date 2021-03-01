@@ -194,16 +194,20 @@ class SliderContoler extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'skip',
+                        (_currentPage == (_pages.length - 1))
+                            ? 'Start'
+                            : 'Skip',
                         style: AppTheme.heading.copyWith(color: Colors.white),
                       ),
-                      Transform.rotate(
-                        angle: 180 * 3.14 / 180,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
+                      (_currentPage == (_pages.length - 1))
+                          ? Container()
+                          : Transform.rotate(
+                              angle: 180 * 3.14 / 180,
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                            ),
                     ],
                   ),
                 ),
