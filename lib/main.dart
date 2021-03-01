@@ -44,11 +44,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        canvasColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
         primaryIconTheme: IconThemeData(color: Colors.white),
-        primaryColor: customColor,
-        iconTheme: IconThemeData(color: Colors.white),
+        primaryColor: Colors.white,
+        bottomAppBarColor: customColor,
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 0,
+          iconTheme: IconThemeData(color: customColor),
+          actionsIconTheme: IconThemeData(color: customColor),
+        ),
+        accentColor: customColor,
+        iconTheme: IconThemeData(color: customColor),
       ),
       initialRoute: SplashScreen.route,
       routes: routes,

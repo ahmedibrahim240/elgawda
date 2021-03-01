@@ -84,7 +84,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                       child: CustomButton(
                         text: 'send',
                         onPress: () {
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (_) => ResetPassword(),
                             ),
