@@ -43,16 +43,7 @@ class _RegisterState extends State<Register> {
               primary: true,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               children: [
-                Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/logo.png'),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
+                LogoContainar(),
                 SizedBox(height: 20),
                 Row(
                   children: [

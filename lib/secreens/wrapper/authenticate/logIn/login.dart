@@ -40,16 +40,7 @@ class _LogInState extends State<LogIn> {
               primary: true,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               children: [
-                Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/logo.png'),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
+                LogoContainar(),
                 SizedBox(height: 20),
                 Row(
                   children: [

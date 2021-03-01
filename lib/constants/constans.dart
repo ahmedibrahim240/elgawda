@@ -12,6 +12,26 @@ const sliderTextColorcontaint = Color(0xfff21496C);
 const customColorIcon = Color(0xfff807d7d);
 const customColorDivider = Color(0xfffe1e1e1);
 const customColorGray = Color(0xfff7d7d7d);
+/////////////////////////////////////////////////////////////
+class LogoContainar extends StatelessWidget {
+  const LogoContainar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('lib/images/logo.png'),
+          fit: BoxFit.fitHeight,
+        ),
+      ),
+    );
+  }
+}
 ////////////////////////////////////////////////////////////
 Future<void> showMyDialog({BuildContext context}) async {
   return showDialog<void>(
