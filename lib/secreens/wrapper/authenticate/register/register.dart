@@ -2,6 +2,7 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -24,6 +25,8 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: customColor,
@@ -35,55 +38,42 @@ class _RegisterState extends State<Register> {
                 child: CircularProgressIndicator(),
               ),
             )
-          : Stack(
+          : ListView(
+              shrinkWrap: true,
+              primary: true,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               children: [
-                CustomAppBar(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('lib/images/logo.png'),
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Join Us',
-                          style: AppTheme.heading.copyWith(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
+                Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('lib/images/logo.png'),
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 20,
-                  left: 0,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      // color: Colors.amber,
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Text(
+                      'Create ',
+                      style: AppTheme.heading.copyWith(
+                        color: customColorGold,
+                        fontSize: 20,
+                      ),
                     ),
-                    onPressed: () {
-                      setState(
-                        () {
-                          widget.toggleView();
-                        },
-                      );
-                    },
-                  ),
+                    Text(
+                      'an Account',
+                      style: AppTheme.heading.copyWith(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
                 ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.only(top: 220, left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
@@ -94,6 +84,22 @@ class _RegisterState extends State<Register> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                validator: (val) => val.isEmpty
+                                    ? 'please enter your phone name'
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    phoneNumber = val;
+                                  });
+                                },
+                                decoration: textFormInputDecoration(
+                                  Icons.person,
+                                  "Full Name",
+                                ),
+                              ),
+                              SizedBox(height: 10),
                               TextFormField(
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(color: Colors.black),
@@ -108,6 +114,23 @@ class _RegisterState extends State<Register> {
                                 decoration: textFormInputDecoration(
                                   Icons.phone,
                                   "Phone number",
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(color: Colors.black),
+                                validator: (val) => val.isEmpty
+                                    ? 'please enter your phone email'
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    phoneNumber = val;
+                                  });
+                                },
+                                decoration: textFormInputDecoration(
+                                  Icons.email,
+                                  "Email",
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -167,6 +190,80 @@ class _RegisterState extends State<Register> {
                                 text: 'Sign Up',
                               ),
                               SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 1,
+                                    width: width * .3,
+                                    color: customColor,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'or',
+                                    style: AppTheme.headingColorBlue.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Container(
+                                    height: 1,
+                                    width: width * .3,
+                                    color: customColor,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Already have an account?",
+                                        style: AppTheme.subHeadingColorBlue
+                                            .copyWith(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () => widget.toggleView(),
+                                        child: Text(
+                                          "Sign In!",
+                                          style: AppTheme.headingColorBlue
+                                              .copyWith(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        FontAwesomeIcons.google,
+                                        color: Colors.redAccent,
+                                        size: 35,
+                                      ),
+                                      SizedBox(width: 30),
+                                      Icon(
+                                        FontAwesomeIcons.facebook,
+                                        color: Colors.blueAccent,
+                                        size: 35,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ],
