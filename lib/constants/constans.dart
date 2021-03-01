@@ -116,17 +116,17 @@ class CustomButton extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Material(
         elevation: 6,
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        color: customColor,
         child: MaterialButton(
           onPressed: onPress,
-          minWidth: double.infinity,
+          minWidth: 150,
           height: 48,
           child: Text(
             text,
             style: AppTheme.heading.copyWith(
               fontSize: 14,
-              color: customColor,
+              color: Colors.white,
             ),
           ),
         ),

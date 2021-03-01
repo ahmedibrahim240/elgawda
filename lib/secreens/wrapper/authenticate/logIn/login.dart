@@ -27,6 +27,7 @@ class _LogInState extends State<LogIn> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
+        backgroundColor: Colors.white,
       ),
       body: (loading)
           ? Container(
@@ -37,301 +38,215 @@ class _LogInState extends State<LogIn> {
           : ListView(
               shrinkWrap: true,
               primary: true,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               children: [
-                Stack(
+                Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('lib/images/logo.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
                   children: [
-                    CustomAppBar(
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('lib/images/logo.png'),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'welcome',
-                              style: AppTheme.heading.copyWith(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ],
-                        ),
+                    Text(
+                      'Welcome ',
+                      style: AppTheme.heading.copyWith(
+                        color: customColorGold,
+                        fontSize: 20,
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 220, left: 30, right: 30),
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                          primary: true,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    Text(
+                      'Back',
+                      style: AppTheme.heading.copyWith(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      '!',
+                      style: AppTheme.heading.copyWith(
+                        color: customColorGold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      primary: true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10),
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                keyboardType: TextInputType.phone,
+                                decoration: textFormInputDecoration(
+                                  Icons.phone,
+                                  'Email Or Phome Number',
+                                ),
+                                validator: (val) => val.isEmpty
+                                    ? 'please enter an phoneNamber'
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    phoneNamber = val;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                decoration: textFormInputDecorationForPassword(
+                                  Icons.visibility_off,
+                                  'password',
+                                  () {
+                                    setState(() {
+                                      obscurePassword = !obscurePassword;
+                                    });
+                                  },
+                                  obscurePassword,
+                                ),
+                                validator: (val) => val.isEmpty
+                                    ? 'please enter a password'
+                                    : null,
+                                obscureText: obscurePassword,
+                                onChanged: (val) {
+                                  setState(() {
+                                    password = val;
+                                  });
+                                },
+                              ),
+                              Center(
+                                child: Text(
+                                  error,
+                                  style: AppTheme.headingColorBlue,
+                                ),
+                              ),
                               SizedBox(height: 10),
-                              Column(
+                              CustomButton(
+                                onPress: () async {},
+                                text: 'Sign In',
+                              ),
+                              SizedBox(height: 12),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => PasswordRecovery(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'forget ',
+                                      style:
+                                          AppTheme.headingColorBlue.copyWith(),
+                                    ),
+                                    Text(
+                                      'password?',
+                                      style:
+                                          AppTheme.headingColorBlue.copyWith(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    keyboardType: TextInputType.phone,
-                                    decoration: textFormInputDecoration(
-                                      Icons.phone,
-                                      'Phome Number',
-                                    ),
-                                    validator: (val) => val.isEmpty
-                                        ? 'please enter an phoneNamber'
-                                        : null,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        phoneNamber = val;
-                                      });
-                                    },
+                                  Container(
+                                    height: 1,
+                                    width: width * .3,
+                                    color: customColor,
                                   ),
-                                  SizedBox(height: 20),
-                                  TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    decoration:
-                                        textFormInputDecorationForPassword(
-                                      Icons.visibility_off,
-                                      'password',
-                                      () {
-                                        setState(() {
-                                          obscurePassword = !obscurePassword;
-                                        });
-                                      },
-                                      obscurePassword,
-                                    ),
-                                    validator: (val) => val.isEmpty
-                                        ? 'please enter a password'
-                                        : null,
-                                    obscureText: obscurePassword,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        password = val;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 10),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'skip',
-                                          style: AppTheme.heading
-                                              .copyWith(color: customColor),
-                                        ),
-                                        Transform.rotate(
-                                          angle: 180 * 3.14 / 180,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            color: customColor,
-                                          ),
-                                        ),
-                                      ],
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'or',
+                                    style: AppTheme.headingColorBlue.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 16,
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                  Center(
-                                    child: Text(
-                                      error,
-                                      style: AppTheme.heading,
-                                    ),
+                                  SizedBox(width: 5),
+                                  Container(
+                                    height: 1,
+                                    width: width * .3,
+                                    color: customColor,
                                   ),
-                                  SizedBox(height: 10),
-                                  CustomButton(
-                                    onPress: () async {},
-                                    text: 'Log In',
-                                  ),
-                                  SizedBox(height: 12),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Column(
+                                children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'forget ',
-                                        style: AppTheme.heading.copyWith(),
+                                        "Don't have an account?",
+                                        style: AppTheme.subHeadingColorBlue
+                                            .copyWith(
+                                          fontSize: 12,
+                                        ),
                                       ),
                                       InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  PasswordRecovery(),
-                                            ),
-                                          );
-                                        },
+                                        onTap: () => widget.toggleView(),
                                         child: Text(
-                                          'password?',
-                                          style: AppTheme.heading.copyWith(
+                                          "Sign Up!",
+                                          style: AppTheme.headingColorBlue
+                                              .copyWith(
                                             fontWeight: FontWeight.w900,
-                                            fontSize: 16,
-                                            color: customColor,
+                                            fontSize: 14,
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 1,
-                                        width: width * .3,
-                                        color: customColor,
-                                      ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        'or',
-                                        style: AppTheme.heading.copyWith(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 16,
-                                          color: customColor,
-                                        ),
-                                      ),
-                                      SizedBox(width: 5),
-                                      Container(
-                                        height: 1,
-                                        width: width * .3,
-                                        color: customColor,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "I dont have an account!",
-                                            style: AppTheme.heading.copyWith(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () => widget.toggleView(),
-                                            child: Text(
-                                              "Sign Up?",
-                                              style: AppTheme.heading.copyWith(
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: 16,
-                                                color: customColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CustomButtonWithchild(
-                                          onPress: () {},
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                FontAwesomeIcons.google,
-                                                color: Colors.white,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    'Sign in with',
-                                                    style: AppTheme.heading
-                                                        .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ' Google',
-                                                    style: AppTheme.heading
-                                                        .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: CustomButtonWithchild(
-                                          onPress: () {},
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                FontAwesomeIcons.facebookF,
-                                                color: Colors.white,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    'Sign in with',
-                                                    style: AppTheme.heading
-                                                        .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'FaceBook',
-                                                    style: AppTheme.heading
-                                                        .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          color: Colors.blueAccent,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.google,
+                                    color: Colors.redAccent,
+                                    size: 35,
+                                  ),
+                                  SizedBox(width: 30),
+                                  Icon(
+                                    FontAwesomeIcons.facebook,
+                                    color: Colors.blueAccent,
+                                    size: 35,
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
                 SizedBox(height: 20),
               ],

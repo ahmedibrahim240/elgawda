@@ -42,29 +42,29 @@ InputDecoration textFormInputDecorationForPassword(
     IconData icon, String label, Function obscureText, bool obscurepasswrod) {
   return InputDecoration(
     errorStyle: AppTheme.subHeading.copyWith(
-      color: customColor,
+      color: customColorGray,
     ),
     hintText: label,
     hintStyle: AppTheme.heading.copyWith(
-      color: customColor,
-      fontSize: 14,
+      color: customColorGray,
+      fontSize: 10,
     ),
     fillColor: Colors.white,
     filled: true,
     isDense: true,
     contentPadding: EdgeInsets.all(10),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         style: BorderStyle.solid,
-        color: customColor,
+        color: customColorGray,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         style: BorderStyle.solid,
-        color: customColor,
+        color: customColorGray,
       ),
     ),
     suffixIcon: IconButton(
@@ -72,11 +72,11 @@ InputDecoration textFormInputDecorationForPassword(
       icon: obscurepasswrod
           ? Icon(
               icon,
-              color: customColor,
+              color: customColorGray,
             )
           : Icon(
               Icons.visibility,
-              color: customColor,
+              color: customColorGray,
             ),
     ),
   );
@@ -93,8 +93,8 @@ InputDecoration textFormInputDecoration(
     ),
     hintText: label,
     hintStyle: AppTheme.heading.copyWith(
-      color: customColor,
-      fontSize: 14,
+      color: customColorGray,
+      fontSize: 10,
     ),
     fillColor: Colors.white,
     filled: true,
@@ -102,20 +102,20 @@ InputDecoration textFormInputDecoration(
     contentPadding: EdgeInsets.all(10),
     suffixIcon: Icon(
       icon,
-      color: customColor,
+      color: customColorGray,
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         style: BorderStyle.solid,
-        color: customColor,
+        color: customColorGray,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         style: BorderStyle.solid,
-        color: customColor,
+        color: customColorGray,
       ),
     ),
   );
