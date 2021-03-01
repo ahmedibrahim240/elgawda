@@ -1,7 +1,7 @@
 import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:elgawda/routes.dart';
 import 'constants/constans.dart';
 
 void main() {
@@ -20,8 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  get routes => null;
-
   // Locale _locale;
   // setLocale(Locale locale) async {
   //   setState(() {

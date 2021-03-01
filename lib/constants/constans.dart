@@ -5,7 +5,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const customColor = Color(0xfff4DC0B1);
+const customColor = Color(0xfff21496C);
+const customColorGold = Color(0xfff9B792C);
+const sliderTextColor = Color(0xfff21496C);
+const sliderTextColorcontaint = Color(0xfff21496C);
 const customColorIcon = Color(0xfff807d7d);
 const customColorDivider = Color(0xfffe1e1e1);
 const customColorGray = Color(0xfff7d7d7d);

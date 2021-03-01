@@ -10,10 +10,22 @@ class AppTheme {
     letterSpacing: 1.2,
     color: Colors.black,
   );
+  static final TextStyle headingColorBlue = TextStyle(
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+    letterSpacing: 1.2,
+    color: sliderTextColor,
+  );
   static final TextStyle subHeading = TextStyle(
     fontFamily: 'Cairo',
     fontSize: 12,
     color: Colors.black,
+  );
+  static final TextStyle subHeadingColorBlue = TextStyle(
+    fontFamily: 'Cairo',
+    fontSize: 12,
+    color: sliderTextColor,
   );
   static final containerBackground = LinearGradient(
     begin: Alignment.topRight,

@@ -1,4 +1,3 @@
-import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,7 @@ class CustomSlider extends StatelessWidget {
             Center(
               child: Text(
                 title,
-                style: AppTheme.heading.copyWith(color: customColor),
+                style: AppTheme.headingColorBlue,
               ),
             ),
             SizedBox(height: 5),
@@ -41,7 +40,8 @@ class CustomSlider extends StatelessWidget {
               child: Center(
                 child: Text(
                   contant,
-                  style: AppTheme.subHeading.copyWith(
+                  textAlign: TextAlign.center,
+                  style: AppTheme.subHeadingColorBlue.copyWith(
                     height: 1.5,
                     letterSpacing: .07,
                   ),

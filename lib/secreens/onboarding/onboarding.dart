@@ -35,25 +35,23 @@ class _OnBoardingState extends State<OnBoarding> {
   PageController _controller = PageController();
   List<Widget> _pages = [
     CustomSlider(
-      title: 'Title',
-      contant:
-          'Title Contant Title Contant Title Contant Title ContantTitle Contant Title Contant Title Contant Title Contant Title Contant Title Contant  ',
-      image: 'lib/images/img3.png',
-      backImage: 'lib/images/back2.png',
+      title: 'Take Video Courses',
+      contant: 'Take Video Courses',
+      image: 'lib/images/img3.jpg',
+      backImage: 'lib/images/back2.jpg',
     ),
     CustomSlider(
-      title: 'Title',
-      contant:
-          'Title Contant Title Contant Title Contant Title ContantTitle Contant Title Contant Title Contant Title Contant Title Contant Title Contant',
-      image: 'lib/images/img1.png',
-      backImage: 'lib/images/back3.png',
+      title: 'Take Video Courses',
+      contant: 'Take Video Courses',
+      image: 'lib/images/img1.jpg',
+      backImage: 'lib/images/back3.jpg',
     ),
     CustomSlider(
-      title: 'Title',
+      title: 'Take Video Courses',
       contant:
           'Title Contant Title Contant Title Contant Title ContantTitle Contant Title Contant Title Contant Title Contant Title Contant Title Contant',
-      image: 'lib/images/img2.png',
-      backImage: 'lib/images/back2.png',
+      image: 'lib/images/img2.jpg',
+      backImage: 'lib/images/back2.jpg',
     ),
   ];
   _onChanged(int index) {
@@ -71,33 +69,14 @@ class _OnBoardingState extends State<OnBoarding> {
       body: Column(
         children: [
           Expanded(
-            child: Stack(
-              children: [
-                PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  controller: _controller,
-                  itemCount: _pages.length,
-                  onPageChanged: _onChanged,
-                  itemBuilder: (context, int index) {
-                    return _pages[index];
-                  },
-                ),
-                CustomAppBar(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('lib/images/logo.png'),
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              controller: _controller,
+              itemCount: _pages.length,
+              onPageChanged: _onChanged,
+              itemBuilder: (context, int index) {
+                return _pages[index];
+              },
             ),
           ),
           SliderContoler(
@@ -140,8 +119,8 @@ class SliderContoler extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: (index == _currentPage)
-                      ? customColor
-                      : customColor.withOpacity(0.5),
+                      ? customColorGold
+                      : customColorGold.withOpacity(0.5),
                 ),
               );
             },
@@ -203,20 +182,30 @@ class SliderContoler extends StatelessWidget {
                     ),
                   );
                 },
-                child: Row(
-                  children: [
-                    Text(
-                      'skip',
-                      style: AppTheme.heading.copyWith(color: customColor),
-                    ),
-                    Transform.rotate(
-                      angle: 180 * 3.14 / 180,
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: customColor,
+                child: Container(
+                  height: 35,
+                  width: 86,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: customColorGold,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'skip',
+                        style: AppTheme.heading.copyWith(color: Colors.white),
                       ),
-                    ),
-                  ],
+                      Transform.rotate(
+                        angle: 180 * 3.14 / 180,
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

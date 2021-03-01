@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:elgawda/constants/constans.dart';
-import 'package:elgawda/constants/themes.dart';
+
 import 'package:flutter/material.dart';
 
 import 'onboarding/onboarding.dart';
@@ -54,29 +54,33 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             height: height,
             width: width,
-            decoration: BoxDecoration(
-              gradient: AppTheme.containerBackground,
-            ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 80),
-              Center(
-                child: Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/logo.png'),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
+          Positioned(
+            top: 200,
+            child: Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/images/logo.png'),
+                  fit: BoxFit.fitHeight,
                 ),
               ),
-              SizedBox(height: 20),
-              CircularProgressIndicator(),
-            ],
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: 12,
+            child: Container(
+              height: 250,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/images/logo2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
           ),
         ],
       ),
