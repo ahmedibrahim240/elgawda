@@ -2,6 +2,8 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../../wrapper.dart';
+
 class ResetPassword extends StatefulWidget {
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
@@ -76,7 +78,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                       Center(
                         child: CustomButton(
                           text: 'send',
-                          onPress: () {},
+                          onPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => Wrapper(),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],

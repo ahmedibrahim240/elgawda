@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../wrapper.dart';
+
 class Register extends StatefulWidget {
   final Function toggleView;
   Register({this.toggleView});
@@ -177,7 +179,13 @@ class _RegisterState extends State<Register> {
                               ),
                               SizedBox(height: 10),
                               CustomButton(
-                                onPress: () async {},
+                                onPress: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => Wrapper(),
+                                    ),
+                                  );
+                                },
                                 text: 'Sign Up',
                               ),
                               SizedBox(height: 10),

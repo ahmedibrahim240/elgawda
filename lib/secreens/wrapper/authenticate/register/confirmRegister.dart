@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:code_fields/code_fields.dart';
 
+import '../../wrapper.dart';
+
 class ConfirmPassword extends StatefulWidget {
   @override
   _ConfirmPasswordState createState() => _ConfirmPasswordState();
@@ -86,7 +88,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                         onPress: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => Home(),
+                              builder: (_) => Wrapper(),
                             ),
                           );
                         },
