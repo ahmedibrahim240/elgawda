@@ -1,6 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/secreens/wrapper/authenticate/verfyPassword.dart';
+import 'package:elgawda/secreens/wrapper/authenticate/restPassword/confirmPassword.dart';
 import 'package:flutter/material.dart';
 
 class PasswordRecovery extends StatefulWidget {
@@ -43,7 +43,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
             SizedBox(height: 40),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -66,7 +66,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                       onPress: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => VerifyPhone(),
+                            builder: (_) => ConfirmPassword(),
                           ),
                         );
                       },
