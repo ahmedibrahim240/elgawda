@@ -29,7 +29,7 @@ Container sectionTitle({String title, Function onTap}) {
       ),
     );
   }
-
+//////////////////////////////////////////////////////////////////////
   featuredSections() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,6 +56,8 @@ Container sectionTitle({String title, Function onTap}) {
       ],
     );
   }
+//////////////////////////////////////////////////////////////////////
+
 
   featuerd({int index, Function onTap}) {
     return InkWell(
@@ -146,6 +148,7 @@ Container sectionTitle({String title, Function onTap}) {
       ),
     );
   }
+//////////////////////////////////////////////////////////////////////
 
   homePoster(BuildContext context) {
     return Container(
@@ -183,6 +186,8 @@ Container sectionTitle({String title, Function onTap}) {
       ),
     );
   }
+//////////////////////////////////////////////////////////////////////
+
 
   homeAppBar() {
     return AppBar(

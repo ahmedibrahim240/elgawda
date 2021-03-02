@@ -1,4 +1,5 @@
 import 'package:elgawda/secreens/home/instractorlistvie.dart';
+import 'package:elgawda/secreens/instuctor/instuctor.dart';
 import 'package:flutter/material.dart';
 
 import 'homeCategooriesBody.dart';
@@ -12,8 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool _isError = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +28,15 @@ class _HomeState extends State<Home> {
           ),
           sectionTitle(title: 'Categories', onTap: () {}),
           HomeCategooriesBody(),
-          sectionTitle(title: 'Instructor', onTap: () {}),
+          sectionTitle(
+              title: 'Instructor',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AllInstuctor(),
+                  ),
+                );
+              }),
           InstractorListView(),
         ],
       ),
