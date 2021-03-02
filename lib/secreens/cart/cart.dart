@@ -10,6 +10,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  List<Courses> _cartList = coursesList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class _CartState extends State<Cart> {
           ListView.builder(
             shrinkWrap: true,
             primary: false,
-            itemCount: 2,
+            itemCount: _cartList.length,
             itemBuilder: (context, index) {
               return trainingCourses(
                 index: index,
@@ -76,7 +77,7 @@ class _CartState extends State<Cart> {
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                     image: NetworkImage(
-                      coursesList[index].image,
+                      _cartList[index].image,
                     ),
                     fit: BoxFit.cover),
               ),
@@ -88,14 +89,14 @@ class _CartState extends State<Cart> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 196,
                   child: Text(
-                    coursesList[index].title,
+                    _cartList[index].title,
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 10),
                   ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 196,
                   child: Text(
-                    coursesList[index].contant,
+                    _cartList[index].contant,
                     style: AppTheme.subHeading.copyWith(
                       fontSize: 9,
                       color: customColorGold,
@@ -105,11 +106,11 @@ class _CartState extends State<Cart> {
                 Row(
                   children: [
                     RatingStar(
-                      rating: coursesList[index].rate,
+                      rating: _cartList[index].rate,
                     ),
                     SizedBox(width: 5),
                     Text(
-                      '${coursesList[index].rate}',
+                      '${_cartList[index].rate}',
                       style: AppTheme.subHeading.copyWith(
                         fontSize: 10,
                         color: customColorGold,
@@ -117,7 +118,7 @@ class _CartState extends State<Cart> {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      '(${coursesList[index].numPeopleRating})',
+                      '(${_cartList[index].numPeopleRating})',
                       style: AppTheme.subHeading.copyWith(
                         fontSize: 10,
                         color: customColorGold,
@@ -137,14 +138,14 @@ class _CartState extends State<Cart> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        '${coursesList[index].newPrice}\$',
+                        '${_cartList[index].newPrice}\$',
                         style: AppTheme.headingColorBlue.copyWith(
                           fontSize: 12,
                         ),
                       ),
                       SizedBox(width: 5),
                       Text(
-                        '${coursesList[index].oldPrice}\$',
+                        '${_cartList[index].oldPrice}\$',
                         style: AppTheme.headingColorBlue.copyWith(
                           fontSize: 12,
                           decoration: TextDecoration.lineThrough,
@@ -158,7 +159,11 @@ class _CartState extends State<Cart> {
             ),
             Center(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _cartList.remove(_cartList[index]);
+                  });
+                },
                 child: CircleAvatar(
                   minRadius: 12,
                   backgroundColor: customColor,

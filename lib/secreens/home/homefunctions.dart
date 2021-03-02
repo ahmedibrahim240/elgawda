@@ -191,8 +191,9 @@ homePoster(BuildContext context) {
 
 homeAppBar(BuildContext context) {
   return AppBar(
+    toolbarHeight: 80,
     leading: Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: CircleAvatar(
         backgroundColor: customColor,
         backgroundImage: AssetImage('lib/images/user.jpg'),
