@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/about_us/about_us.dart';
+import 'package:elgawda/secreens/contact_us/contact_us..dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,7 +32,7 @@ class _MoreState extends State<More> {
             MoreUserData(
               userDate: _userDate,
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 60),
             MoreBody(
               title: 'Cart',
               child: Icon(
@@ -40,16 +41,22 @@ class _MoreState extends State<More> {
               ),
               onTap: () {},
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             MoreBody(
               title: 'Contact Us',
               child: Icon(
                 FontAwesomeIcons.solidAddressCard,
                 color: customColor,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ContactUs(),
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             MoreBody(
               title: 'About Us',
               child: Icon(
@@ -65,7 +72,7 @@ class _MoreState extends State<More> {
                 );
               },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             MoreBody(
               title: 'Change Language',
               child: Language(),
