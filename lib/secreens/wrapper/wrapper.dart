@@ -26,7 +26,7 @@ class _WrapperState extends State<Wrapper> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        backgroundColor: customColorDivider,
+        backgroundColor: Color(0xfffF1F1F1),
         selectedItemColor: customColor,
         unselectedItemColor: customColor.withOpacity(.60),
         selectedLabelStyle: AppTheme.headingColorBlue,
