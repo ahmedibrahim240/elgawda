@@ -1,4 +1,8 @@
+import 'package:elgawda/secreens/home/instractorlistvie.dart';
 import 'package:flutter/material.dart';
+
+import 'homeCategooriesBody.dart';
+import 'homefunctions.dart';
 
 class Home extends StatefulWidget {
   static final route = '/';
@@ -8,11 +12,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _isError = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
+      appBar: homeAppBar(),
+      body: ListView(
+        shrinkWrap: true,
+        primary: true,
+        children: [
+          homePoster(context),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: featuredSections(),
+          ),
+          sectionTitle(title: 'Categories', onTap: () {}),
+          HomeCategooriesBody(),
+          sectionTitle(title: 'Instructor', onTap: () {}),
+          InstractorListView(),
+        ],
       ),
     );
   }

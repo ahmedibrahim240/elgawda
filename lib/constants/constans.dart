@@ -225,7 +225,24 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 }
+
 /////////////////////////////////////////////////////////////////////////////////
+customRaiseButtom({String text, Function onTap}) {
+  return RaisedButton(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    color: customColor,
+    onPressed: onTap,
+    child: Text(
+      text,
+      style: AppTheme.subHeading.copyWith(
+        color: Colors.white,
+      ),
+    ),
+  );
+}
+////////////////////////////////////////////////////////////////////////
 
 class CustomCarouselSlider extends StatefulWidget {
   final bool reverse;
@@ -339,16 +356,17 @@ class _CustomCarouselSliderState extends State<CustomCarouselSlider> {
 ///////////////////////////////////////////////////////////
 class RatingStar extends StatelessWidget {
   final double rating;
-  final bool isReadOnly;
 
-  const RatingStar({Key key, @required this.rating, @required this.isReadOnly})
-      : super(key: key);
+  const RatingStar({
+    Key key,
+    @required this.rating,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SmoothStarRating(
       rating: rating,
       size: 20,
-      isReadOnly: isReadOnly,
+      isReadOnly: true,
       filledIconData: Icons.star,
       color: Colors.yellow[700],
       halfFilledIconData: Icons.star_half,
