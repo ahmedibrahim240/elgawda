@@ -1,7 +1,7 @@
 import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:elgawda/routes.dart';
+// import 'package:elgawda/routes.dart';s
 import 'constants/constans.dart';
 
 void main() {
@@ -56,8 +56,7 @@ class _MyAppState extends State<MyApp> {
         accentColor: customColor,
         iconTheme: IconThemeData(color: customColor),
       ),
-      initialRoute: SplashScreen.route,
-      routes: routes,
+      home: SplashScreen(),
     );
 
     //  StreamProvider<User>.value(

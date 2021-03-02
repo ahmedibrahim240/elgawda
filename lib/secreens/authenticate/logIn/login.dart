@@ -131,10 +131,11 @@ class _LogInState extends State<LogIn> {
                               SizedBox(height: 10),
                               CustomButton(
                                 onPress: () {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                       builder: (_) => Wrapper(),
                                     ),
+                                    (routes) => false,
                                   );
                                 },
                                 text: 'Sign In',

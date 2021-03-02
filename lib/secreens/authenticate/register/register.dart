@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class Register extends StatefulWidget {
   final Function toggleView;
   Register({this.toggleView});
@@ -180,10 +179,11 @@ class _RegisterState extends State<Register> {
                               SizedBox(height: 10),
                               CustomButton(
                                 onPress: () {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                       builder: (_) => Wrapper(),
                                     ),
+                                    (routes) => false,
                                   );
                                 },
                                 text: 'Sign Up',

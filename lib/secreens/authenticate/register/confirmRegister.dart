@@ -84,10 +84,11 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                       child: CustomButton(
                         text: 'send',
                         onPress: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                               builder: (_) => Wrapper(),
                             ),
+                            (routes) => false,
                           );
                         },
                       ),

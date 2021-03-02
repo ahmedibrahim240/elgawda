@@ -176,10 +176,11 @@ class SliderContoler extends StatelessWidget {
               // ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (_) => Authenticate(),
                     ),
+                    (routes) => false,
                   );
                 },
                 child: Container(

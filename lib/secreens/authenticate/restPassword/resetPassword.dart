@@ -78,10 +78,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                         child: CustomButton(
                           text: 'send',
                           onPress: () {
-                            Navigator.of(context).push(
+                            Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                 builder: (_) => Wrapper(),
                               ),
+                              (routes) => false,
                             );
                           },
                         ),
