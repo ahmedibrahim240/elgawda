@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,10 @@ class _MyAppState extends State<MyApp> {
           elevation: 0,
           iconTheme: IconThemeData(color: customColor),
           actionsIconTheme: IconThemeData(color: customColor),
+          centerTitle: true,
+          textTheme: TextTheme(
+            headline6: AppTheme.headingColorBlue,
+          ),
         ),
         accentColor: customColor,
         iconTheme: IconThemeData(color: customColor),
