@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -78,7 +79,12 @@ class _MyCoursesState extends State<MyCourses> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
+              Divider(
+                color: customColorDivider,
+                thickness: 2,
+              ),
+              SizedBox(height: 10),
             ],
           );
         },
