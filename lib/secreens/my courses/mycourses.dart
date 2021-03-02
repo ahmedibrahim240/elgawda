@@ -1,7 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
-import 'package:elgawda/secreens/cart/cart.dart';
+import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -127,7 +127,13 @@ class _MyCoursesState extends State<MyCourses> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => Notificatios(),
+                ),
+              );
+            },
             child: Icon(
               Icons.notifications,
               color: customColor,
