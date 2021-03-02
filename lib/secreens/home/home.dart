@@ -1,5 +1,5 @@
 import 'package:elgawda/secreens/home/instractorlistvie.dart';
-import 'package:elgawda/secreens/instuctor/instuctor.dart';
+import 'package:elgawda/secreens/instuctor/allInstuctor.dart';
 import 'package:flutter/material.dart';
 
 import 'homeCategooriesBody.dart';

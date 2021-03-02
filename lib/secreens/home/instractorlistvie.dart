@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/instructor.dart';
+import 'package:elgawda/secreens/instuctor/instructorPageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,17 @@ class _InstractorListViewState extends State<InstractorListView> {
       itemBuilder: (context, index) {
         return Column(
           children: [
-            insructorCard(index: index, onTap: () {}),
+            insructorCard(
+                index: index,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => InstructorPageView(
+                        instructor: instructorList[index],
+                      ),
+                    ),
+                  );
+                }),
             Divider(
               color: customColor.withOpacity(.5),
               thickness: 2,

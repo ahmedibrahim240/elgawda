@@ -3,8 +3,10 @@ class Instructor {
   final String insDevoplTitlle;
   final String insWork;
   final String image;
+  final String bio;
 
   Instructor({
+    this.bio,
     this.insDevoplTitlle,
     this.image,
     this.insName,
@@ -14,6 +16,8 @@ class Instructor {
 
 List<Instructor> instructorList = [
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -21,6 +25,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -28,6 +34,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -35,6 +43,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -42,6 +52,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -49,6 +61,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -56,6 +70,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -63,6 +79,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -70,6 +88,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -77,6 +97,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -84,6 +106,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -91,6 +115,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -98,6 +124,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -105,6 +133,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -112,6 +142,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
@@ -119,6 +151,8 @@ List<Instructor> instructorList = [
         'https://images.pexels.com/photos/594610/pexels-photo-594610.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   ),
   Instructor(
+    bio:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     insName: 'A.Kahraba',
     insDevoplTitlle: 'Flutter',
     insWork: 'Techno Masr',
