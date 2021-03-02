@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/secreens/editprofile/editprofile.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,11 +107,20 @@ class _MyCoursesState extends State<MyCourses> {
           Text('My Courses'),
         ],
       ),
-      leading: Padding(
-        padding: const EdgeInsets.all(5),
-        child: CircleAvatar(
-          backgroundColor: customColor,
-          backgroundImage: AssetImage('lib/images/user.jpg'),
+      leading: InkWell(
+        onTap: () {
+          flitter(
+            context: context,
+            child: EditProfile(),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: CircleAvatar(
+            maxRadius: 50,
+            backgroundColor: customColor,
+            backgroundImage: AssetImage('lib/images/user.jpg'),
+          ),
         ),
       ),
       actions: [

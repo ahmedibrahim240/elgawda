@@ -424,6 +424,9 @@ flitter({BuildContext context, Widget child}) {
   return showModalBottomSheet(
     context: context,
     builder: (context) => child,
+    isDismissible: true,
+    enableDrag: true,
+    isScrollControlled: false,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(25),

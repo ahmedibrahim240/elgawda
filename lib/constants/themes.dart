@@ -121,6 +121,38 @@ InputDecoration textFormInputDecoration(
   );
 }
 
+InputDecoration textFormInpuofEidtProfile({
+  IconData icon,
+}) {
+  return InputDecoration(
+    errorStyle: AppTheme.subHeading.copyWith(
+      color: customColor,
+    ),
+    fillColor: Colors.white,
+    filled: true,
+    isDense: true,
+    contentPadding: EdgeInsets.all(10),
+    suffixIcon: Icon(
+      icon,
+      color: customColor,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        style: BorderStyle.solid,
+        color: customColorGray,
+      ),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        style: BorderStyle.solid,
+        color: customColorGray,
+      ),
+    ),
+  );
+}
+
 ///////////////////////////////////////////////////////////////
 InputDecoration conectedTextFormStyle({String lableText}) {
   return InputDecoration(
