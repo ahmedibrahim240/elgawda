@@ -1,7 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/onboarding/slider.dart';
-import 'package:elgawda/secreens/wrapper/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 
 class OnBoard extends StatefulWidget {

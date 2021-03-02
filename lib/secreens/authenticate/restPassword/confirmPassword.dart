@@ -1,6 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/secreens/wrapper/authenticate/restPassword/resetPassword.dart';
+import 'package:elgawda/secreens/authenticate/restPassword/resetPassword.dart';
 import 'package:flutter/material.dart';
 
 import 'package:code_fields/code_fields.dart';

@@ -1,6 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/secreens/wrapper/authenticate/restPassword/confirmPassword.dart';
+import 'package:elgawda/secreens/authenticate/register/confirmRegister.dart';
 import 'package:flutter/material.dart';
 
 class PasswordRecovery extends StatefulWidget {

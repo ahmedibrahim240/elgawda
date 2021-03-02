@@ -1,8 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
-
-import '../../wrapper.dart';
 
 class ResetPassword extends StatefulWidget {
   @override

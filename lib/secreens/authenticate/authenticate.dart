@@ -1,4 +1,4 @@
-import 'package:elgawda/secreens/wrapper/authenticate/register/register.dart';
+import 'package:elgawda/secreens/authenticate/register/register.dart';
 import 'package:flutter/material.dart';
 
 import 'logIn/login.dart';

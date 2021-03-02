@@ -1,11 +1,9 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/secreens/wrapper/home/home.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:code_fields/code_fields.dart';
-
-import '../../wrapper.dart';
 
 class ConfirmPassword extends StatefulWidget {
   @override
