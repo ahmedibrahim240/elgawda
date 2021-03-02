@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/about_us/about_us.dart';
+import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/contact_us/contact_us..dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,13 @@ class _MoreState extends State<More> {
                 FontAwesomeIcons.shoppingCart,
                 color: customColor,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => Cart(),
+                  ),
+                );
+              },
             ),
             SizedBox(height: 30),
             MoreBody(
