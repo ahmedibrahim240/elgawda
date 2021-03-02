@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/secreens/about_us/about_us.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -56,7 +57,13 @@ class _MoreState extends State<More> {
                 size: 30,
                 color: customColor,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AboutUs(),
+                  ),
+                );
+              },
             ),
             SizedBox(height: 20),
             MoreBody(
