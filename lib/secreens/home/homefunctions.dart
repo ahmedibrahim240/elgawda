@@ -3,6 +3,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
+import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -52,7 +53,15 @@ featuredSections() {
           itemBuilder: (context, index) {
             return featuerd(
               index: index,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => FeaturedCoursesedtails(
+                      courses: coursesList[index],
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),
