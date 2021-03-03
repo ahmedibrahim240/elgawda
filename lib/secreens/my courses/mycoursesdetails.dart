@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/secreens/chatRome.dart/chatRome.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -21,87 +22,85 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Stack(
+      body: ListView(
+        shrinkWrap: true,
+        primary: true,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         children: [
           Container(
-            height: MediaQuery.of(context).size.height - 160,
-            child: ListView(
-              shrinkWrap: true,
-              primary: true,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: ChewieVideo(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Card(
-                  elevation: 4,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 200,
-                        child: ChewieVideo(),
-                      ),
-                      courseDetail(),
-                    ],
-                  ),
+                taps(
+                  index: 0,
+                  title: 'Lecture',
+                  onTap: () {
+                    setState(
+                      () {
+                        lecTapped = 0;
+                      },
+                    );
+                  },
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      taps(
-                        index: 0,
-                        title: 'Lecture',
-                        onTap: () {
-                          setState(
-                            () {
-                              lecTapped = 0;
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(width: 20),
-                      taps(
-                        index: 1,
-                        title: 'More',
-                        onTap: () {
-                          setState(
-                            () {
-                              lecTapped = 1;
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(width: 20),
-                      taps(
-                        index: 2,
-                        title: 'Review',
-                        onTap: () {
-                          setState(
-                            () {
-                              lecTapped = 2;
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                SizedBox(width: 20),
+                taps(
+                  index: 1,
+                  title: 'More',
+                  onTap: () {
+                    setState(
+                      () {
+                        lecTapped = 1;
+                      },
+                    );
+                  },
                 ),
-                (lecTapped == 0)
-                    ? lectureBody()
-                    : (lecTapped == 1)
-                        ? Container(
-                            child: Center(
-                              child: Text(
-                                widget.courses.contant,
-                                style: AppTheme.subHeading,
-                              ),
-                            ),
-                          )
-                        : reviewBody(),
+                SizedBox(width: 20),
+                taps(
+                  index: 2,
+                  title: 'Review',
+                  onTap: () {
+                    setState(
+                      () {
+                        lecTapped = 2;
+                      },
+                    );
+                  },
+                ),
+                SizedBox(width: 20),
+                taps(
+                  index: 3,
+                  title: 'Chat',
+                  onTap: () {
+                    setState(
+                      () {
+                        lecTapped = 3;
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
+          (lecTapped == 0)
+              ? lectureBody()
+              : (lecTapped == 1)
+                  ? Container(
+                      child: Center(
+                        child: Text(
+                          widget.courses.contant,
+                          style: AppTheme.subHeading,
+                        ),
+                      ),
+                    )
+                  : (lecTapped == 2)
+                      ? reviewBody()
+                      : ChatRome(),
         ],
       ),
     );
@@ -263,7 +262,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                           width: 20,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: customColor,
+                            color: Colors.green,
                           ),
                           child: Center(
                             child: Icon(
@@ -287,6 +286,15 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                         color: Colors.grey[400],
                       ),
                     ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Quiz',
+                        style: AppTheme.heading.copyWith(
+                          color: customColorGold,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ],

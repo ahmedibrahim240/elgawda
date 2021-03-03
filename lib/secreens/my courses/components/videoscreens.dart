@@ -1,5 +1,4 @@
 import 'package:chewie/chewie.dart';
-import 'package:elgawda/constants/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -47,7 +46,7 @@ class _ChewieVideoState extends State<ChewieVideo> {
               _chewieController.videoPlayerController.value.initialized
           ? Theme(
               data: Theme.of(context).copyWith(
-                dialogBackgroundColor: customColor,
+                dialogBackgroundColor: Colors.white,
               ),
               child: Chewie(
                 controller: _chewieController,
