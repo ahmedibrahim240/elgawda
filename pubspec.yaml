@@ -50,6 +50,7 @@ dependencies:
   chewie: ^0.12.1+1
   video_player: ^1.0.1
   geolocator:
+
   # flutter_phone_direct_caller: ^1.0.1
   shared_preferences:
   # firebase_auth: ^0.14.0+5
