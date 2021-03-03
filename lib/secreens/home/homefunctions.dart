@@ -1,12 +1,8 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
-import 'package:elgawda/secreens/cart/cart.dart';
-import 'package:elgawda/secreens/editprofile/editprofile.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
-import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Container sectionTitle({String title, Function onTap}) {
   return Container(

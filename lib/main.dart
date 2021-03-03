@@ -1,6 +1,5 @@
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
-import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:elgawda/routes.dart';s
