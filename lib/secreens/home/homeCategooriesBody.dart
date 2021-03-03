@@ -36,7 +36,7 @@ class HomeCategooriesBody extends StatelessWidget {
                     },
                   ),
                   customRaiseButtom(
-                    text: categoriesList[index * 2].name,
+                    text: categoriesList[index].name,
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
