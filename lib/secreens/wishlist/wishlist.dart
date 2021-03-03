@@ -1,7 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
-import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +14,20 @@ class _WishlistState extends State<Wishlist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: wichlistAppBar(),
+      appBar: homeAppBar(
+        context: context,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              FontAwesomeIcons.graduationCap,
+              color: customColor,
+            ),
+            SizedBox(width: 20),
+            Text('WichList'),
+          ],
+        ),
+      ),
       body: ListView.builder(
         shrinkWrap: true,
         itemCount: coursesList.length,
@@ -89,41 +101,6 @@ class _WishlistState extends State<Wishlist> {
           );
         },
       ),
-    );
-  }
-
-  wichlistAppBar() {
-    return AppBar(
-      toolbarHeight: 80,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            FontAwesomeIcons.graduationCap,
-            color: customColor,
-          ),
-          SizedBox(width: 20),
-          Text('WichList'),
-        ],
-      ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => Cart(),
-                ),
-              );
-            },
-            child: Icon(
-              FontAwesomeIcons.shoppingCart,
-              color: customColor,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

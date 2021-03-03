@@ -33,14 +33,17 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              height: 160,
-              width: 160,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(userDate.userImage),
-                  fit: BoxFit.cover,
+            Hero(
+              tag: 'UserImage',
+              child: Container(
+                height: 160,
+                width: 160,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage(userDate.userImage),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

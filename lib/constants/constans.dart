@@ -1,7 +1,11 @@
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
+import 'package:elgawda/secreens/cart/cart.dart';
+import 'package:elgawda/secreens/editprofile/editprofile.dart';
+import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -195,35 +199,76 @@ void showSettingsPanel(
     },
   );
 }
+
 /////////////////////////////////////////////////////////////////////////////////
-
-class CustomAppBar extends StatelessWidget {
-  final Widget child;
-  const CustomAppBar({
-    Key key,
-    this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: ClipPath(
-        clipper: MyCliper(),
-        child: Container(
-          height: 220,
-          padding: EdgeInsets.only(top: 8),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: AppTheme.containerBackground,
+homeAppBar({BuildContext context, Widget title}) {
+  return AppBar(
+    toolbarHeight: 80,
+    title: title,
+    leading: InkWell(
+      onTap: () {
+        flitter(
+          context: context,
+          child: EditProfile(),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        child: Hero(
+          tag: 'UserImage',
+          child: CircleAvatar(
+            maxRadius: 50,
+            backgroundColor: customColor,
+            backgroundImage: AssetImage('lib/images/user.jpg'),
           ),
-          child: child,
         ),
       ),
-    );
-  }
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: InkWell(
+          onTap: () {},
+          child: Icon(
+            Icons.search,
+            color: customColorDivider,
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => Notificatios(),
+              ),
+            );
+          },
+          child: Icon(
+            Icons.notifications,
+            color: customColor,
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => Cart(),
+              ),
+            );
+          },
+          child: Icon(
+            FontAwesomeIcons.shoppingCart,
+            color: customColor,
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -426,7 +471,7 @@ flitter({BuildContext context, Widget child}) {
     builder: (context) => child,
     isDismissible: true,
     enableDrag: true,
-    isScrollControlled: false,
+    isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(25),

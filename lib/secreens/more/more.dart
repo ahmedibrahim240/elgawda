@@ -25,6 +25,9 @@ class _MoreState extends State<More> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: homeAppBar(
+        context: context,
+      ),
       body: SafeArea(
         child: ListView(
           shrinkWrap: true,

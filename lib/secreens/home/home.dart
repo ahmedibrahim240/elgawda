@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/secreens/CategoriesCourses/allCategories.dart';
 import 'package:elgawda/secreens/home/instractorlistvie.dart';
 import 'package:elgawda/secreens/instuctor/allInstuctor.dart';
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: homeAppBar(context),
+      appBar: homeAppBar(context: context),
       body: ListView(
         shrinkWrap: true,
         primary: true,
