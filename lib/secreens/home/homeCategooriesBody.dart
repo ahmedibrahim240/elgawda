@@ -22,6 +22,7 @@ class HomeCategooriesBody extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         primary: false,
         childAspectRatio: (itemWidth / itemHeight),
         shrinkWrap: true,
@@ -50,6 +51,7 @@ class HomeCategooriesBody extends StatelessWidget {
                       categoriesList[index].name,
                       style: AppTheme.heading.copyWith(
                         color: Colors.white,
+                        fontSize: 10,
                       ),
                     ),
                   ),

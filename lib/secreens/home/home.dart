@@ -1,3 +1,4 @@
+import 'package:elgawda/secreens/CategoriesCourses/allCategories.dart';
 import 'package:elgawda/secreens/home/instractorlistvie.dart';
 import 'package:elgawda/secreens/instuctor/allInstuctor.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,16 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: featuredSections(),
           ),
-          sectionTitle(title: 'Categories', onTap: () {}),
+          sectionTitle(
+            title: 'Categories',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => AllCategories(),
+                ),
+              );
+            },
+          ),
           HomeCategooriesBody(),
           sectionTitle(
               title: 'Instructor',
