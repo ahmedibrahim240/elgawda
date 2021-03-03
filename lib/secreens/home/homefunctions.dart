@@ -1,6 +1,5 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/models/categoories.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
