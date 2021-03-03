@@ -1,4 +1,5 @@
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
         accentColor: customColor,
         iconTheme: IconThemeData(color: customColor),
       ),
-      home: Wrapper(),
+      home: SplashScreen(),
     );
 
     //  StreamProvider<User>.value(
