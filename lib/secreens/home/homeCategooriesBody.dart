@@ -1,5 +1,8 @@
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/models/categoories.dart';
+import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeCategooriesBody extends StatelessWidget {
   const HomeCategooriesBody({
@@ -10,43 +13,57 @@ class HomeCategooriesBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: ListView.builder(
+        shrinkWrap: true,
+        primary: false,
+        itemCount: 2,
+        itemBuilder: (context, index) {
+          return Column(
             children: [
-              customRaiseButtom(
-                text: 'C#',
-                onTap: () {},
-              ),
-              customRaiseButtom(
-                text: 'c++',
-                onTap: () {},
-              ),
-              customRaiseButtom(
-                text: 'C',
-                onTap: () {},
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customRaiseButtom(
+                    text: categoriesList[index].name,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => CategoriesCoursesPage(
+                            categories: categoriesList[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  customRaiseButtom(
+                    text: categoriesList[index * 2].name,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => CategoriesCoursesPage(
+                            categories: categoriesList[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  customRaiseButtom(
+                    text: categoriesList[index].name,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => CategoriesCoursesPage(
+                            categories: categoriesList[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customRaiseButtom(
-                text: 'Jave Script',
-                onTap: () {},
-              ),
-              customRaiseButtom(
-                text: 'HTMLL',
-                onTap: () {},
-              ),
-              customRaiseButtom(
-                text: 'CCNN',
-                onTap: () {},
-              ),
-            ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

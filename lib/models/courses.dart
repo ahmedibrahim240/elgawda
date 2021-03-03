@@ -3,6 +3,8 @@ class Courses {
   final String lecTitle;
   final String contant;
   final String image;
+  final String badge;
+
   final double rate;
   final double numPeopleRating;
   final double oldPrice;
@@ -10,6 +12,7 @@ class Courses {
 
   Courses({
     this.image,
+    this.badge,
     this.title,
     this.lecTitle,
     this.contant,
@@ -22,6 +25,7 @@ class Courses {
 
 List<Courses> coursesList = [
   Courses(
+    badge: 'Bestseller',
     title: 'UThe complete Digital',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
@@ -33,6 +37,7 @@ List<Courses> coursesList = [
     numPeopleRating: 197.75,
   ),
   Courses(
+    badge: 'Recent',
     title: 'The complete Digital',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
@@ -45,6 +50,7 @@ List<Courses> coursesList = [
   ),
   Courses(
     title: 'The complete Digital',
+    badge: 'Sale',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
     image:
@@ -56,6 +62,7 @@ List<Courses> coursesList = [
   ),
   Courses(
     title: 'The complete Digital',
+    badge: 'Bestseller',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
     image:
@@ -67,6 +74,7 @@ List<Courses> coursesList = [
   ),
   Courses(
     title: 'The complete Digital',
+    badge: 'Sale',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
     image:
@@ -78,6 +86,7 @@ List<Courses> coursesList = [
   ),
   Courses(
     title: 'The complete Digital',
+    badge: 'Recent',
     contant: 'Master Digital Marketing StrategySocial media email&more',
     lecTitle: 'Ryan Kroonenburg',
     image:
