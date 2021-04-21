@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
@@ -6,6 +7,7 @@ import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:html/parser.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -38,6 +40,53 @@ class LogoContainar extends StatelessWidget {
     );
   }
 }
+
+String parseHtmlString(String htmlString) {
+  final document = parse(htmlString);
+  final String parsedString = parse(document.body.text).documentElement.text;
+
+  return parsedString;
+}
+
+String gitnewPrice({String descaound, String price}) {
+  double oldPrice;
+  oldPrice = double.parse(price) - double.parse(descaound);
+  return oldPrice.toString();
+}
+
+/////////////////////////////////////
+customCachedNetworkImage({String url, BuildContext context}) {
+  try {
+    if (url == null || url == '') {
+      return Container(
+        child: Icon(
+          Icons.image,
+          color: Colors.lightBlueAccent,
+        ),
+      );
+    } else {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        child: (Uri.parse(url).isAbsolute)
+            ? CachedNetworkImage(
+                imageUrl: url,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              )
+            : Icon(
+                Icons.image,
+                color: customColor,
+              ),
+      );
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
+/////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
 Future<void> showMyDialog({BuildContext context}) async {

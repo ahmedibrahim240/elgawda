@@ -1,18 +1,21 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/categoories.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:elgawda/constants/constans.dart';
-
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AllCategories extends StatefulWidget {
+class SubCategoriesCourses extends StatefulWidget {
+  final Categories categories;
+
+  const SubCategoriesCourses({Key key, @required this.categories})
+      : super(key: key);
   @override
-  _AllCategoriesState createState() => _AllCategoriesState();
+  _SubCategoriesCoursesState createState() => _SubCategoriesCoursesState();
 }
 
-class _AllCategoriesState extends State<AllCategories> {
+class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +25,7 @@ class _AllCategoriesState extends State<AllCategories> {
         primary: false,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         itemCount: categoriesList.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
