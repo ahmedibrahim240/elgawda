@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Positioned(
             top: 200,
             child: Container(
-              height: 100,
+              height: 200,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -70,10 +70,10 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           Positioned(
-            bottom: 50,
-            left: 12,
+            bottom: 100,
+            left: 45,
             child: Container(
-              height: 250,
+              height: 300,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(

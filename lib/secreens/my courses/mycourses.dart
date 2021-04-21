@@ -56,9 +56,12 @@ class _MyCoursesState extends State<MyCourses> {
                       width: 130,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: NetworkImage(coursesList[index].image),
-                          fit: BoxFit.cover,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: customCachedNetworkImage(
+                          context: context,
+                          url: coursesList[index].image,
                         ),
                       ),
                     ),

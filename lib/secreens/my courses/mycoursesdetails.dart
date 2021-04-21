@@ -90,19 +90,33 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           (lecTapped == 0)
               ? lectureBody()
               : (lecTapped == 1)
-                  ? Container(
-                      child: Center(
-                        child: Text(
-                          widget.courses.contant,
-                          style: AppTheme.subHeading,
-                        ),
-                      ),
-                    )
+                  ? more()
                   : (lecTapped == 2)
                       ? reviewBody()
                       : ChatRome(),
         ],
       ),
+    );
+  }
+
+  more() {
+    return ListView(
+      shrinkWrap: true,
+      primary: false,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      children: [
+        Text(
+          'Description',
+          style: AppTheme.heading.copyWith(
+            color: customColor,
+            fontSize: 20,
+          ),
+        ),
+        Text(
+          widget.courses.contant,
+          style: AppTheme.subHeadingColorBlue,
+        ),
+      ],
     );
   }
 
@@ -115,63 +129,63 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Text(
-                  'Add your rate',
-                  style: AppTheme.heading.copyWith(
-                    color: customColor,
+              SmoothStarRating(
+                rating: 2.5,
+                size: 25,
+                filledIconData: Icons.star,
+                color: Colors.yellow[700],
+                halfFilledIconData: Icons.star_half,
+                borderColor: Colors.yellow[900],
+                defaultIconData: Icons.star_border,
+                starCount: 5,
+                allowHalfRating: true,
+                spacing: 2.0,
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 100,
+                child: TextFormField(
+                  expands: true,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: customColorGray),
+                      gapPadding: 10,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: customColorGray),
+                      gapPadding: 10,
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    labelStyle: AppTheme.heading.copyWith(
+                      color: customColorGray,
+                    ),
+                    labelText: 'Comment',
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                widget.courses.title,
-                style: AppTheme.heading.copyWith(),
-              ),
-              SizedBox(height: 10),
-              Center(
-                child: SmoothStarRating(
-                  rating: 2.5,
-                  size: 25,
-                  filledIconData: Icons.star,
-                  color: Colors.yellow[700],
-                  halfFilledIconData: Icons.star_half,
-                  borderColor: Colors.yellow[900],
-                  defaultIconData: Icons.star_border,
-                  starCount: 5,
-                  allowHalfRating: true,
-                  spacing: 2.0,
-                ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                decoration: conectedTextFormStyle(
-                  lableText: 'Add comment',
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: Text(
-                  'سؤال سؤال سؤال سؤال',
-                  textDirection: TextDirection.ltr,
-                  style: AppTheme.heading.copyWith(),
-                ),
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                decoration: conectedTextFormStyle(
-                  lableText: 'Answer',
-                ),
-              ),
-              SizedBox(height: 10),
-              CustomButtonWithchild(
-                color: customColor,
-                onPress: () {},
-                child: Center(
-                  child: Text(
-                    'Rating',
-                    style: AppTheme.heading.copyWith(
-                      color: Colors.white,
+              InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: customColor,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Rating',
+                        style: AppTheme.heading.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),

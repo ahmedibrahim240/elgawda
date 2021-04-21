@@ -12,7 +12,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const customColor = Color(0xfff21496C);
-const customColorGold = Color(0xfff9B792C);
+const customColorGold = Color(0xfff8e0048);
 const sliderTextColor = Color(0xfff21496C);
 const sliderTextColorcontaint = Color(0xfff21496C);
 const customColorIcon = Color(0xfff7D7D7D);
@@ -34,7 +34,7 @@ class LogoContainar extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('lib/images/logo.png'),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );
