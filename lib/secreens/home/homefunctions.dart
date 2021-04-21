@@ -1,6 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/material.dart';
 
@@ -164,37 +166,101 @@ featuerd({int index, Function onTap, @required BuildContext context}) {
 
 homePoster(BuildContext context) {
   return Container(
-    height: 150,
-    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      image: DecorationImage(
-        image: AssetImage('lib/images/aboutus.jpg'),
-        fit: BoxFit.cover,
-      ),
-    ),
-    child: Container(
-      height: 150,
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
+    child: Column(
+      children: <Widget>[
+        CarouselSlider(
+          options: CarouselOptions(
+            autoPlayInterval: Duration(seconds: 2),
+            autoPlay: true,
+            // reverse: widget.reverse,
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+            enlargeStrategy: CenterPageEnlargeStrategy.scale,
+          ),
+          items: coursesList
+              .map(
+                (items) => GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => CategoriesCoursesPageView(
+                          courses: items,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    child: Container(
+                      margin: EdgeInsets.all(5.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          child: Stack(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0)),
+                                child: Container(
+                                  width: 300,
+                                  height: 140,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                  ),
+                                  child: customCachedNetworkImage(
+                                    context: context,
+                                    url: items.image,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 300,
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                ),
+                                child: Container(
+                                  height: 100,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
+                                    ),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(200, 0, 0, 0),
+                                        Color.fromARGB(0, 0, 0, 0)
+                                      ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      SizedBox(height: 40),
+                                      Text(
+                                        items.title,
+                                        style: TextStyle(
+                                          color: customColorGold,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
         ),
-        gradient: LinearGradient(
-          colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-        ),
-      ),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: Text(
-          'Curved AppBar Exemple',
-          style: AppTheme.heading.copyWith(color: customColorbottomBar),
-        ),
-      ),
+      ],
     ),
   );
 }
