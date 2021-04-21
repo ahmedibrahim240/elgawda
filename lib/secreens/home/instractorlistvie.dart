@@ -14,7 +14,7 @@ class _InstractorListViewState extends State<InstractorListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: instructorList.length,
+      itemCount: (instructorList.length <= 3) ? instructorList.length : 3,
       shrinkWrap: true,
       primary: false,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -51,11 +51,13 @@ class _InstractorListViewState extends State<InstractorListView> {
             height: 100,
             width: 100,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(instructorList[index].image),
-                  fit: BoxFit.cover,
-                ),
-                shape: BoxShape.circle),
+              shape: BoxShape.circle,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: customCachedNetworkImage(
+                  context: context, url: instructorList[index].image),
+            ),
           ),
           SizedBox(width: 20),
           Column(

@@ -28,9 +28,12 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
             height: 160,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: NetworkImage(widget.courses.image),
-                fit: BoxFit.cover,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: customCachedNetworkImage(
+                context: context,
+                url: widget.courses.image,
               ),
             ),
           ),

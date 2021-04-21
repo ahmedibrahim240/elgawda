@@ -24,10 +24,6 @@ class _HomeState extends State<Home> {
         primary: true,
         children: [
           homePoster(context),
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: featuredSections(),
-          ),
           sectionTitle(
             title: 'Categories',
             onTap: () {
@@ -49,6 +45,10 @@ class _HomeState extends State<Home> {
                 );
               }),
           InstractorListView(),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: featuredSections(context: context),
+          ),
         ],
       ),
     );

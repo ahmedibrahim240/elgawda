@@ -31,7 +31,7 @@ Container sectionTitle({String title, Function onTap}) {
 }
 
 //////////////////////////////////////////////////////////////////////
-featuredSections() {
+featuredSections({@required BuildContext context}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -49,6 +49,7 @@ featuredSections() {
           itemBuilder: (context, index) {
             return featuerd(
               index: index,
+              context: context,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -68,7 +69,7 @@ featuredSections() {
 
 //////////////////////////////////////////////////////////////////////
 
-featuerd({int index, Function onTap}) {
+featuerd({int index, Function onTap, @required BuildContext context}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -82,11 +83,13 @@ featuerd({int index, Function onTap}) {
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage(
-                    coursesList[index].image,
-                  ),
-                  fit: BoxFit.cover),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: customCachedNetworkImage(
+                context: context,
+                url: coursesList[index].image,
+              ),
             ),
           ),
           SizedBox(
