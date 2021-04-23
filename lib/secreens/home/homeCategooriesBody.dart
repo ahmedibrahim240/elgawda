@@ -13,10 +13,10 @@ class HomeCategooriesBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 210,
+      height: 100,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: GridView.count(
-        crossAxisCount: 2,
+        crossAxisCount: 1,
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
         scrollDirection: Axis.horizontal,

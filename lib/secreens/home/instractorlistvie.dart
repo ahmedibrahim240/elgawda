@@ -14,7 +14,7 @@ class _InstractorListViewState extends State<InstractorListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: (instructorList.length <= 3) ? instructorList.length : 3,
+      itemCount: (instructorList.length <= 4) ? instructorList.length : 4,
       shrinkWrap: true,
       primary: false,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),

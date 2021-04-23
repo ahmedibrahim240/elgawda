@@ -71,7 +71,7 @@ class _CartState extends State<Cart> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 150,
+              height: 120,
               width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -164,16 +164,10 @@ class _CartState extends State<Cart> {
                     _cartList.remove(_cartList[index]);
                   });
                 },
-                child: CircleAvatar(
-                  minRadius: 12,
-                  backgroundColor: customColor,
-                  child: Center(
-                    child: Text(
-                      'x',
-                      style: AppTheme.heading
-                          .copyWith(color: Colors.white, fontSize: 15),
-                    ),
-                  ),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 25,
                 ),
               ),
             ),

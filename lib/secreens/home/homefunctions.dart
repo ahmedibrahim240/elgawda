@@ -4,6 +4,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Container sectionTitle({String title, Function onTap}) {
@@ -238,15 +239,20 @@ homePoster(BuildContext context) {
                                     ),
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      SizedBox(height: 40),
                                       Text(
                                         items.title,
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: customColorGold,
-                                          fontSize: 25,
+                                          color: Colors.white,
+                                          fontSize: 16,
                                         ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                     ],
                                   ),

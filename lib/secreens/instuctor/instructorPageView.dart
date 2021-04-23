@@ -68,8 +68,8 @@ class _InstructorPageViewState extends State<InstructorPageView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 150,
-              width: 100,
+              height: 120,
+              width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
@@ -84,14 +84,14 @@ class _InstructorPageViewState extends State<InstructorPageView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width - 165,
+                  width: MediaQuery.of(context).size.width - 185,
                   child: Text(
                     coursesList[index].title,
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 10),
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width - 165,
+                  width: MediaQuery.of(context).size.width - 185,
                   child: Text(
                     coursesList[index].contant,
                     style: AppTheme.subHeading.copyWith(
@@ -126,7 +126,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                 Align(
                   child: Row(
                     children: [
-                      SizedBox(width: 50),
+                      SizedBox(width: 30),
                       Text(
                         'Pri',
                         style: AppTheme.headingColorBlue.copyWith(

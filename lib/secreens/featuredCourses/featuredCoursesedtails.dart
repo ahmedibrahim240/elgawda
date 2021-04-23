@@ -109,20 +109,29 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
               ),
               SizedBox(height: 30),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  iconCouresBoton(
-                    icon: Icons.favorite,
-                    title: 'Add to wachlist',
+                  Expanded(
+                    flex: 1,
+                    child: iconCouresBoton(
+                      icon: Icons.favorite,
+                      title: 'Add to wachlist',
+                    ),
                   ),
-                  iconCouresBoton(
-                    icon: FontAwesomeIcons.shoppingCart,
-                    title: 'Add to Cart',
+                  Expanded(
+                    flex: 1,
+                    child: iconCouresBoton(
+                      icon: FontAwesomeIcons.shoppingCart,
+                      title: 'Add to Cart',
+                    ),
                   ),
-                  iconCouresBoton(
-                    icon: FontAwesomeIcons.solidShareSquare,
-                    title: 'Share',
+                  Expanded(
+                    flex: 1,
+                    child: iconCouresBoton(
+                      icon: FontAwesomeIcons.solidShareSquare,
+                      title: 'Share',
+                    ),
                   ),
                 ],
               ),
@@ -209,13 +218,13 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
           Icon(
             icon,
             color: customColor,
-            size: 35,
+            size: 30,
           ),
           SizedBox(height: 10),
           Text(
             title,
             style: AppTheme.headingColorBlue.copyWith(
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
         ],

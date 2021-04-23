@@ -42,48 +42,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: customColor,
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            height: height,
-            width: width,
-          ),
-          Positioned(
-            top: 200,
-            child: Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/images/logo.png'),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+      body: Center(
+        child: Container(
+          height: 400,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/logo.png'),
+              fit: BoxFit.fitHeight,
             ),
           ),
-          Positioned(
-            bottom: 100,
-            left: 45,
-            child: Container(
-              height: 300,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/images/logo2.png'),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
