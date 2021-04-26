@@ -1,10 +1,15 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+import '../../../sharedPreferences.dart';
 import '../passwordRecovery.dart';
 
 class LogIn extends StatefulWidget {
@@ -87,13 +92,15 @@ class _LogInState extends State<LogIn> {
                             children: [
                               TextFormField(
                                 style: TextStyle(color: Colors.black),
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.text,
                                 decoration: textFormInputDecoration(
-                                  Icons.phone,
-                                  getTranslated(context, 'password'),
+                                  Icons.login,
+                                  getTranslated(
+                                      context, 'email_or_phone_number'),
                                 ),
                                 validator: (val) => val.isEmpty
-                                    ? getTranslated(context, 'valid_password')
+                                    ? getTranslated(
+                                        context, 'valid_email_phone')
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
@@ -124,21 +131,19 @@ class _LogInState extends State<LogIn> {
                                   });
                                 },
                               ),
-                              Center(
-                                child: Text(
-                                  error,
-                                  style: AppTheme.headingColorBlue,
-                                ),
-                              ),
                               SizedBox(height: 10),
                               CustomButton(
-                                onPress: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                      builder: (_) => Wrapper(),
-                                    ),
-                                    (routes) => false,
-                                  );
+                                onPress: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
+
+                                    logInWithPhoneAndPassword(
+                                      phoneNummber: phoneNamber,
+                                      password: password,
+                                    );
+                                  }
                                 },
                                 text: getTranslated(context, 'sign_in'),
                               ),
@@ -249,5 +254,54 @@ class _LogInState extends State<LogIn> {
               ],
             ),
     );
+  }
+
+  logInWithPhoneAndPassword({
+    String phoneNummber,
+    String password,
+  }) async {
+    try {
+      var response = await http.post(
+        Utils.LOGIN_URL,
+        body: {
+          'email': phoneNummber,
+          'password': password,
+        },
+      );
+
+      Map<String, dynamic> map = json.decode(response.body);
+      setState(() async {
+        if (map['success'] == true) {
+          setState(() {
+            User.userToken = map['data']['api_token'].toString();
+          });
+          MySharedPreferences.saveUserSingIn(true);
+          MySharedPreferences.saveUserSkipLogIn(false);
+          MySharedPreferences.saveUserUserPassword(password);
+
+          MySharedPreferences.saveUserUserToken(
+            map['data']['api_token'].toString(),
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => Wrapper(),
+            ),
+          );
+        } else {
+          setState(() {
+            showMyDialog(context: context, message: map['message'].toString());
+
+            loading = false;
+          });
+        }
+      });
+      // Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+
+      print(e.toString());
+    }
   }
 }
