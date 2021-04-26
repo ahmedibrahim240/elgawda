@@ -51,5 +51,5 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final SETTINGES_URL = BASE_URL + "/settings";
   // ignore: non_constant_identifier_names
-  static final AboutUS_URL = BASE_URL + "/about";
+  static final AboutUS_URL = BASE_URL + "/setting/about";
 }
