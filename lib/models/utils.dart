@@ -2,37 +2,6 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
-  //Functions
-  static void showSnackBar(BuildContext context, String message) =>
-      Scaffold.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(content: Text(message)),
-        );
-  //gitUserImge
-  static userImageURL({String gender}) {
-    String imgURl;
-    switch (gender) {
-      case 'Male':
-        imgURl = 'lib/images/man.png';
-        return imgURl;
-        break;
-      case 'Female':
-        imgURl = 'lib/images/female.png';
-        return imgURl;
-        break;
-      case 'male':
-        imgURl = 'lib/images/man.png';
-        return imgURl;
-        break;
-
-      case 'female':
-        imgURl = 'lib/images/female.png';
-        return imgURl;
-        break;
-    }
-  }
-
   static bageColors({String bage}) {
     Color color;
     switch (bage) {
@@ -52,8 +21,7 @@ class Utils {
   }
 
   // ignore: non_constant_identifier_names
-  static final BASE_URL =
-      "http://technomasrsystems.com/Demos/Others/ShyBeLbn/public/api";
+  static final BASE_URL = "http://api.jawda-academy.com/api";
   // ignore: non_constant_identifier_names
   static final Consultant_URL = BASE_URL + "/consultants";
   // ignore: non_constant_identifier_names

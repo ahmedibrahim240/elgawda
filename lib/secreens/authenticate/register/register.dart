@@ -1,10 +1,16 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../../../sharedPreferences.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -16,11 +22,11 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  String phoneNumber = '';
-  String password = '';
-  String confirmPassword = '';
-  String name = '';
-  String error = '';
+  String phoneNumber;
+  String password;
+  String confirmPassword;
+  String name;
+  String email;
 
   bool obscurePassword = true;
   bool obscureconPassword = true;
@@ -118,7 +124,7 @@ class _RegisterState extends State<Register> {
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
-                                    phoneNumber = val;
+                                    email = val;
                                   });
                                 },
                                 decoration: textFormInputDecoration(
@@ -174,19 +180,21 @@ class _RegisterState extends State<Register> {
                                 },
                               ),
                               SizedBox(height: 10),
-                              Text(
-                                error,
-                                style: AppTheme.heading,
-                              ),
-                              SizedBox(height: 10),
                               CustomButton(
-                                onPress: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                      builder: (_) => Wrapper(),
-                                    ),
-                                    (routes) => false,
-                                  );
+                                onPress: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
+
+                                    registerWithPhoneAndPassword(
+                                      name: name,
+                                      password_confirmation: confirmPassword,
+                                      email: email,
+                                      mobile: phoneNumber,
+                                      password: password,
+                                    );
+                                  }
                                 },
                                 text: getTranslated(context, 'sign_up'),
                               ),
@@ -279,11 +287,79 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  registerWithPhoneAndPassword({
+    // ignore: non_constant_identifier_names
+    String mobile,
+    // ignore: non_constant_identifier_names
+    String email,
+    // ignore: non_constant_identifier_names
+    String name,
+    // ignore: non_constant_identifier_names
+    String password_confirmation,
+    // ignore: non_constant_identifier_names
+    String password,
+  }) async {
+    try {
+      // Dio dio = new Dio();
+
+      var response = await http.post(
+        Utils.REGISTER_URL,
+        // Utils.REGISTER_URL,
+        body: {
+          'name': name,
+          'email': email,
+          'mobile': mobile,
+          'password': password,
+          'password_confirmation': password_confirmation,
+        },
+      );
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print('stuates Code:${response.statusCode}');
+
+      if (map['success'] == true) {
+        setState(() {
+          User.userToken = map['data']['api_token'].toString();
+        });
+        MySharedPreferences.saveUserUserToken(
+          map['data']['api_token'].toString(),
+        );
+
+        MySharedPreferences.saveUserSingIn(true);
+        MySharedPreferences.saveUserSkipLogIn(false);
+        MySharedPreferences.saveUserUserPassword(password);
+
+        User.userLogIn = await MySharedPreferences.getUserSingIn();
+        User.userSkipLogIn = await MySharedPreferences.getUserSkipLogIn();
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+      } else {
+        setState(() {
+          loading = false;
+        });
+        showMyDialog(context: context, message: map['message'].toString());
+      }
+
+      // Navigator.pop(context);
+    } catch (e) {
+      print('Cash errrrrrrrrrrrrrrror');
+      setState(() {
+        loading = false;
+      });
+
+      print(e.toString());
+    }
+  }
+
   String validatePassord(String val) {
     if (val.isEmpty) {
-      return 'please enter a password';
+      return getTranslated(context, "valid_password");
     } else if (val.length < 6) {
-      return 'the password should be at least 6 character';
+      return getTranslated(context, "valid_password_len");
     } else {
       return null;
     }
@@ -295,9 +371,9 @@ class _RegisterState extends State<Register> {
     String confrimPassord,
   ) {
     if (val.isEmpty) {
-      return 'please enter a password';
+      return getTranslated(context, "valid_password");
     } else if (password != confirmPassword) {
-      return 'password not matching';
+      return getTranslated(context, "password_not_mat");
     } else {
       return null;
     }

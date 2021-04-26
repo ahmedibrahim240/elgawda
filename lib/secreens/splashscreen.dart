@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/models/userData.dart';
 
 import 'package:flutter/material.dart';
 
+import '../sharedPreferences.dart';
 import 'onboarding/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,8 +21,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  getDateOfUser() async {
+    User.userToken = await MySharedPreferences.getUserUserToken();
+    User.userLogIn = await MySharedPreferences.getUserSingIn();
+  }
+
   @override
   void initState() {
+    getDateOfUser();
     super.initState();
     Timer(
       Duration(seconds: 5),

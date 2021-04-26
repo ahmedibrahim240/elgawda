@@ -13,6 +13,7 @@ import 'package:elgawda/models/language.dart';
 
 // import 'components/Language.dart';
 import '../../sharedPreferences.dart';
+import '../splashscreen.dart';
 import 'components/moreUserData.dart';
 import 'components/morebody.dart';
 
@@ -89,18 +90,24 @@ class _MoreState extends State<More> {
             ),
             SizedBox(height: 30),
             lan(),
-            // MoreBody(
-            //   title: 'Change Language',
-            //   child: Language(),
-            //   onTap: () {},
-            // ),
             Divider(
               color: customColor.withOpacity(.7),
               thickness: 2,
             ),
             SizedBox(height: 50),
             CustomButton(
-              onPress: () {},
+              onPress: () {
+                setState(
+                  () {
+                    MySharedPreferences.saveUserUserToken(null);
+                  },
+                );
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (_) => SplashScreen(),
+                  ),
+                );
+              },
               text: getTranslated(context, 'log_out'),
             ),
           ],

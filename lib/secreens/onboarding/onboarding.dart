@@ -1,9 +1,12 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/onboarding/slider.dart';
 import 'package:flutter/material.dart';
+
+import '../../sharedPreferences.dart';
 
 class OnBoard extends StatefulWidget {
   @override
@@ -11,18 +14,24 @@ class OnBoard extends StatefulWidget {
 }
 
 class _OnBoardState extends State<OnBoard> {
+  getDateOfUser() async {
+    User.userToken = await MySharedPreferences.getUserUserToken();
+    User.userLogIn = await MySharedPreferences.getUserSingIn();
+  }
+
   @override
   void initState() {
+    getDateOfUser();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (User.userLogIn == true) {
-    //   return Authenticate();
-    // } else {
-    return OnBoarding();
-    // }
+    if (User.userLogIn == true) {
+      return Authenticate();
+    } else {
+      return OnBoarding();
+    }
   }
 }
 
@@ -131,50 +140,7 @@ class SliderContoler extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            //  (_currentPage == (_pages.length - 1))
-            //     ? MainAxisAlignment.center
-            //     : MainAxisAlignment.spaceBetween,
             children: [
-              // InkWell(
-              //   onTap: () {
-              //     if (_currentPage == (_pages.length - 1)) {
-              //       Navigator.of(context).push(
-              //         MaterialPageRoute(
-              //           builder: (_) => Authenticate(),
-              //         ),
-              //       );
-              //     } else {
-              //       _controller.nextPage(
-              //         duration: Duration(milliseconds: 600),
-              //         curve: Curves.easeInOutQuint,
-              //       );
-              //     }
-              //   },
-              //   child: AnimatedContainer(
-              //     duration: Duration(milliseconds: 300),
-              //     height: 40,
-              //     width: 100,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(5),
-              //       color: customColor,
-              //     ),
-              //     child: (_currentPage == (_pages.length - 1))
-              //         ? Center(
-              //             child: Text(
-              //               'start',
-              //               style: AppTheme.heading
-              //                   .copyWith(color: Colors.white),
-              //             ),
-              //           )
-              //         : Center(
-              //             child: Text(
-              //               'next',
-              //               style: AppTheme.heading
-              //                   .copyWith(color: Colors.white),
-              //             ),
-              //           ),
-              //   ),
-              // ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).pushAndRemoveUntil(

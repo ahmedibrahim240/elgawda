@@ -57,6 +57,10 @@
   "valid_email_phone"                               :"Please enter a valid Phone Namber Or Emaile",
   "valid_phone"                                     :"Please enter a valid Phone Namber",
   "valid_password"                                  :"Please enter a password",
+  "password_not_mat"                                : "Password not matching",
+
+  "valid_password_len"                              :"The password should be at least 6 character",
+
   "valid_name"                                      :"Please enter a name",
   "valid_email"                                     :"Please enter a email"
  

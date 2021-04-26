@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/userData.dart';
-import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
@@ -20,6 +19,10 @@ const customColorIcon = Color(0xfff7D7D7D);
 const customColorDivider = Color(0xfffe1e1e1);
 const customColorGray = Color(0xfff7d7d7d);
 const customColorbottomBar = Color(0xfffDBD8D2);
+const String emailEror = 'الرجاء إدخال بريد إلكتروني';
+const String conPasswordEror = 'الرجاء إدخال بريد إلكتروني';
+const String nameEror = 'الرجاء إدخال الاسم';
+const String phoneEror = 'الرجاء إدخال رقم الهاتف';
 
 /////////////////////////////////////////////////////////////
 class LogoContainar extends StatelessWidget {
@@ -100,7 +103,7 @@ customCachedNetworkImage({String url, BuildContext context}) {
 /////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
-Future<void> showMyDialog({BuildContext context}) async {
+Future<void> showMyDialog({BuildContext context, String message}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -109,11 +112,17 @@ Future<void> showMyDialog({BuildContext context}) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(
-                'you Shoud be login frist',
-                style: AppTheme.heading.copyWith(
-                  color: customColor,
+              Center(
+                child: Text(
+                  'رساله اداريه',
+                  style: AppTheme.heading.copyWith(
+                    color: customColor,
+                  ),
                 ),
+              ),
+              Text(
+                message,
+                style: AppTheme.subHeading,
               ),
             ],
           ),
@@ -121,32 +130,13 @@ Future<void> showMyDialog({BuildContext context}) async {
         actions: <Widget>[
           TextButton(
             child: Text(
-              'Cancel',
+              'تم',
               style: AppTheme.heading.copyWith(
                 color: customColor,
               ),
             ),
             onPressed: () {
               Navigator.of(context).pop();
-            },
-          ),
-          RaisedButton(
-            color: customColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35),
-            ),
-            child: Text(
-              'LogIn',
-              style: AppTheme.heading.copyWith(
-                color: Colors.white,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (_) => Authenticate(),
-                ),
-              );
             },
           ),
         ],
