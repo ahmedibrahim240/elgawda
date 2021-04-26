@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/models/featuredCoursesApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,46 +39,72 @@ Container sectionTitle(
 
 //////////////////////////////////////////////////////////////////////
 featuredSections({@required BuildContext context}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          getTranslated(context, 'featured'),
-          style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
-        ),
-      ),
-      SizedBox(height: 10),
-      Container(
-        height: 300,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: coursesList.length,
-          itemBuilder: (context, index) {
-            return featuerd(
-              index: index,
-              context: context,
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => FeaturedCoursesedtails(
-                      courses: coursesList[index],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ),
-    ],
+  return FutureBuilder(
+    future: FeaturedCoursesApi.fetchFeaturedCourses(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        print(snapshot.data);
+        return (snapshot.data == null || snapshot.data.isEmpty)
+            ? Container()
+            : ListView.builder(
+                itemCount:
+                    (snapshot.data.length <= 4) ? snapshot.data.length : 4,
+                shrinkWrap: true,
+                primary: false,
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          getTranslated(context, 'featured'),
+                          style:
+                              AppTheme.headingColorBlue.copyWith(fontSize: 16),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 300,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return featuerd(
+                              index: index,
+                              coures: snapshot.data[index],
+                              context: context,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => FeaturedCoursesedtails(
+                                      courses: coursesList[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
   );
 }
 
 //////////////////////////////////////////////////////////////////////
 
-featuerd({int index, Function onTap, @required BuildContext context}) {
+featuerd(
+    {int index,
+    Function onTap,
+    @required BuildContext context,
+    CouresesModels coures}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -95,47 +123,49 @@ featuerd({int index, Function onTap, @required BuildContext context}) {
               borderRadius: BorderRadius.circular(10),
               child: customCachedNetworkImage(
                 context: context,
-                url: coursesList[index].image,
+                url: coures.image_path,
               ),
             ),
           ),
           SizedBox(
             width: 200,
             child: Text(
-              coursesList[index].title,
+              (coures.name) ?? '',
               style: AppTheme.headingColorBlue.copyWith(fontSize: 12),
             ),
           ),
           Text(
-            coursesList[index].lecTitle,
+            (coures.instructorName) ?? '',
             style: AppTheme.subHeading.copyWith(
               fontSize: 10,
               color: customColorGold,
             ),
           ),
-          Row(
-            children: [
-              RatingStar(
-                rating: coursesList[index].rate,
-              ),
-              SizedBox(width: 5),
-              Text(
-                '${coursesList[index].rate}',
-                style: AppTheme.subHeading.copyWith(
-                  fontSize: 10,
-                  color: customColorGold,
+          (coures.rate == '0')
+              ? Container()
+              : Row(
+                  children: [
+                    RatingStar(
+                      rating: double.parse(coures.rate),
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      '${coures.rate}',
+                      style: AppTheme.subHeading.copyWith(
+                        fontSize: 10,
+                        color: customColorGold,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      '(${coures.rate_count})',
+                      style: AppTheme.subHeading.copyWith(
+                        fontSize: 10,
+                        color: customColorGold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(width: 5),
-              Text(
-                '(${coursesList[index].numPeopleRating})',
-                style: AppTheme.subHeading.copyWith(
-                  fontSize: 10,
-                  color: customColorGold,
-                ),
-              ),
-            ],
-          ),
           Row(
             children: [
               Text(
@@ -145,20 +175,31 @@ featuerd({int index, Function onTap, @required BuildContext context}) {
                 ),
               ),
               SizedBox(width: 10),
-              Text(
-                '${coursesList[index].newPrice}\$',
-                style: AppTheme.headingColorBlue.copyWith(
-                  fontSize: 12,
-                ),
-              ),
+              (coures.discount == null || coures.discount == '')
+                  ? Container()
+                  : Text(
+                      newPrice(
+                        price: double.parse(coures.price),
+                        dis: double.parse(
+                          coures.discount,
+                        ),
+                      ).toString(),
+                      style: AppTheme.headingColorBlue.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
               SizedBox(width: 5),
               Text(
-                '${coursesList[index].oldPrice}\$',
-                style: AppTheme.headingColorBlue.copyWith(
-                  fontSize: 12,
-                  decoration: TextDecoration.lineThrough,
-                  color: customColor.withOpacity(.5),
-                ),
+                '${coures.price}\$',
+                style: (coures.discount == null || coures.discount == '')
+                    ? AppTheme.headingColorBlue.copyWith(
+                        fontSize: 12,
+                        decoration: TextDecoration.lineThrough,
+                        color: customColor.withOpacity(.5),
+                      )
+                    : AppTheme.headingColorBlue.copyWith(
+                        fontSize: 12,
+                      ),
               ),
             ],
           ),

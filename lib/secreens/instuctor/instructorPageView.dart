@@ -108,29 +108,31 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    RatingStar(
-                      rating: double.parse(course.rate),
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      '${course.rate}',
-                      style: AppTheme.subHeading.copyWith(
-                        fontSize: 10,
-                        color: customColorGold,
+                (course.rate == '0')
+                    ? Container()
+                    : Row(
+                        children: [
+                          RatingStar(
+                            rating: double.parse(course.rate),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${course.rate}',
+                            style: AppTheme.subHeading.copyWith(
+                              fontSize: 10,
+                              color: customColorGold,
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '(${course.rate_count})',
+                            style: AppTheme.subHeading.copyWith(
+                              fontSize: 10,
+                              color: customColorGold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      '(${course.rate_count})',
-                      style: AppTheme.subHeading.copyWith(
-                        fontSize: 10,
-                        color: customColorGold,
-                      ),
-                    ),
-                  ],
-                ),
                 Align(
                   child: Row(
                     children: [

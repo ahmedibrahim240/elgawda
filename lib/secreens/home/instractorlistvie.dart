@@ -1,7 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/InstructorApi.dart';
-import 'package:elgawda/models/instructor.dart';
 import 'package:elgawda/secreens/instuctor/instructorPageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
