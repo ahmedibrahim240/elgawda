@@ -19,10 +19,6 @@ const customColorIcon = Color(0xfff7D7D7D);
 const customColorDivider = Color(0xfffe1e1e1);
 const customColorGray = Color(0xfff7d7d7d);
 const customColorbottomBar = Color(0xfffDBD8D2);
-const String emailEror = 'الرجاء إدخال بريد إلكتروني';
-const String conPasswordEror = 'الرجاء إدخال بريد إلكتروني';
-const String nameEror = 'الرجاء إدخال الاسم';
-const String phoneEror = 'الرجاء إدخال رقم الهاتف';
 
 /////////////////////////////////////////////////////////////
 class LogoContainar extends StatelessWidget {
@@ -91,6 +87,7 @@ customCachedNetworkImage({String url, BuildContext context}) {
               )
             : Icon(
                 Icons.image,
+                size: 100,
                 color: customColor,
               ),
       );
