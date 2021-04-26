@@ -4,6 +4,7 @@ import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
+import 'package:elgawda/services/UserData.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -248,6 +249,11 @@ void showSettingsPanel(
 }
 
 /////////////////////////////////////////////////////////////////////////////////
+newPrice({double price, double dis}) {
+  return price - dis;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
 homeAppBar({BuildContext context, Widget title}) {
   return AppBar(
     toolbarHeight: 80,
@@ -259,16 +265,35 @@ homeAppBar({BuildContext context, Widget title}) {
           child: EditProfile(),
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Hero(
-          tag: 'UserImage',
-          child: CircleAvatar(
-            maxRadius: 50,
-            backgroundColor: customColor,
-            backgroundImage: AssetImage('lib/images/user.jpg'),
-          ),
-        ),
+      child: StreamBuilder<Users>(
+        stream: DatabaseServices(context: context, userToken: User.userToken)
+            .userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Users users = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Hero(
+                tag: 'UserImage',
+                child: CircleAvatar(
+                  maxRadius: 50,
+                  backgroundColor: customColor,
+                  backgroundImage: (users.image != '' || users.image != null)
+                      ? NetworkImage(users.image)
+                      : AssetImage(
+                          'lib/images/man.png',
+                        ),
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     ),
     actions: [

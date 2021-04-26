@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/instructor.dart';
 import 'package:elgawda/secreens/instuctor/instructorPageView.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,36 +14,50 @@ class InstractorListView extends StatefulWidget {
 class _InstractorListViewState extends State<InstractorListView> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: (instructorList.length <= 4) ? instructorList.length : 4,
-      shrinkWrap: true,
-      primary: false,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            insructorCard(
-                index: index,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => InstructorPageView(
-                        instructor: instructorList[index],
-                      ),
-                    ),
-                  );
-                }),
-            Divider(
-              color: customColor.withOpacity(.5),
-              thickness: 2,
-            ),
-          ],
-        );
+    return FutureBuilder(
+      future: InstructorApi.fetchInstructor(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot.data);
+          return (snapshot.data == null || snapshot.data.isEmpty)
+              ? Container()
+              : ListView.builder(
+                  itemCount:
+                      (snapshot.data.length <= 4) ? snapshot.data.length : 4,
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        insructorCard(
+                            index: index,
+                            instructor: snapshot.data[index],
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => InstructorPageView(
+                                    instructor: snapshot.data[index],
+                                  ),
+                                ),
+                              );
+                            }),
+                        Divider(
+                          color: customColor.withOpacity(.5),
+                          thickness: 2,
+                        ),
+                      ],
+                    );
+                  },
+                );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
       },
     );
   }
 
-  insructorCard({int index, Function onTap}) {
+  insructorCard({int index, Function onTap, InstructorModels instructor}) {
     return InkWell(
       onTap: onTap,
       child: Row(
@@ -56,7 +71,7 @@ class _InstractorListViewState extends State<InstractorListView> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: customCachedNetworkImage(
-                  context: context, url: instructorList[index].image),
+                  context: context, url: instructor.image_path),
             ),
           ),
           SizedBox(width: 20),
@@ -64,17 +79,31 @@ class _InstractorListViewState extends State<InstractorListView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                instructorList[index].insName,
-                style: AppTheme.headingColorBlue,
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 200,
+                height: 50,
+                child: Text(
+                  (instructor.name) ?? '',
+                  style: AppTheme.headingColorBlue.copyWith(fontSize: 12),
+                ),
               ),
-              Text(
-                instructorList[index].insWork,
-                style: AppTheme.subHeadingColorBlue,
-              ),
-              Text(
-                instructorList[index].insDevoplTitlle,
-                style: AppTheme.subHeadingColorBlue,
+              (instructor.bio == null || instructor.bio == '')
+                  ? Container()
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width - 200,
+                      height: 50,
+                      child: Text(
+                        (instructor.bio) ?? '',
+                        style: AppTheme.subHeadingColorBlue,
+                      ),
+                    ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 200,
+                height: 50,
+                child: Text(
+                  (instructor.job) ?? '',
+                  style: AppTheme.subHeadingColorBlue,
+                ),
               ),
             ],
           ),

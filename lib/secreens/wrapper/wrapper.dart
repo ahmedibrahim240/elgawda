@@ -32,6 +32,12 @@ class _WrapperState extends State<Wrapper> {
   }
 
   @override
+  void initState() {
+    getDateOfUser();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],

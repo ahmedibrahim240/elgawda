@@ -39,7 +39,7 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final CHANGEPASSWORD_URL = BASE_URL + "/clients/change_password";
   // ignore: non_constant_identifier_names
-  static final CHECKOUT_URL = BASE_URL + "/visits";
+  static final HOME_URL = BASE_URL + "/home";
   // ignore: non_constant_identifier_names
   static final VISITS_URL = BASE_URL + "/visits";
   // ignore: non_constant_identifier_names

@@ -1,13 +1,12 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
-import 'package:elgawda/models/courses.dart';
-import 'package:elgawda/models/instructor.dart';
+import 'package:elgawda/models/InstructorApi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InstructorPageView extends StatefulWidget {
-  final Instructor instructor;
+  final InstructorModels instructor;
 
   const InstructorPageView({Key key, @required this.instructor})
       : super(key: key);
@@ -27,30 +26,34 @@ class _InstructorPageViewState extends State<InstructorPageView> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         children: [
           instructorImage(),
-          Text(
-            getTranslated(context, 'bio'),
-            style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
-          ),
+          (widget.instructor.bio == '' || widget.instructor.bio == null)
+              ? Container()
+              : Text(
+                  getTranslated(context, 'bio'),
+                  style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+                ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
-              widget.instructor.bio,
+              (widget.instructor.bio) ?? '',
               style: AppTheme.subHeadingColorBlue.copyWith(fontSize: 14),
             ),
           ),
-          Text(
-                        getTranslated(context, 'Training_courses'),
-
-            style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
-          ),
+          (widget.instructor.courses.isEmpty)
+              ? Container()
+              : Text(
+                  getTranslated(context, 'Training_courses'),
+                  style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+                ),
           ListView.builder(
             shrinkWrap: true,
             primary: false,
-            itemCount: coursesList.length,
+            itemCount: widget.instructor.courses.length,
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             itemBuilder: (context, index) {
               return trainingCourses(
                 index: index,
+                course: widget.instructor.courses[index],
                 onTap: () {},
               );
             },
@@ -60,7 +63,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
     );
   }
 
-  trainingCourses({int index, Function onTap}) {
+  trainingCourses({int index, Function onTap, CouresesModels course}) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -74,11 +77,13 @@ class _InstructorPageViewState extends State<InstructorPageView> {
               width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                    image: NetworkImage(
-                      coursesList[index].image,
-                    ),
-                    fit: BoxFit.cover),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: customCachedNetworkImage(
+                  context: context,
+                  url: course.image_path,
+                ),
               ),
             ),
             SizedBox(width: 5),
@@ -88,14 +93,15 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 185,
                   child: Text(
-                    coursesList[index].title,
+                    course.name,
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 10),
                   ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 185,
+                  height: 30,
                   child: Text(
-                    coursesList[index].contant,
+                    parseHtmlString(course.description),
                     style: AppTheme.subHeading.copyWith(
                       fontSize: 9,
                       color: customColorGold,
@@ -105,11 +111,11 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                 Row(
                   children: [
                     RatingStar(
-                      rating: coursesList[index].rate,
+                      rating: double.parse(course.rate),
                     ),
                     SizedBox(width: 5),
                     Text(
-                      '${coursesList[index].rate}',
+                      '${course.rate}',
                       style: AppTheme.subHeading.copyWith(
                         fontSize: 10,
                         color: customColorGold,
@@ -117,7 +123,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      '(${coursesList[index].numPeopleRating})',
+                      '(${course.rate_count})',
                       style: AppTheme.subHeading.copyWith(
                         fontSize: 10,
                         color: customColorGold,
@@ -136,20 +142,32 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                         ),
                       ),
                       SizedBox(width: 10),
-                      Text(
-                        '${coursesList[index].newPrice}\$',
-                        style: AppTheme.headingColorBlue.copyWith(
-                          fontSize: 12,
-                        ),
-                      ),
+                      (course.discount == null || course.discount == '')
+                          ? Container()
+                          : Text(
+                              newPrice(
+                                price: double.parse(course.price),
+                                dis: double.parse(
+                                  course.discount,
+                                ),
+                              ).toString(),
+                              style: AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
                       SizedBox(width: 5),
                       Text(
-                        '${coursesList[index].oldPrice}\$',
-                        style: AppTheme.headingColorBlue.copyWith(
-                          fontSize: 12,
-                          decoration: TextDecoration.lineThrough,
-                          color: customColor.withOpacity(.5),
-                        ),
+                        '${course.price}\$',
+                        style:
+                            (course.discount == null || course.discount == '')
+                                ? AppTheme.headingColorBlue.copyWith(
+                                    fontSize: 12,
+                                    decoration: TextDecoration.lineThrough,
+                                    color: customColor.withOpacity(.5),
+                                  )
+                                : AppTheme.headingColorBlue.copyWith(
+                                    fontSize: 12,
+                                  ),
                       ),
                     ],
                   ),
@@ -169,12 +187,14 @@ class _InstructorPageViewState extends State<InstructorPageView> {
         Container(
           height: 150,
           width: 150,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(widget.instructor.image),
-                fit: BoxFit.cover,
-              ),
-              shape: BoxShape.circle),
+          decoration: BoxDecoration(shape: BoxShape.circle),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: customCachedNetworkImage(
+              context: context,
+              url: widget.instructor.image_path,
+            ),
+          ),
         ),
         SizedBox(width: 20),
         Column(
@@ -182,11 +202,11 @@ class _InstructorPageViewState extends State<InstructorPageView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.instructor.insName,
+              widget.instructor.name,
               style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
             ),
             Text(
-              widget.instructor.insWork,
+              widget.instructor.job,
               style: AppTheme.subHeadingColorBlue.copyWith(fontSize: 14),
             ),
           ],
