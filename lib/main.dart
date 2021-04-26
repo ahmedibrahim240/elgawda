@@ -2,43 +2,44 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:elgawda/routes.dart';s
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'constants/constans.dart';
+import 'localization/app_localization.dart';
+import 'localization/localization_constants.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  // const MyApp({Key key}) : super(key: key);
-  // static void setLocale(BuildContext context, Locale newLocale) {
-  //   _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-  //   state.setLocale(newLocale);
-  // }
+  const MyApp({Key key}) : super(key: key);
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    state.setLocale(newLocale);
+  }
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  // Locale _locale;
-  // setLocale(Locale locale) async {
-  //   setState(() {
-  //     _locale = locale;
-  //     // DBHelper.saveAppLang(locale.toString());
-  //   });
-  //   print('Applan:' + locale.toString());
-  // }
+  Locale _locale;
+  setLocale(Locale locale) async {
+    setState(() {
+      _locale = locale;
+    });
+    print('Applan:' + locale.toString());
+  }
 
-  // @override
-  // void didChangeDependencies() {
-  //   getLocale().then((locale) {
-  //     setState(() {
-  //       this._locale = locale;
-  //     });
-  //   });
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    getLocale().then((locale) {
+      setState(() {
+        this._locale = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,27 @@ class _MyAppState extends State<MyApp> {
         accentColor: customColor,
         iconTheme: IconThemeData(color: customColor),
       ),
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('ar', 'EG'),
+      ],
+      locale: _locale,
+      localizationsDelegates: [
+        AppLocalization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        for (var locale in supportedLocales) {
+          if (locale.languageCode == deviceLocale.languageCode &&
+              locale.countryCode == deviceLocale.countryCode) {
+            return deviceLocale;
+          }
+        }
+
+        return supportedLocales.first;
+      },
       home: SplashScreen(),
     );
 

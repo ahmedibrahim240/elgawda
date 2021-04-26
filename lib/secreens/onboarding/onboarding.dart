@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/onboarding/slider.dart';
 import 'package:flutter/material.dart';
@@ -196,8 +197,8 @@ class SliderContoler extends StatelessWidget {
                     children: [
                       Text(
                         (_currentPage == (_pages.length - 1))
-                            ? 'Start'
-                            : 'Skip',
+                            ? getTranslated(context, 'start')
+                            : getTranslated(context, 'skip'),
                         style: AppTheme.heading.copyWith(color: Colors.white),
                       ),
                       (_currentPage == (_pages.length - 1))

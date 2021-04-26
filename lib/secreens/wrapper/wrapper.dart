@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/home/home.dart';
 import 'package:elgawda/secreens/more/more.dart';
 import 'package:elgawda/secreens/my%20courses/mycourses.dart';
@@ -36,21 +37,21 @@ class _WrapperState extends State<Wrapper> {
         },
         items: [
           BottomNavigationBarItem(
-            label: 'Home',
+            label: getTranslated(context, 'home'),
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            label: 'My Courses',
+            label: getTranslated(context, 'my_courses'),
             icon: Icon(
               FontAwesomeIcons.youtube,
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Wishlist',
+            label: getTranslated(context, 'wishlist'),
             icon: Icon(Icons.favorite),
           ),
           BottomNavigationBarItem(
-            label: 'More',
+            label: getTranslated(context, 'more'),
             icon: Icon(Icons.more_horiz),
           ),
         ],

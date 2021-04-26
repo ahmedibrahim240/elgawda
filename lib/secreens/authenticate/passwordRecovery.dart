@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/authenticate/register/confirmRegister.dart';
 import 'package:flutter/material.dart';
 
@@ -30,14 +31,14 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
             LogoContainar(),
             SizedBox(height: 40),
             Text(
-              'Password Recovery',
+              getTranslated(context, 'password_recovery'),
               style: AppTheme.headingColorBlue.copyWith(
                 fontSize: 15,
                 color: customColor,
               ),
             ),
             Text(
-              "Please enter a valid email",
+              getTranslated(context, 'valid_email'),
               style: AppTheme.subHeading.copyWith(),
             ),
             SizedBox(height: 40),
@@ -52,17 +53,18 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(color: Colors.black),
-                      validator: (val) =>
-                          val.isEmpty ? 'please enter your phone email' : null,
+                      validator: (val) => val.isEmpty
+                          ? getTranslated(context, 'valid_email')
+                          : null,
                       onChanged: (val) {},
                       decoration: textFormInputDecoration(
                         Icons.email,
-                        "Email",
+                        getTranslated(context, 'email'),
                       ),
                     ),
                     SizedBox(height: 30),
                     CustomButton(
-                      text: 'send',
+                      text: getTranslated(context, 'send'),
                       onPress: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'components/NotificationsContant.dart';
 
@@ -15,7 +16,10 @@ class _NotificatiosState extends State<Notificatios> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Notifications')),
+      appBar: AppBar(
+          title: Text(
+        getTranslated(context, 'notifications'),
+      )),
       body: ListView(
         shrinkWrap: true,
         primary: true,

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
@@ -52,6 +53,16 @@ String gitnewPrice({String descaound, String price}) {
   double oldPrice;
   oldPrice = double.parse(price) - double.parse(descaound);
   return oldPrice.toString();
+}
+
+apiLang() {
+  switch (User.appLang) {
+    case 'ar_EG':
+      return 'ar';
+      break;
+    default:
+      return 'en';
+  }
 }
 
 /////////////////////////////////////

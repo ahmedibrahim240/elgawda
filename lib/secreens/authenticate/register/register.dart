@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +50,14 @@ class _RegisterState extends State<Register> {
                 Row(
                   children: [
                     Text(
-                      'Create ',
+                      getTranslated(context, 'create'),
                       style: AppTheme.heading.copyWith(
                         color: customColorGold,
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      'an Account',
+                      getTranslated(context, 'an_account'),
                       style: AppTheme.heading.copyWith(
                         fontSize: 20,
                       ),
@@ -79,16 +80,16 @@ class _RegisterState extends State<Register> {
                               TextFormField(
                                 style: TextStyle(color: Colors.black),
                                 validator: (val) => val.isEmpty
-                                    ? 'please enter your phone name'
+                                    ? getTranslated(context, 'valid_name')
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
-                                    phoneNumber = val;
+                                    name = val;
                                   });
                                 },
                                 decoration: textFormInputDecoration(
                                   Icons.person,
-                                  "Full Name",
+                                  getTranslated(context, 'full_name'),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -96,7 +97,7 @@ class _RegisterState extends State<Register> {
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(color: Colors.black),
                                 validator: (val) => val.isEmpty
-                                    ? 'please enter your phone number'
+                                    ? getTranslated(context, 'valid_phone')
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
@@ -105,7 +106,7 @@ class _RegisterState extends State<Register> {
                                 },
                                 decoration: textFormInputDecoration(
                                   Icons.phone,
-                                  "Phone number",
+                                  getTranslated(context, 'phone_numer'),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -113,7 +114,7 @@ class _RegisterState extends State<Register> {
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(color: Colors.black),
                                 validator: (val) => val.isEmpty
-                                    ? 'please enter your phone email'
+                                    ? getTranslated(context, 'valid_email')
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
@@ -122,7 +123,7 @@ class _RegisterState extends State<Register> {
                                 },
                                 decoration: textFormInputDecoration(
                                   Icons.email,
-                                  "Email",
+                                  getTranslated(context, 'email'),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -130,7 +131,7 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(color: Colors.black),
                                 decoration: textFormInputDecorationForPassword(
                                   Icons.visibility_off,
-                                  'password',
+                                  getTranslated(context, 'password'),
                                   () {
                                     setState(() {
                                       obscurePassword = !obscurePassword;
@@ -151,7 +152,8 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(color: Colors.black),
                                 decoration: textFormInputDecorationForPassword(
                                   Icons.visibility_off,
-                                  "Confirm the password",
+                                  getTranslated(
+                                      context, 'confirm_the_password'),
                                   () {
                                     setState(() {
                                       obscureconPassword = !obscureconPassword;
@@ -186,7 +188,7 @@ class _RegisterState extends State<Register> {
                                     (routes) => false,
                                   );
                                 },
-                                text: 'Sign Up',
+                                text: getTranslated(context, 'sign_up'),
                               ),
                               SizedBox(height: 10),
                               Row(
@@ -200,7 +202,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    'or',
+                                    getTranslated(context, 'or'),
                                     style: AppTheme.headingColorBlue.copyWith(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 16,
@@ -223,16 +225,18 @@ class _RegisterState extends State<Register> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Already have an account?",
+                                        getTranslated(
+                                            context, 'already_have_an_account'),
                                         style: AppTheme.subHeadingColorBlue
                                             .copyWith(
                                           fontSize: 12,
                                         ),
                                       ),
+                                      Text(' '),
                                       InkWell(
                                         onTap: () => widget.toggleView(),
                                         child: Text(
-                                          "Sign In!",
+                                          getTranslated(context, 'sign_in'),
                                           style: AppTheme.headingColorBlue
                                               .copyWith(
                                             fontWeight: FontWeight.w900,

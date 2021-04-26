@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,14 +47,15 @@ class _LogInState extends State<LogIn> {
                 Row(
                   children: [
                     Text(
-                      'Welcome ',
+                      getTranslated(context, 'Welcome'),
                       style: AppTheme.heading.copyWith(
                         color: customColorGold,
                         fontSize: 20,
                       ),
                     ),
+                    Text(' '),
                     Text(
-                      'Back',
+                      getTranslated(context, 'Back'),
                       style: AppTheme.heading.copyWith(
                         fontSize: 20,
                       ),
@@ -88,10 +90,10 @@ class _LogInState extends State<LogIn> {
                                 keyboardType: TextInputType.phone,
                                 decoration: textFormInputDecoration(
                                   Icons.phone,
-                                  'Email Or Phome Number',
+                                  getTranslated(context, 'password'),
                                 ),
                                 validator: (val) => val.isEmpty
-                                    ? 'please enter an phoneNamber'
+                                    ? getTranslated(context, 'valid_password')
                                     : null,
                                 onChanged: (val) {
                                   setState(() {
@@ -104,7 +106,7 @@ class _LogInState extends State<LogIn> {
                                 style: TextStyle(color: Colors.black),
                                 decoration: textFormInputDecorationForPassword(
                                   Icons.visibility_off,
-                                  'password',
+                                  getTranslated(context, 'password'),
                                   () {
                                     setState(() {
                                       obscurePassword = !obscurePassword;
@@ -113,7 +115,7 @@ class _LogInState extends State<LogIn> {
                                   obscurePassword,
                                 ),
                                 validator: (val) => val.isEmpty
-                                    ? 'please enter a password'
+                                    ? getTranslated(context, 'valid_password')
                                     : null,
                                 obscureText: obscurePassword,
                                 onChanged: (val) {
@@ -138,7 +140,7 @@ class _LogInState extends State<LogIn> {
                                     (routes) => false,
                                   );
                                 },
-                                text: 'Sign In',
+                                text: getTranslated(context, 'sign_in'),
                               ),
                               SizedBox(height: 12),
                               InkWell(
@@ -154,12 +156,7 @@ class _LogInState extends State<LogIn> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'forget ',
-                                      style:
-                                          AppTheme.headingColorBlue.copyWith(),
-                                    ),
-                                    Text(
-                                      'password?',
+                                      getTranslated(context, 'forget_password'),
                                       style:
                                           AppTheme.headingColorBlue.copyWith(),
                                     ),
@@ -178,7 +175,7 @@ class _LogInState extends State<LogIn> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    'or',
+                                    getTranslated(context, 'or'),
                                     style: AppTheme.headingColorBlue.copyWith(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 16,
@@ -201,7 +198,8 @@ class _LogInState extends State<LogIn> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Don't have an account?",
+                                        getTranslated(
+                                            context, "don't_have_an_account"),
                                         style: AppTheme.subHeadingColorBlue
                                             .copyWith(
                                           fontSize: 12,
@@ -210,7 +208,7 @@ class _LogInState extends State<LogIn> {
                                       InkWell(
                                         onTap: () => widget.toggleView(),
                                         child: Text(
-                                          "Sign Up!",
+                                          getTranslated(context, "sign_up"),
                                           style: AppTheme.headingColorBlue
                                               .copyWith(
                                             fontWeight: FontWeight.w900,

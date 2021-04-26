@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/models/instructor.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
         children: [
           instructorImage(),
           Text(
-            'BIO',
+            getTranslated(context, 'bio'),
             style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
           ),
           Padding(
@@ -38,7 +39,8 @@ class _InstructorPageViewState extends State<InstructorPageView> {
             ),
           ),
           Text(
-            'Training courses',
+                        getTranslated(context, 'Training_courses'),
+
             style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
           ),
           ListView.builder(

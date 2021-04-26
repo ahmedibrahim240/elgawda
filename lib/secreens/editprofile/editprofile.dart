@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _EditProfileState extends State<EditProfile> {
           children: [
             Center(
               child: Text(
-                'Edit Profile',
+                getTranslated(context, 'edit_profile'),
                 style: AppTheme.headingColorBlue.copyWith(fontSize: 15),
               ),
             ),
@@ -55,7 +56,7 @@ class _EditProfileState extends State<EditProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Name',
+                    getTranslated(context, 'name'),
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 15),
                   ),
                   TextFormField(
@@ -64,7 +65,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Phone Number',
+                    getTranslated(context, 'phone_numer'),
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 15),
                   ),
                   TextFormField(
@@ -73,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Email',
+                    getTranslated(context, 'email'),
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 15),
                   ),
                   TextFormField(
@@ -82,7 +83,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Passord',
+                    getTranslated(context, 'password'),
                     style: AppTheme.headingColorBlue.copyWith(fontSize: 15),
                   ),
                   TextFormField(
@@ -102,7 +103,7 @@ class _EditProfileState extends State<EditProfile> {
                   Center(
                     child: CustomButton(
                       onPress: () {},
-                      text: 'Save',
+                      text: getTranslated(context, 'save'),
                     ),
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,9 @@ class _WishlistState extends State<Wishlist> {
               color: customColor,
             ),
             SizedBox(width: 20),
-            Text('WichList'),
+            Text(
+              getTranslated(context, 'wishlist'),
+            ),
           ],
         ),
       ),

@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Container sectionTitle({String title, Function onTap}) {
+Container sectionTitle(
+    {String title, Function onTap, @required BuildContext context}) {
   return Container(
     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
     child: Row(
@@ -21,7 +23,7 @@ Container sectionTitle({String title, Function onTap}) {
         TextButton(
           onPressed: onTap,
           child: Text(
-            'View All',
+            getTranslated(context, 'view_all'),
             style: AppTheme.subHeading.copyWith(
               fontSize: 12,
               color: customColorGold,
@@ -38,13 +40,15 @@ featuredSections({@required BuildContext context}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        'Featured',
-        style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          getTranslated(context, 'featured'),
+          style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+        ),
       ),
       SizedBox(height: 10),
       Container(
-        margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
         height: 300,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,

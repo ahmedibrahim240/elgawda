@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Confirm",
+                      getTranslated(context, 'Confrim'),
                       style: AppTheme.heading.copyWith(
                         color: customColor,
                         fontSize: 20,
@@ -55,7 +56,8 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                     SizedBox(height: 40),
                     Center(
                       child: Text(
-                        "A code has been sent to an email" + '\n text@text.com',
+                        getTranslated(context, 'code_sent') +
+                            '\n text@text.com',
                         textAlign: TextAlign.center,
                         style: AppTheme.subHeading.copyWith(),
                       ),
@@ -74,7 +76,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                       child: InkWell(
                         onTap: () {},
                         child: Text(
-                          "Resend code ?",
+                          getTranslated(context, 'ResendCode') + " ?",
                           style: AppTheme.headingColorBlue.copyWith(),
                         ),
                       ),
@@ -82,7 +84,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                     SizedBox(height: 20),
                     Center(
                       child: CustomButton(
-                        text: 'send',
+                        text: getTranslated(context, 'send'),
                         onPress: () {
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(

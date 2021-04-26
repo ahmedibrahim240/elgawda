@@ -1,4 +1,5 @@
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/CategoriesCourses/allCategories.dart';
 import 'package:elgawda/secreens/home/instractorlistvie.dart';
 import 'package:elgawda/secreens/instuctor/allInstuctor.dart';
@@ -25,7 +26,8 @@ class _HomeState extends State<Home> {
         children: [
           homePoster(context),
           sectionTitle(
-            title: 'Categories',
+            title: getTranslated(context,'categories'),
+            context: context,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -36,7 +38,9 @@ class _HomeState extends State<Home> {
           ),
           HomeCategooriesBody(),
           sectionTitle(
-              title: 'Instructor',
+              title: getTranslated(context,'instructor'),
+            context: context,
+
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
