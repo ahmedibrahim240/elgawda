@@ -26,6 +26,9 @@ class CouresesModels {
   // ignore: non_constant_identifier_names
   final int rate_count;
   final String name;
+  final String mp4Link;
+  // ignore: non_constant_identifier_names
+  final String promo_video;
   final String instructorName;
   // ignore: non_constant_identifier_names
   final String vimeo_code;
@@ -43,6 +46,7 @@ class CouresesModels {
     this.id,
     this.name,
     this.description,
+    this.mp4Link,
     // ignore: non_constant_identifier_names
     this.rate_count,
     this.instructorName,
@@ -52,6 +56,8 @@ class CouresesModels {
     this.vimeo_code,
     // ignore: non_constant_identifier_names
     this.image_path,
+    // ignore: non_constant_identifier_names
+    this.promo_video,
     this.badges,
     this.rate,
     this.discount,
@@ -76,9 +82,11 @@ class InstructorApi {
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
+              mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
               image_path: cours['image_path'],
               vimeo_code: cours['vimeo_code'],
+              promo_video: cours['promo_video'],
               badges: cours['badges'],
               rate: cours['rate'],
               price: cours['price'],
@@ -99,6 +107,8 @@ class InstructorApi {
         }
       }
     } catch (e) {
+      print('home slider errror');
+
       print(e);
     }
     return listOfInstructor;

@@ -1,9 +1,7 @@
-
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/categoories.dart';
 import 'package:elgawda/models/utils.dart';
-import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,13 +38,13 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => CategoriesCoursesPageView(
-                        courses: widget.categories.courses[index],
-                      ),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => CategoriesCoursesPageView(
+                  //       courses: widget.categories.courses[index],
+                  //     ),
+                  //   ),
+                  // );
                 },
                 child: Column(
                   children: [

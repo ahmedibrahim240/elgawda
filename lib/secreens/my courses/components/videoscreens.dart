@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class ChewieVideo extends StatefulWidget {
+  final String url;
+
+  const ChewieVideo({Key key, this.url}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ChewieVideoState();
@@ -28,7 +31,8 @@ class _ChewieVideoState extends State<ChewieVideo> {
 
   Future<void> initializePlayer() async {
     _videoPlayerController1 = VideoPlayerController.network(
-        'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4');
+      widget.url,
+    );
     await _videoPlayerController1.initialize();
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,

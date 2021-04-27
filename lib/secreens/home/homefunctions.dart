@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/HomeDataApi.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/courses.dart';
-import 'package:elgawda/models/featuredCoursesApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +40,7 @@ Container sectionTitle(
 //////////////////////////////////////////////////////////////////////
 featuredSections({@required BuildContext context}) {
   return FutureBuilder(
-    future: FeaturedCoursesApi.fetchFeaturedCourses(),
+    future: HomeDaTaApi.fetchFeaturedCourses(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         print(snapshot.data);
@@ -202,6 +202,26 @@ featuerd(
 //////////////////////////////////////////////////////////////////////
 
 homePoster(BuildContext context) {
+  return FutureBuilder(
+    future: HomeDaTaApi.fetchHomeSlider(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        print(snapshot.data);
+        return (snapshot.data == null || snapshot.data.isEmpty)
+            ? Container()
+            : coursesSilder(context: context, list: snapshot.data);
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
+  );
+}
+
+//////////////////////////////////////////////////////////////////////
+Container coursesSilder({
+  BuildContext context,
+  List list,
+}) {
   return Container(
     child: Column(
       children: <Widget>[
@@ -214,7 +234,7 @@ homePoster(BuildContext context) {
             enlargeCenterPage: true,
             enlargeStrategy: CenterPageEnlargeStrategy.scale,
           ),
-          items: coursesList
+          items: list
               .map(
                 (items) => GestureDetector(
                   onTap: () {
@@ -227,6 +247,7 @@ homePoster(BuildContext context) {
                     );
                   },
                   child: Container(
+                    height: 300,
                     child: Container(
                       margin: EdgeInsets.all(5.0),
                       child: ClipRRect(
@@ -246,7 +267,7 @@ homePoster(BuildContext context) {
                                   ),
                                   child: customCachedNetworkImage(
                                     context: context,
-                                    url: items.image,
+                                    url: items.image_path,
                                   ),
                                 ),
                               ),
@@ -280,7 +301,7 @@ homePoster(BuildContext context) {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        items.title,
+                                        items.name,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -306,6 +327,5 @@ homePoster(BuildContext context) {
     ),
   );
 }
-//////////////////////////////////////////////////////////////////////
 
 /////////////////////////////

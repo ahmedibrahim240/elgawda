@@ -2,6 +2,7 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,15 @@ class _InstructorPageViewState extends State<InstructorPageView> {
               return trainingCourses(
                 index: index,
                 course: widget.instructor.courses[index],
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => CategoriesCoursesPageView(
+                        courses: widget.instructor.courses[index],
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),
@@ -164,7 +173,10 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                             (course.discount == null || course.discount == '')
                                 ? AppTheme.headingColorBlue.copyWith(
                                     fontSize: 12,
-                                    decoration: TextDecoration.lineThrough,
+                                    decoration: (course.discount == null ||
+                                            course.discount == '')
+                                        ? TextDecoration.none
+                                        : TextDecoration.lineThrough,
                                     color: customColor.withOpacity(.5),
                                   )
                                 : AppTheme.headingColorBlue.copyWith(

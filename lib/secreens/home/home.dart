@@ -16,43 +16,64 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(context: context),
-      body: ListView(
-        shrinkWrap: true,
-        primary: true,
-        children: [
-          homePoster(context),
-          sectionTitle(
-            title: getTranslated(context, 'categories'),
-            context: context,
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => AllCategories(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          customOnRefresh(onRefresh: () {
+            setState(() {
+              loading = !loading;
+            });
+          }, affterRefresh: () {
+            setState(() {
+              loading = !loading;
+            });
+          });
+        },
+        child: (loading)
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
-              );
-            },
-          ),
-          HomeCategooriesBody(),
-          sectionTitle(
-              title: getTranslated(context, 'instructor'),
-              context: context,
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => AllInstuctor(),
+              )
+            : ListView(
+                shrinkWrap: true,
+                primary: true,
+                children: [
+                  homePoster(context),
+                  sectionTitle(
+                    title: getTranslated(context, 'categories'),
+                    context: context,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => AllCategories(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              }),
-          InstractorListView(),
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: featuredSections(context: context),
-          ),
-        ],
+                  HomeCategooriesBody(),
+                  sectionTitle(
+                      title: getTranslated(context, 'instructor'),
+                      context: context,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => AllInstuctor(),
+                          ),
+                        );
+                      }),
+                  InstractorListView(),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: featuredSections(context: context),
+                  ),
+                ],
+              ),
       ),
     );
   }

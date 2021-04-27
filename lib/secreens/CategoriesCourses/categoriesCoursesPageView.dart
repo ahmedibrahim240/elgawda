@@ -1,12 +1,13 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoriesCoursesPageView extends StatefulWidget {
-  final Courses courses;
+  final CouresesModels courses;
 
   const CategoriesCoursesPageView({Key key, @required this.courses})
       : super(key: key);
@@ -25,19 +26,24 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
         primary: true,
         children: [
           SizedBox(height: 10),
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: customCachedNetworkImage(
-                context: context,
-                url: widget.courses.image,
-              ),
-            ),
-          ),
+          (Uri.parse(widget.courses.mp4Link).isAbsolute)
+              ? Container(
+                  height: 200,
+                  child: ChewieVideo(url: widget.courses.mp4Link),
+                )
+              : Container(
+                  height: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: customCachedNetworkImage(
+                      context: context,
+                      url: widget.courses.image_path,
+                    ),
+                  ),
+                ),
           ListView(
             shrinkWrap: true,
             primary: false,
@@ -49,50 +55,79 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   Column(
                     children: [
                       Text(
-                        'Courses ' + widget.courses.title,
+                        'Courses ' + widget.courses.name,
                         style: AppTheme.headingColorBlue.copyWith(
                           color: customColorGold,
                           fontSize: 12,
                         ),
                       ),
-                      Row(
-                        children: [
-                          RatingStar(
-                            rating: widget.courses.rate,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            widget.courses.rate.toString(),
-                            style: AppTheme.subHeading.copyWith(
-                              fontSize: 10,
-                              color: customColorGold,
+                      (widget.courses.rate == '0')
+                          ? Container()
+                          : Row(
+                              children: [
+                                RatingStar(
+                                  rating: double.parse(widget.courses.rate),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  widget.courses.rate.toString(),
+                                  style: AppTheme.subHeading.copyWith(
+                                    fontSize: 10,
+                                    color: customColorGold,
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  '(${widget.courses.rate_count})',
+                                  style: AppTheme.subHeading.copyWith(
+                                    fontSize: 10,
+                                    color: customColorGold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            '(${widget.courses.numPeopleRating})',
-                            style: AppTheme.subHeading.copyWith(
-                              fontSize: 10,
-                              color: customColorGold,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                   Row(
                     children: [
+                      SizedBox(width: 30),
                       Text(
-                        widget.courses.oldPrice.toString() + '\$',
-                        style: AppTheme.subHeading.copyWith(
-                          color: customColorGray,
-                          decoration: TextDecoration.lineThrough,
+                        'Pri',
+                        style: AppTheme.headingColorBlue.copyWith(
+                          fontSize: 12,
                         ),
                       ),
                       SizedBox(width: 10),
+                      (widget.courses.discount == '0' ||
+                              widget.courses.discount == null)
+                          ? Container()
+                          : Text(
+                              newPrice(
+                                price: double.parse(widget.courses.price),
+                                dis: double.parse(
+                                  widget.courses.discount,
+                                ),
+                              ).toString(),
+                              style: AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                      SizedBox(width: 5),
                       Text(
-                        widget.courses.newPrice.toString() + '\$',
-                        style: AppTheme.headingColorBlue.copyWith(),
+                        '${widget.courses.price}\$',
+                        style: (widget.courses.discount == '0' ||
+                                widget.courses.discount == null)
+                            ? AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                                decoration: (widget.courses.discount == '0' ||
+                                        widget.courses.discount == null)
+                                    ? TextDecoration.none
+                                    : TextDecoration.lineThrough,
+                                color: customColor.withOpacity(.5),
+                              )
+                            : AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                              ),
                       ),
                     ],
                   ),
@@ -106,19 +141,22 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'About this course',
-                  style: AppTheme.heading.copyWith(
-                    color: customColorGray,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    'About ' + widget.courses.name,
+                    style: AppTheme.heading.copyWith(
+                      color: customColorGray,
+                    ),
                   ),
                 ),
-                Text(
-                  widget.courses.contant +
-                      widget.courses.contant +
-                      widget.courses.contant,
-                  // textAlign: TextAlign.justify,
-                  style: AppTheme.subHeading.copyWith(
-                    color: customColorGray,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    parseHtmlString((widget.courses.description) ?? ''),
+                    style: AppTheme.subHeading.copyWith(
+                      color: customColorGray,
+                    ),
                   ),
                 ),
               ],
@@ -126,31 +164,41 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           ),
           SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                iconCouresBoton(
-                  icon: Icons.favorite,
-                  title: 'Add to wachlist',
+                Expanded(
+                  flex: 1,
+                  child: iconCouresBoton(
+                    icon: Icons.favorite,
+                    title: 'Add to wachlist',
+                  ),
                 ),
-                iconCouresBoton(
-                  icon: FontAwesomeIcons.shoppingCart,
-                  title: 'Add to Cart',
+                Expanded(
+                  flex: 1,
+                  child: iconCouresBoton(
+                    icon: FontAwesomeIcons.shoppingCart,
+                    title: 'Add to Cart',
+                  ),
                 ),
-                iconCouresBoton(
-                  icon: FontAwesomeIcons.solidShareSquare,
-                  title: 'Share',
+                Expanded(
+                  flex: 1,
+                  child: iconCouresBoton(
+                    icon: FontAwesomeIcons.solidShareSquare,
+                    title: 'Share',
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(height: 30),
-          Container(
-            color: customColorbottomBar,
-            child: lectureDetaile(),
-          ),
+          (widget.courses.sections.isEmpty)
+              ? Container()
+              : Container(
+                  color: customColorbottomBar,
+                  child: lectureDetaile(list: widget.courses.sections),
+                ),
           SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -165,11 +213,11 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
     );
   }
 
-  lectureDetaile() {
+  lectureDetaile({var list}) {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: 4,
+      itemCount: list.length,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       itemBuilder: (context, index) {
         return Column(
@@ -205,7 +253,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          'Welcom to 2 course',
+                          list[index]['name'],
                           style: AppTheme.heading,
                         ),
                       ],

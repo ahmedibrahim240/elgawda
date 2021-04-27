@@ -21,6 +21,17 @@ const customColorIcon = Color(0xfff7D7D7D);
 const customColorDivider = Color(0xfffe1e1e1);
 const customColorGray = Color(0xfff7d7d7d);
 const customColorbottomBar = Color(0xfffDBD8D2);
+////////////////////////////////////////
+Future<Null> customOnRefresh(
+    {Function onRefresh, Function affterRefresh}) async {
+  onRefresh();
+
+  await Future.delayed(
+    Duration(seconds: 2),
+    affterRefresh,
+  );
+  return null;
+}
 
 /////////////////////////////////////////////////////////////
 class LogoContainar extends StatelessWidget {
@@ -67,29 +78,23 @@ apiLang() {
 }
 
 /////////////////////////////////////
-customCachedNetworkImage({String url, BuildContext context}) {
+customCachedNetworkImage({String url, BuildContext context, BoxFit boxFit}) {
   try {
     if (url == null || url == '') {
-      return Container(
-        child: Icon(
-          Icons.image,
-          color: Colors.lightBlueAccent,
-        ),
-      );
+      return Container();
     } else {
       return Container(
         width: MediaQuery.of(context).size.width,
         child: (Uri.parse(url).isAbsolute)
             ? CachedNetworkImage(
                 imageUrl: url,
-                fit: BoxFit.cover,
+                fit: (boxFit) ?? BoxFit.contain,
                 placeholder: (context, url) =>
                     Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               )
             : Icon(
                 Icons.image,
-                size: 100,
                 color: customColor,
               ),
       );
