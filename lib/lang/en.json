@@ -62,6 +62,8 @@
   "Close"                                           : "Close",
   "catchError"                                           : "An error occurred during transmission, please try again later",
   "AdministrativeMessage"                           : "AdministrativeMessage",
+  "searchFiled":"No data found ",
+
 
   "valid_password_len"                              :"The password should be at least 6 character",
 

@@ -4,6 +4,7 @@ import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
+import 'package:elgawda/secreens/home/coursesSearch.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
 import 'package:elgawda/services/UserData.dart';
 import 'package:flutter/material.dart';
@@ -306,7 +307,12 @@ homeAppBar({BuildContext context, Widget title}) {
       Padding(
         padding: const EdgeInsets.all(10.0),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            showSearch(
+              context: context,
+              delegate: CoursesSearch(),
+            );
+          },
           child: Icon(
             Icons.search,
             color: customColorDivider,
