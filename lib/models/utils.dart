@@ -51,5 +51,12 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final SETTINGES_URL = BASE_URL + "/settings";
   // ignore: non_constant_identifier_names
+  static final SendForgetCode_URL = BASE_URL + "/clients/send_forget_code";
+  // ignore: non_constant_identifier_names
+  static final CheckForgetCode_URL = BASE_URL + "/clients/check_forget_code";
+  // ignore: non_constant_identifier_names
+  static final ResetForgetPassword_URL =
+      BASE_URL + "/clients/reset_password_after_forget";
+  // ignore: non_constant_identifier_names
   static final AboutUS_URL = BASE_URL + "/setting/about";
 }

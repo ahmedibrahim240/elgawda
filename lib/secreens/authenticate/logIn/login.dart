@@ -2,11 +2,11 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
-import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:elgawda/models/utils.dart';
 import 'dart:convert';
 
 import '../../../sharedPreferences.dart';
@@ -270,36 +270,42 @@ class _LogInState extends State<LogIn> {
       );
 
       Map<String, dynamic> map = json.decode(response.body);
-      setState(() async {
-        if (map['success'] == true) {
-          setState(() {
-            User.userToken = map['data']['api_token'].toString();
-          });
-          MySharedPreferences.saveUserSingIn(true);
-          MySharedPreferences.saveUserSkipLogIn(false);
-          MySharedPreferences.saveUserUserPassword(password);
 
-          MySharedPreferences.saveUserUserToken(
-            map['data']['api_token'].toString(),
-          );
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (_) => Wrapper(),
-            ),
-          );
-        } else {
-          setState(() {
-            showMyDialog(context: context, message: map['message'].toString());
+      if (map['success'] == true) {
+        setState(() {
+          User.userToken = map['data']['api_token'].toString();
+        });
+        MySharedPreferences.saveUserSingIn(true);
+        MySharedPreferences.saveUserSkipLogIn(false);
+        MySharedPreferences.saveUserUserPassword(password);
 
-            loading = false;
-          });
-        }
-      });
+        MySharedPreferences.saveUserUserToken(
+          map['data']['api_token'].toString(),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+      } else {
+        setState(() {
+          showMyDialog(context: context, message: map['message'].toString());
+
+          loading = false;
+        });
+      }
+
       // Navigator.pop(context);
     } catch (e) {
+      print('Cash LogIn Errro');
+
       setState(() {
         loading = false;
       });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
 
       print(e.toString());
     }

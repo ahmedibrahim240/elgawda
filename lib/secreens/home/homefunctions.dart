@@ -46,50 +46,41 @@ featuredSections({@required BuildContext context}) {
         print(snapshot.data);
         return (snapshot.data == null || snapshot.data.isEmpty)
             ? Container()
-            : ListView.builder(
-                itemCount:
-                    (snapshot.data.length <= 4) ? snapshot.data.length : 4,
-                shrinkWrap: true,
-                primary: false,
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          getTranslated(context, 'featured'),
-                          style:
-                              AppTheme.headingColorBlue.copyWith(fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 300,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return featuerd(
-                              index: index,
-                              coures: snapshot.data[index],
-                              context: context,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => FeaturedCoursesedtails(
-                                      courses: coursesList[index],
-                                    ),
-                                  ),
-                                );
-                              },
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      getTranslated(context, 'featured'),
+                      style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 300,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return featuerd(
+                          index: index,
+                          coures: snapshot.data[index],
+                          context: context,
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => FeaturedCoursesedtails(
+                                  courses: coursesList[index],
+                                ),
+                              ),
                             );
                           },
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
       } else {
         return Center(child: CircularProgressIndicator());

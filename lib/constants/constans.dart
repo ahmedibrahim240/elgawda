@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
@@ -112,7 +113,7 @@ Future<void> showMyDialog({BuildContext context, String message}) async {
             children: <Widget>[
               Center(
                 child: Text(
-                  'رساله اداريه',
+                  getTranslated(context, 'AdministrativeMessage'),
                   style: AppTheme.heading.copyWith(
                     color: customColor,
                   ),
@@ -128,7 +129,7 @@ Future<void> showMyDialog({BuildContext context, String message}) async {
         actions: <Widget>[
           TextButton(
             child: Text(
-              'تم',
+              getTranslated(context, 'Close'),
               style: AppTheme.heading.copyWith(
                 color: customColor,
               ),

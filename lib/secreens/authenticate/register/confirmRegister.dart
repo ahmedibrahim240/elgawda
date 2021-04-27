@@ -1,12 +1,15 @@
+import 'dart:async';
+
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
-import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
-
 import 'package:code_fields/code_fields.dart';
 
 class ConfirmPassword extends StatefulWidget {
+  final String email;
+
+  const ConfirmPassword({Key key, @required this.email}) : super(key: key);
   @override
   _ConfirmPasswordState createState() => _ConfirmPasswordState();
 }
@@ -14,6 +17,8 @@ class ConfirmPassword extends StatefulWidget {
 class _ConfirmPasswordState extends State<ConfirmPassword> {
   final _formKey = GlobalKey<FormState>();
   final int codeLength = 4;
+  int counter = 60;
+  Timer _timer;
 
   String validateCode(String code) {
     if (code.length < codeLength)
@@ -23,6 +28,34 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
       if (!isNumeric) return "برجاء ادخال الكود المرسل";
     }
     return null;
+  }
+
+  startTimer() {
+    counter = 60;
+    _timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          if (counter > 0) {
+            counter--;
+          } else {
+            _timer.cancel();
+          }
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 
   @override
@@ -57,7 +90,8 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                     Center(
                       child: Text(
                         getTranslated(context, 'code_sent') +
-                            '\n text@text.com',
+                            '\n' +
+                            widget.email,
                         textAlign: TextAlign.center,
                         style: AppTheme.subHeading.copyWith(),
                       ),
@@ -66,35 +100,42 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                     Center(
                       child: CodeFields(
                         length: codeLength,
+                        onCompleted: (val) {
+                          _timer.cancel();
+                          print(val);
+
+                          Navigator.of(context).pop();
+                        },
+                        onChanged: (val) {
+                          print(val);
+                        },
                         validator: validateCode,
                         textStyle: TextStyle(color: Colors.black),
                         autofocus: true,
                       ),
                     ),
                     SizedBox(height: 20),
-                    Center(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Text(
-                          getTranslated(context, 'ResendCode') + " ?",
-                          style: AppTheme.headingColorBlue.copyWith(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Center(
-                      child: CustomButton(
-                        text: getTranslated(context, 'send'),
-                        onPress: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (_) => Wrapper(),
+                    (counter > 0)
+                        ? Center(
+                            child: Text(
+                              counter.toString(),
+                              style: AppTheme.headingColorBlue.copyWith(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            (routes) => false,
-                          );
-                        },
-                      ),
-                    ),
+                          )
+                        : Center(
+                            child: InkWell(
+                              onTap: () {
+                                startTimer();
+                              },
+                              child: Text(
+                                getTranslated(context, 'ResendCode') + " ?",
+                                style: AppTheme.headingColorBlue.copyWith(),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),

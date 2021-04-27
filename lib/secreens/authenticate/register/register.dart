@@ -346,10 +346,14 @@ class _RegisterState extends State<Register> {
 
       // Navigator.pop(context);
     } catch (e) {
-      print('Cash errrrrrrrrrrrrrrror');
+      print('Cash Resster Errro');
       setState(() {
         loading = false;
       });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
 
       print(e.toString());
     }

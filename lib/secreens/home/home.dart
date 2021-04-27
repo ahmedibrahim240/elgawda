@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
         children: [
           homePoster(context),
           sectionTitle(
-            title: getTranslated(context,'categories'),
+            title: getTranslated(context, 'categories'),
             context: context,
             onTap: () {
               Navigator.of(context).push(
@@ -38,9 +38,8 @@ class _HomeState extends State<Home> {
           ),
           HomeCategooriesBody(),
           sectionTitle(
-              title: getTranslated(context,'instructor'),
-            context: context,
-
+              title: getTranslated(context, 'instructor'),
+              context: context,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

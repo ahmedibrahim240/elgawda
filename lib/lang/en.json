@@ -59,6 +59,9 @@
   "valid_phone"                                     : "Please enter a valid Phone Namber",
   "valid_password"                                  : "Please enter a password",
   "password_not_mat"                                : "Password not matching",
+  "Close"                                           : "Close",
+  "catchError"                                           : "An error occurred during transmission, please try again later",
+  "AdministrativeMessage"                           : "AdministrativeMessage",
 
   "valid_password_len"                              :"The password should be at least 6 character",
 
