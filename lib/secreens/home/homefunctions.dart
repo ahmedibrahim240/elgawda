@@ -125,13 +125,15 @@ featuerd(
               style: AppTheme.headingColorBlue.copyWith(fontSize: 12),
             ),
           ),
-          Text(
-            (coures.instructorName) ?? '',
-            style: AppTheme.subHeading.copyWith(
-              fontSize: 10,
-              color: customColorGold,
-            ),
-          ),
+          (coures.instructorName == null)
+              ? Container()
+              : Text(
+                  (coures.instructorName) ?? '',
+                  style: AppTheme.subHeading.copyWith(
+                    fontSize: 10,
+                    color: customColorGold,
+                  ),
+                ),
           (coures.rate == '0')
               ? Container()
               : Row(

@@ -80,10 +80,10 @@ class _InstractorListViewState extends State<InstractorListView> {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width - 200,
-                height: 50,
+                height: 20,
                 child: Text(
                   (instructor.name) ?? '',
-                  style: AppTheme.headingColorBlue.copyWith(fontSize: 12),
+                  style: AppTheme.headingColorBlue.copyWith(fontSize: 10),
                 ),
               ),
               (instructor.bio == null || instructor.bio == '')

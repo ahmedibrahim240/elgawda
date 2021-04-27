@@ -66,6 +66,54 @@ class CouresesModels {
 }
 
 class InstructorApi {
+  static Future<List<InstructorModels>> fetchALLInstructor() async {
+    List<InstructorModels> listOfInstructor = [];
+    List<CouresesModels> listOfInstructorCoureses = [];
+
+    try {
+      var response = await http.get(Utils.Instructors_URL);
+      var jsonData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        for (var items in jsonData['data']) {
+          listOfInstructorCoureses = [];
+          for (var cours in items['courses']) {
+            CouresesModels coureses = CouresesModels(
+              id: cours['id'],
+              description: cours['description'],
+              rate_count: cours['rate_count'],
+              name: cours['name'],
+              mp4Link: cours['video_qualities'][0]['url'],
+              instructorName: cours['instructor']['name'],
+              image_path: cours['image_path'],
+              vimeo_code: cours['vimeo_code'],
+              promo_video: cours['promo_video'],
+              badges: cours['badges'],
+              rate: cours['rate'],
+              price: cours['price'],
+              sections: cours['sections'],
+              discount: cours['discount'],
+            );
+            listOfInstructorCoureses.add(coureses);
+          }
+          InstructorModels instructor = InstructorModels(
+            id: items['id'],
+            name: items['name'],
+            bio: items['bio'],
+            image_path: items['image_path'],
+            job: items['job'],
+            courses: listOfInstructorCoureses,
+          );
+          listOfInstructor.add(instructor);
+        }
+      }
+    } catch (e) {
+      print('home slider errror');
+
+      print(e);
+    }
+    return listOfInstructor;
+  }
+
   static Future<List<InstructorModels>> fetchInstructor() async {
     List<InstructorModels> listOfInstructor = [];
     List<CouresesModels> listOfInstructorCoureses = [];

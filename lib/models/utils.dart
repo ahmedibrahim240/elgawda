@@ -41,6 +41,8 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final HOME_URL = BASE_URL + "/home";
   // ignore: non_constant_identifier_names
+  static final Instructors_URL = BASE_URL + "/instructors";
+  // ignore: non_constant_identifier_names
   static final VISITS_URL = BASE_URL + "/visits";
   // ignore: non_constant_identifier_names
   static final SEARCHBYNAME_URL = BASE_URL + "/search?search=";
