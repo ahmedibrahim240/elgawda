@@ -109,29 +109,27 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
       );
 
       Map<String, dynamic> map = json.decode(response.body);
-      setState(() async {
-        if (map['success'] == true) {
-          setState(() {
-            loading = !loading;
-          });
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => ConfirmPassword(
-                email: email,
-              ),
+
+      if (map['success'] == true) {
+        setState(() {
+          loading = !loading;
+        });
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => ConfirmPassword(
+              email: email,
             ),
-          );
-        } else {
-          setState(() {
-            loading = !loading;
-          });
-          showMyDialog(
-            context: context,
-            message: map['message'],
-          );
-        }
-      });
-      // Navigator.pop(context);
+          ),
+        );
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(
+          context: context,
+          message: map['message'],
+        );
+      }
     } catch (e) {
       setState(() {
         loading = !loading;
