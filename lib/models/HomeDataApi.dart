@@ -1,4 +1,5 @@
 import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,6 +75,31 @@ class HomeDaTaApi {
       print(e);
     }
     return listOfCoureses;
+  }
+
+  static Future<List<CategoriesModels>> fetchHomeCategories() async {
+    List<CategoriesModels> listOfCategoriesModels = [];
+
+    try {
+      var response = await http.get(Utils.HOME_URL);
+      var jsonData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        for (var cours in jsonData['data']['categories']) {
+          CategoriesModels categories = CategoriesModels(
+            id: cours['id'],
+            name: cours['name'],
+            image: cours['image'],
+            subcategories: cours['subcategories'],
+          );
+          listOfCategoriesModels.add(categories);
+        }
+      }
+    } catch (e) {
+      print('home slider errror');
+
+      print(e);
+    }
+    return listOfCategoriesModels;
   }
 
   static Future<List<CouresesModels>> cursesSearch(String name) async {

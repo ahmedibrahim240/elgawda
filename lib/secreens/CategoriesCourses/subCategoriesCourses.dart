@@ -9,8 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 class SubCategoriesCourses extends StatefulWidget {
   final Categories categories;
 
-  const SubCategoriesCourses({Key key, @required this.categories})
-      : super(key: key);
+  const SubCategoriesCourses({Key key, this.categories}) : super(key: key);
   @override
   _SubCategoriesCoursesState createState() => _SubCategoriesCoursesState();
 }
@@ -32,9 +31,7 @@ class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => CategoriesCoursesPage(
-                    categories: categoriesList[index],
-                  ),
+                  builder: (_) => CategoriesCoursesPage(),
                 ),
               );
             },
