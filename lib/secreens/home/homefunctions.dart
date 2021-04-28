@@ -4,7 +4,6 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/HomeDataApi.dart';
 import 'package:elgawda/models/InstructorApi.dart';
-import 'package:elgawda/models/courses.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
 import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,7 +70,7 @@ featuredSections({@required BuildContext context}) {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => FeaturedCoursesedtails(
-                                  courses: coursesList[index],
+                                  courses: snapshot.data[index],
                                 ),
                               ),
                             );
@@ -269,6 +268,7 @@ Container coursesSilder({
                                   ),
                                   child: customCachedNetworkImage(
                                     context: context,
+                                    boxFit: BoxFit.cover,
                                     url: items.image_path,
                                   ),
                                 ),

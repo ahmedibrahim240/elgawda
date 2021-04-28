@@ -1,12 +1,12 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/models/InstructorApi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FeaturedCoursesedtails extends StatefulWidget {
-  final Courses courses;
+  final CouresesModels courses;
 
   const FeaturedCoursesedtails({Key key, @required this.courses})
       : super(key: key);
@@ -33,7 +33,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
               borderRadius: BorderRadius.circular(10),
               child: customCachedNetworkImage(
                 context: context,
-                url: widget.courses.image,
+                url: widget.courses.image_path,
               ),
             ),
           ),
@@ -43,46 +43,48 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             children: [
               Text(
-                'Courses ' + widget.courses.title,
+                'Courses ' + widget.courses.name,
                 style: AppTheme.headingColorBlue.copyWith(
                   color: customColorGold,
                 ),
               ),
               SizedBox(height: 20),
               Text(
-                widget.courses.contant + widget.courses.contant,
-                // textAlign: TextAlign.justify,
+                parseHtmlString(widget.courses.description),
+                textAlign: TextAlign.justify,
                 style: AppTheme.subHeading.copyWith(
                   color: customColorGray,
                 ),
               ),
               SizedBox(height: 20),
-              Row(
-                children: [
-                  RatingStar(
-                    rating: widget.courses.rate,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    widget.courses.rate.toString(),
-                    style: AppTheme.subHeading.copyWith(
-                      fontSize: 10,
-                      color: customColorGold,
+              (widget.courses.rate == '0')
+                  ? Container()
+                  : Row(
+                      children: [
+                        RatingStar(
+                          rating: double.parse(widget.courses.rate),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          widget.courses.rate.toString(),
+                          style: AppTheme.subHeading.copyWith(
+                            fontSize: 10,
+                            color: customColorGold,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '(${widget.courses.rate_count})',
+                          style: AppTheme.subHeading.copyWith(
+                            fontSize: 10,
+                            color: customColorGold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    '(${widget.courses.numPeopleRating})',
-                    style: AppTheme.subHeading.copyWith(
-                      fontSize: 10,
-                      color: customColorGold,
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(height: 20),
               Text(
-                widget.courses.badge,
+                widget.courses.badges,
                 style: AppTheme.heading.copyWith(
                   color: customColorGold,
                 ),
@@ -141,27 +143,41 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '\$',
+                        'Pri',
                         style: AppTheme.headingColorBlue.copyWith(
-                          fontSize: 20,
+                          fontSize: 12,
                         ),
                       ),
                       SizedBox(width: 10),
+                      (widget.courses.discount == null ||
+                              widget.courses.discount == '')
+                          ? Container()
+                          : Text(
+                              newPrice(
+                                price: double.parse(widget.courses.price),
+                                dis: double.parse(
+                                  widget.courses.discount,
+                                ),
+                              ).toString(),
+                              style: AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                      SizedBox(width: 5),
                       Text(
-                        widget.courses.newPrice.toString() + '\$',
-                        style: AppTheme.headingColorBlue.copyWith(),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        widget.courses.oldPrice.toString() + '\$',
-                        style: AppTheme.subHeading.copyWith(
-                          color: customColorGray,
-                          decoration: TextDecoration.lineThrough,
-                        ),
+                        '${widget.courses.price}\$',
+                        style: (widget.courses.discount == null ||
+                                widget.courses.discount == '')
+                            ? AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                                decoration: TextDecoration.lineThrough,
+                                color: customColor.withOpacity(.5),
+                              )
+                            : AppTheme.headingColorBlue.copyWith(
+                                fontSize: 12,
+                              ),
                       ),
                     ],
                   ),
