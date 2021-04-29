@@ -30,8 +30,18 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: 200,
-            child: ChewieVideo(),
+            child: customCachedNetworkImage(
+              context: context,
+              url: widget.courses.image,
+              boxFit: BoxFit.cover,
+            ),
           ),
+
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 200,
+          //   child: ChewieVideo(),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(

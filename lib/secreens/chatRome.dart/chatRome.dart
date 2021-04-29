@@ -1,7 +1,12 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/models/chetApi.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:elgawda/models/utils.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ChatRome extends StatefulWidget {
   @override
@@ -11,11 +16,11 @@ class ChatRome extends StatefulWidget {
 class _ChatRomeState extends State<ChatRome> {
   List<String> messageList = [];
   TextEditingController _messageController = TextEditingController();
-
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: MediaQuery.of(context).size.height - 360,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -26,19 +31,30 @@ class _ChatRomeState extends State<ChatRome> {
               primary: false,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: messageList.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(messageList[index]),
-                        SizedBox(height: 20),
-                      ],
-                    );
+                FutureBuilder(
+                  future: ChatApi.fetchAllMyMassege(14),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return (snapshot.data.isEmpty)
+                          ? Container()
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              primary: false,
+                              itemCount: messageList.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(snapshot.data[index].message),
+                                    SizedBox(height: 20),
+                                  ],
+                                );
+                              },
+                            );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
               ],
@@ -86,7 +102,7 @@ class _ChatRomeState extends State<ChatRome> {
               maxLines: null,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
-                hintText: '....write a message',
+                hintText: (loading) ? 'Sendig ....' : 'Write a message....',
                 hintStyle: AppTheme.subHeading.copyWith(
                   fontSize: 10,
                   color: customColorIcon,
@@ -112,8 +128,9 @@ class _ChatRomeState extends State<ChatRome> {
           GestureDetector(
             onTap: () {
               setState(() {
-                messageList.add(_messageController.text);
+                loading = !loading;
                 _messageController.text = '';
+                sentMessage(_messageController.text);
               });
             },
             child: Container(
@@ -126,5 +143,46 @@ class _ChatRomeState extends State<ChatRome> {
         ],
       ),
     );
+  }
+
+  sentMessage(String message) async {
+    try {
+      var response = await http.post(
+        Utils.Chat_URL + "/14/send",
+        body: {
+          'message': message,
+        },
+        headers: {
+          'x-api-key': User.userToken,
+        },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+      setState(
+        () async {
+          if (map['success'] == false) {
+            setState(() {
+              loading = !loading;
+            });
+            showMyDialog(context: context, message: map['message'].toString());
+          } else {
+            setState(() {
+              loading = !loading;
+            });
+            showMyDialog(context: context, message: 'Massge Was Send');
+          }
+        },
+      );
+      // Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      print(
+          'Catchhhhhhhhhhhhhhhhhhhhhhh errororororrorrorooroeoreoroeroeorero');
+      print(e.toString());
+    }
   }
 }
