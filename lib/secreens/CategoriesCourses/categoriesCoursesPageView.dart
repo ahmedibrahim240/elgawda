@@ -27,12 +27,10 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
     courseFromSQL = await helper.getProductById(widget.courses.id);
 
     if (courseFromSQL != null) {
-      if (courseFromSQL.type == 'course') {
-        if (courseFromSQL.consultantId == widget.courses.id) {
-          setState(() {
-            cantAdd = true;
-          });
-        }
+      if (courseFromSQL.coursesId == widget.courses.id) {
+        setState(() {
+          cantAdd = true;
+        });
       }
     }
   }
@@ -52,7 +50,6 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
         shrinkWrap: true,
         primary: true,
         children: [
-          SizedBox(height: 10),
           (widget.courses.vimeo_code != '' && widget.courses.vimeo_code != null)
               ? FutureBuilder(
                   future: CategoriesApi.getVideoMp4Link(
@@ -64,7 +61,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                           ? Container()
                           : Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 300,
+                              height: 200,
                               child: ChewieVideo(
                                 url: snapshot.data,
                               ),
@@ -282,9 +279,49 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           SizedBox(height: 30),
           (widget.courses.sections.isEmpty)
               ? Container()
-              : Container(
-                  color: customColorbottomBar,
-                  child: lectureDetaile(list: widget.courses.sections),
+              : ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: widget.courses.sections.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            (widget.courses.sections[index]['name']) ?? '',
+                            style: AppTheme.headingColorBlue,
+                          ),
+                          subtitle: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  'Video -${widget.courses.sections[index]['featured_data']["total_time"]} mins-',
+                                  style: AppTheme.subHeading.copyWith(
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  'Resources (${widget.courses.sections[index]['featured_data']["total_files"]})',
+                                  style: AppTheme.subHeading.copyWith(
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: customColorbottomBar,
+                          child: lectureDetaile(
+                              list: widget.courses.sections[index]['lessons']),
+                        ),
+                      ],
+                    );
+                  },
                 ),
           SizedBox(height: 20),
           Padding(
@@ -347,7 +384,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Video -10.22 mins-Resources (1)',
+                      'Video -${list[index]["duration"]}',
                       style: AppTheme.subHeading.copyWith(
                         color: Colors.grey[400],
                       ),

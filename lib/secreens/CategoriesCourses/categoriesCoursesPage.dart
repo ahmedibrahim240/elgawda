@@ -77,11 +77,14 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          snapshot.data[index].name,
-                                          style: AppTheme.headingColorBlue
-                                              .copyWith(
-                                            fontSize: 12,
+                                        Center(
+                                          child: Text(
+                                            snapshot.data[index].name,
+                                            textAlign: TextAlign.center,
+                                            style: AppTheme.headingColorBlue
+                                                .copyWith(
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ),
                                         (snapshot.data[index].instructorName ==

@@ -440,6 +440,7 @@ increaseCartTotlaPrice({double price}) async {
   print('increaseCartTotlaPrice:$price');
   double totalParice;
   totalParice = Cart.totalPraices + price;
+
   MySharedPreferences.saveTotalPrice(totalParice);
   Cart.totalPraices = await MySharedPreferences.getTotalPrice();
 }

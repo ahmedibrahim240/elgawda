@@ -19,19 +19,17 @@ class FeaturedCoursesedtails extends StatefulWidget {
 }
 
 class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
-   DbHehper helper;
+  DbHehper helper;
   bool cantAdd = false;
   var courseFromSQL;
   getCouresByIdFlomSQl() async {
     courseFromSQL = await helper.getProductById(widget.courses.id);
 
     if (courseFromSQL != null) {
-      if (courseFromSQL.type == 'course') {
-        if (courseFromSQL.consultantId == widget.courses.id) {
-          setState(() {
-            cantAdd = true;
-          });
-        }
+      if (courseFromSQL.coursesId == widget.courses.id) {
+        setState(() {
+          cantAdd = true;
+        });
       }
     }
   }
@@ -42,6 +40,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
     helper = DbHehper();
     getCouresByIdFlomSQl();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +49,6 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
         shrinkWrap: true,
         primary: true,
         children: [
-          SizedBox(height: 10),
           (widget.courses.vimeo_code != '' && widget.courses.vimeo_code != null)
               ? FutureBuilder(
                   future: CategoriesApi.getVideoMp4Link(
@@ -62,7 +60,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                           ? Container()
                           : Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 300,
+                              height: 200,
                               child: ChewieVideo(
                                 url: snapshot.data,
                               ),
@@ -184,16 +182,32 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                     ),
                   ),
                   (cantAdd)
-                    ? Container()
-                    : Expanded(
-                    flex: 1,
-                    child: iconCouresBoton(
-                      icon: FontAwesomeIcons.shoppingCart,
-                      title: 'Add to Cart',
-                       onTap: () async {
-                            setState(() {
-                              increaseCartTotlaPrice(
-                                price: (widget.courses.discount == null)
+                      ? Container()
+                      : Expanded(
+                          flex: 1,
+                          child: iconCouresBoton(
+                            icon: FontAwesomeIcons.shoppingCart,
+                            title: 'Add to Cart',
+                            onTap: () async {
+                              setState(() {
+                                increaseCartTotlaPrice(
+                                  price: (widget.courses.discount == null)
+                                      ? double.parse(
+                                          widget.courses.price.toString())
+                                      : newPrice(
+                                          dis: double.parse(widget
+                                              .courses.discount
+                                              .toString()),
+                                          price: double.parse(
+                                            widget.courses.price.toString(),
+                                          ),
+                                        ),
+                                );
+                              });
+                              CoursesProdect prodect = CoursesProdect({
+                                'CoursesId': widget.courses.id,
+                                'title': widget.courses.name,
+                                'price': (widget.courses.discount == null)
                                     ? double.parse(
                                         widget.courses.price.toString())
                                     : newPrice(
@@ -203,32 +217,15 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                                           widget.courses.price.toString(),
                                         ),
                                       ),
-                              );
-                            });
-                            CoursesProdect prodect = CoursesProdect({
-                              'CoursesId': widget.courses.id,
-                              'title': widget.courses.name,
-                              'price': (widget.courses.discount == null)
-                                  ? double.parse(
-                                      widget.courses.price.toString())
-                                  : newPrice(
-                                      dis: double.parse(
-                                          widget.courses.discount.toString()),
-                                      price: double.parse(
-                                        widget.courses.price.toString(),
-                                      ),
-                                    ),
-                              'proImageUrl': widget.courses.image_path,
-                            });
-                            // ignore: unused_local_variable
-                            int id = await helper.createProduct(prodect);
-                            cardDialog(
-                                context: context, message: 'Item Was Add');
-                          },
+                                'proImageUrl': widget.courses.image_path,
+                              });
+                              // ignore: unused_local_variable
+                              int id = await helper.createProduct(prodect);
+                              cardDialog(
+                                  context: context, message: 'Item Was Add');
+                            },
+                          ),
                         ),
-                      ),
-                    
-                 
                   Expanded(
                     flex: 1,
                     child: iconCouresBoton(

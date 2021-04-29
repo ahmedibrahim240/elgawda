@@ -73,6 +73,7 @@ class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
                       child: Center(
                         child: Text(
                           widget.subCategores[index].name,
+                          textAlign: TextAlign.center,
                           style: AppTheme.heading.copyWith(
                             color: Colors.white,
                           ),

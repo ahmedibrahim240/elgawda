@@ -28,6 +28,7 @@ class _CartState extends State<Cart> {
     helper = DbHehper();
     getTotalPrice();
     super.initState();
+    print("Cart.totalPraices:${Cart.totalPraices}");
   }
 
   bool loading = false;
@@ -162,6 +163,7 @@ class _CartState extends State<Cart> {
                                       Center(
                                         child: InkWell(
                                           onTap: () async {
+                                            setState(() {});
                                             await helper.deleteProduct(
                                                 snapshot.data[index]['id']);
                                             setState(() {
@@ -197,7 +199,7 @@ class _CartState extends State<Cart> {
                                 ),
                                 SizedBox(width: 20),
                                 Text(
-                                  '${Cart.totalPraices} \$',
+                                  Cart.totalPraices.toStringAsFixed(2) + '\$',
                                   style: AppTheme.headingColorBlue.copyWith(
                                       fontSize: 16, color: customColorGold),
                                 ),

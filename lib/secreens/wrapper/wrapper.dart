@@ -3,6 +3,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
+import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/home/home.dart';
 import 'package:elgawda/secreens/more/more.dart';
 import 'package:elgawda/secreens/my%20courses/mycourses.dart';
@@ -34,6 +35,7 @@ class _WrapperState extends State<Wrapper> {
     User.userToken = await MySharedPreferences.getUserUserToken();
     User.appLang = await MySharedPreferences.getAppLang();
     User.apiLang = await MySharedPreferences.getApiLang();
+    Cart.totalPraices = await MySharedPreferences.getTotalPrice();
   }
 
   @override
@@ -41,6 +43,7 @@ class _WrapperState extends State<Wrapper> {
     getDateOfUser();
     gitFCMToken();
     super.initState();
+    print("Cart.totalPraices:${Cart.totalPraices}");
   }
 
   gitFCMToken() {
