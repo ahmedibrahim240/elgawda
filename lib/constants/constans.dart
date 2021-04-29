@@ -6,13 +6,18 @@ import 'package:elgawda/secreens/cart/cart.dart';
 import 'package:elgawda/secreens/editprofile/editprofile.dart';
 import 'package:elgawda/secreens/home/coursesSearch.dart';
 import 'package:elgawda/secreens/notifications/notifications.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/UserData.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../sharedPreferences.dart';
+// import 'package:flutter_share/flutter_share.dart';
 
 const customColor = Color(0xfff21496C);
 const customColorGold = Color(0xfff8e0048);
@@ -371,7 +376,78 @@ customRaiseButtom({String text, Function onTap}) {
     ),
   );
 }
+
+Future<void> cardDialog({BuildContext context, String message}) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Center(
+                child: Text(
+                  (message) ??
+                      'تم اضافة الطلب لإستكمال  عمليه الشراء عليك  الذهاب الي عربة التسوق',
+                  style: AppTheme.subHeading,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              getTranslated(context, 'home'),
+              style: AppTheme.heading.copyWith(
+                color: customColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => Wrapper()),
+                (route) => false,
+              );
+            },
+          ),
+          TextButton(
+            child: Text(
+              getTranslated(context, 'cart'),
+              style: AppTheme.heading.copyWith(
+                color: customColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (_) => Cart(),
+                ),
+                ModalRoute.withName('/'),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 ////////////////////////////////////////////////////////////////////////
+increaseCartTotlaPrice({double price}) async {
+  print('increaseCartTotlaPrice:$price');
+  double totalParice;
+  totalParice = Cart.totalPraices + price;
+  MySharedPreferences.saveTotalPrice(totalParice);
+  Cart.totalPraices = await MySharedPreferences.getTotalPrice();
+}
+
+decreaseCartTotlaPrice({double price}) async {
+  double totalParice;
+  totalParice = Cart.totalPraices - price;
+  MySharedPreferences.saveTotalPrice(totalParice);
+  Cart.totalPraices = await MySharedPreferences.getTotalPrice();
+}
 
 class CustomCarouselSlider extends StatefulWidget {
   final bool reverse;
@@ -579,4 +655,14 @@ Future<void> launchInBrowser(String url) async {
     throw 'Could not launch $url';
   }
 }
+
+// ------------------------------------------------------------------------
+/////////////////////////////////////////////////////////////
+Future<void> share({String url, String title}) async {
+  await FlutterShare.share(
+    title: title,
+    linkUrl: url,
+  );
+}
+
 // ------------------------------------------------------------------------

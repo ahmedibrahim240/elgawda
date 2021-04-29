@@ -18,6 +18,30 @@ class CategoriesModels {
 }
 
 class CategoriesApi {
+  static Future<String> getVideoMp4Link({var id}) async {
+    String link;
+    try {
+      var response = await http.get(
+        'https://player.vimeo.com/video/$id/config',
+      );
+      var jsonData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        for (var url in jsonData['request']['files']['progressive']) {
+          if (url['quality'] == "360p") {
+            link = url['url'];
+          } else if (url['quality'] == "240p") {
+            link = url['url'];
+          }
+        }
+
+        print('link:$link');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return link;
+  }
+
   static Future<List<CategoriesModels>> fetchAllCategories() async {
     List<CategoriesModels> listOfCategoriesModels = [];
 
@@ -56,8 +80,13 @@ class CategoriesApi {
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],
+            discount_message: cours['discount_message'],
+            website_link: cours['website_link'],
             mp4Link: cours['video_qualities'][0]['url'],
-            // instructorName: cours['instructor'][0]['name'],
+            instructorName: cours['instructor']['name'],
+            total_files: cours['featured_data']['total_files'],
+            total_time: cours['featured_data']['total_time'],
+            total_quizes: cours['featured_data']['total_quizes'],
             image_path: cours['image_path'],
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],

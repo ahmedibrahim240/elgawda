@@ -1,6 +1,10 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/models/categoriesApi.dart';
+import 'package:elgawda/models/prodact.dart';
+import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
+import 'package:elgawda/services/dbhelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,6 +19,29 @@ class FeaturedCoursesedtails extends StatefulWidget {
 }
 
 class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
+   DbHehper helper;
+  bool cantAdd = false;
+  var courseFromSQL;
+  getCouresByIdFlomSQl() async {
+    courseFromSQL = await helper.getProductById(widget.courses.id);
+
+    if (courseFromSQL != null) {
+      if (courseFromSQL.type == 'course') {
+        if (courseFromSQL.consultantId == widget.courses.id) {
+          setState(() {
+            cantAdd = true;
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    helper = DbHehper();
+    getCouresByIdFlomSQl();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,19 +51,41 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
         primary: true,
         children: [
           SizedBox(height: 10),
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: customCachedNetworkImage(
-                context: context,
-                url: widget.courses.image_path,
-              ),
-            ),
-          ),
+          (widget.courses.vimeo_code != '' && widget.courses.vimeo_code != null)
+              ? FutureBuilder(
+                  future: CategoriesApi.getVideoMp4Link(
+                      id: widget.courses.vimeo_code),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.data);
+                      return (snapshot.data == null || snapshot.data.isEmpty)
+                          ? Container()
+                          : Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 300,
+                              child: ChewieVideo(
+                                url: snapshot.data,
+                              ),
+                            );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
+              : Container(
+                  height: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: customCachedNetworkImage(
+                      boxFit: BoxFit.cover,
+                      context: context,
+                      url: widget.courses.image_path,
+                    ),
+                  ),
+                ),
           ListView(
             shrinkWrap: true,
             primary: false,
@@ -90,25 +139,38 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                 ),
               ),
               SizedBox(height: 10),
-              coursesDetaile(
-                iconData: Icons.person,
-                title: 'Created by Ahmed Mohamed',
-              ),
+              (widget.courses.instructorName == '' ||
+                      widget.courses.instructorName == null)
+                  ? Container()
+                  : coursesDetaile(
+                      iconData: Icons.person,
+                      title: 'Created by' + widget.courses.instructorName,
+                    ),
               SizedBox(height: 10),
-              coursesDetaile(
-                iconData: Icons.play_circle_fill,
-                title: '23 total hours on video',
-              ),
+              (widget.courses.total_time == '00:00:00' ||
+                      widget.courses.total_time == null)
+                  ? Container()
+                  : coursesDetaile(
+                      iconData: Icons.play_circle_fill,
+                      title:
+                          '${widget.courses.total_time} total hours on video',
+                    ),
               SizedBox(height: 10),
-              coursesDetaile(
-                iconData: FontAwesomeIcons.book,
-                title: '5 of PDF',
-              ),
+              (widget.courses.total_files == 0 ||
+                      widget.courses.total_files == null)
+                  ? Container()
+                  : coursesDetaile(
+                      iconData: FontAwesomeIcons.book,
+                      title: '${widget.courses.total_files} of PDF',
+                    ),
               SizedBox(height: 10),
-              coursesDetaile(
-                iconData: Icons.book,
-                title: '15 Quiz after one section',
-              ),
+              (widget.courses.total_quizes == 0 ||
+                      widget.courses.total_quizes == null)
+                  ? Container()
+                  : coursesDetaile(
+                      iconData: Icons.book,
+                      title: '${widget.courses.total_quizes} Quiz',
+                    ),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,16 +183,61 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                       title: 'Add to wachlist',
                     ),
                   ),
-                  Expanded(
+                  (cantAdd)
+                    ? Container()
+                    : Expanded(
                     flex: 1,
                     child: iconCouresBoton(
                       icon: FontAwesomeIcons.shoppingCart,
                       title: 'Add to Cart',
-                    ),
-                  ),
+                       onTap: () async {
+                            setState(() {
+                              increaseCartTotlaPrice(
+                                price: (widget.courses.discount == null)
+                                    ? double.parse(
+                                        widget.courses.price.toString())
+                                    : newPrice(
+                                        dis: double.parse(
+                                            widget.courses.discount.toString()),
+                                        price: double.parse(
+                                          widget.courses.price.toString(),
+                                        ),
+                                      ),
+                              );
+                            });
+                            CoursesProdect prodect = CoursesProdect({
+                              'CoursesId': widget.courses.id,
+                              'title': widget.courses.name,
+                              'price': (widget.courses.discount == null)
+                                  ? double.parse(
+                                      widget.courses.price.toString())
+                                  : newPrice(
+                                      dis: double.parse(
+                                          widget.courses.discount.toString()),
+                                      price: double.parse(
+                                        widget.courses.price.toString(),
+                                      ),
+                                    ),
+                              'proImageUrl': widget.courses.image_path,
+                            });
+                            // ignore: unused_local_variable
+                            int id = await helper.createProduct(prodect);
+                            cardDialog(
+                                context: context, message: 'Item Was Add');
+                          },
+                        ),
+                      ),
+                    
+                 
                   Expanded(
                     flex: 1,
                     child: iconCouresBoton(
+                      onTap: () {
+                        share(
+                          url: widget.courses.website_link,
+                          title: widget.courses.name,
+                        );
+                      },
                       icon: FontAwesomeIcons.solidShareSquare,
                       title: 'Share',
                     ),
@@ -182,7 +289,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                     ],
                   ),
                   Text(
-                    '90% off -2 days left a price',
+                    widget.courses.discount_message ?? '',
                     style: AppTheme.headingColorBlue.copyWith(
                       fontSize: 14,
                       color: Colors.red,
@@ -224,9 +331,9 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
     );
   }
 
-  iconCouresBoton({String title, IconData icon}) {
+  iconCouresBoton({String title, IconData icon, Function onTap}) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -17,6 +17,8 @@ class MySharedPreferences {
   static String sharedPrefUserUserPhone = 'UserPhome';
   static String sharedPrefUserUserPassword = 'UserPassword';
   static String sharedPrefUserImageUrl = 'userImageUrl';
+  static String sharedPrefTotalPraic = 'TotalPraic';
+
   static String sharedPrefUserToken = 'userToken';
   static String sharedPrefCartConslProdect = 'cartConsulPro';
   static String sharedPrefCounsultFillterIndex = 'FillterIndex';
@@ -32,6 +34,11 @@ class MySharedPreferences {
   static Future<bool> saveUserSkipLogIn(bool isSkipLogIn) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setBool(sharedPrefUserSkipLogIn, isSkipLogIn);
+  }
+
+  static Future<bool> saveTotalPrice(double price) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setDouble(sharedPrefTotalPraic, price);
   }
 
   static Future<bool> saveUserselectedProImage(bool isSelected) async {
@@ -258,6 +265,12 @@ class MySharedPreferences {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String phoneNamber = preferences.getString(sharedPrefUserUserPhone);
     return phoneNamber;
+  }
+
+  static getTotalPrice() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    double price = (preferences.getDouble(sharedPrefTotalPraic) ?? 0.0);
+    return price;
   }
 
   // static saveDataOfConsulPro(value) async {

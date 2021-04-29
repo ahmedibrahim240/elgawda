@@ -38,11 +38,31 @@ class CouresesModels {
   final String description;
   final String rate;
   final String discount;
+  // ignore: non_constant_identifier_names
+  final String discount_message;
   var sections;
+  // ignore: non_constant_identifier_names
+  final int total_quizes;
+  // ignore: non_constant_identifier_names
+  final String total_time;
+  // ignore: non_constant_identifier_names
+  final int total_files;
+  // ignore: non_constant_identifier_names
+  final String website_link;
 
   final String price;
 
   CouresesModels({
+    // ignore: non_constant_identifier_names
+    this.total_quizes,
+    // ignore: non_constant_identifier_names
+    this.discount_message,
+    // ignore: non_constant_identifier_names
+    this.website_link,
+    // ignore: non_constant_identifier_names
+    this.total_time,
+    // ignore: non_constant_identifier_names
+    this.total_files,
     this.id,
     this.name,
     this.description,
@@ -82,8 +102,13 @@ class InstructorApi {
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
+              discount_message: cours['discount_message'],
+              website_link: cours['website_link'],
               mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
+              total_files: cours['featured_data']['total_files'],
+              total_time: cours['featured_data']['total_time'],
+              total_quizes: cours['featured_data']['total_quizes'],
               image_path: cours['image_path'],
               vimeo_code: cours['vimeo_code'],
               promo_video: cours['promo_video'],
@@ -130,8 +155,13 @@ class InstructorApi {
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
+              discount_message: cours['discount_message'],
+              website_link: cours['website_link'],
               mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
+              total_files: cours['featured_data']['total_files'],
+              total_time: cours['featured_data']['total_time'],
+              total_quizes: cours['featured_data']['total_quizes'],
               image_path: cours['image_path'],
               vimeo_code: cours['vimeo_code'],
               promo_video: cours['promo_video'],
