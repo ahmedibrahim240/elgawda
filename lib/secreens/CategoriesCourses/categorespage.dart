@@ -1,9 +1,10 @@
+import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPage.dart';
 import 'package:elgawda/secreens/CategoriesCourses/subCategoriesCourses.dart';
 import 'package:flutter/material.dart';
 
 class Categorespage extends StatefulWidget {
-  final List categores;
+  final List<SubCategoriesModels> categores;
   final String name;
   final int id;
 
@@ -26,7 +27,9 @@ class _CategorespageState extends State<Categorespage> {
         name: widget.name,
       );
     } else {
-      return SubCategoriesCourses();
+      return SubCategoriesCourses(
+        subCategores: widget.categores,
+      );
     }
   }
 }

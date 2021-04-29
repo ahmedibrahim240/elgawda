@@ -89,23 +89,33 @@ class HomeDaTaApi {
 
   static Future<List<CategoriesModels>> fetchHomeCategories() async {
     List<CategoriesModels> listOfCategoriesModels = [];
+    List<SubCategoriesModels> listOfSubCategoriesModels = [];
 
     try {
-      var response = await http.get(Utils.HOME_URL);
+      var response = await http.get(Utils.Categories_URL);
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
-        for (var cours in jsonData['data']['categories']) {
+        for (var cours in jsonData['data']) {
+          listOfSubCategoriesModels = [];
+          for (var sub in cours['subcategories']) {
+            SubCategoriesModels categories = SubCategoriesModels(
+              id: sub['id'],
+              name: sub['name'],
+              image: sub['image'],
+            );
+            listOfSubCategoriesModels.add(categories);
+          }
           CategoriesModels categories = CategoriesModels(
             id: cours['id'],
             name: cours['name'],
             image: cours['image'],
-            subcategories: cours['subcategories'],
+            subcategories: listOfSubCategoriesModels,
           );
           listOfCategoriesModels.add(categories);
         }
       }
     } catch (e) {
-      print('home slider errror');
+      print('home GAtro errror');
 
       print(e);
     }

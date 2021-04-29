@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class CategoriesModels {
   final int id;
-  var subcategories;
+  final List<SubCategoriesModels> subcategories;
   final String name;
   final String image;
 
@@ -14,6 +14,18 @@ class CategoriesModels {
     this.name,
     this.image,
     this.subcategories,
+  });
+}
+
+class SubCategoriesModels {
+  final int id;
+  final String name;
+  final String image;
+
+  SubCategoriesModels({
+    this.id,
+    this.name,
+    this.image,
   });
 }
 
@@ -44,23 +56,33 @@ class CategoriesApi {
 
   static Future<List<CategoriesModels>> fetchAllCategories() async {
     List<CategoriesModels> listOfCategoriesModels = [];
+    List<SubCategoriesModels> listOfSubCategoriesModels = [];
 
     try {
       var response = await http.get(Utils.Categories_URL);
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']) {
+          listOfSubCategoriesModels = [];
+          for (var sub in cours['subcategories']) {
+            SubCategoriesModels categories = SubCategoriesModels(
+              id: sub['id'],
+              name: sub['name'],
+              image: sub['image'],
+            );
+            listOfSubCategoriesModels.add(categories);
+          }
           CategoriesModels categories = CategoriesModels(
             id: cours['id'],
             name: cours['name'],
             image: cours['image'],
-            subcategories: cours['subcategories'],
+            subcategories: listOfSubCategoriesModels,
           );
           listOfCategoriesModels.add(categories);
         }
       }
     } catch (e) {
-      print('home slider errror');
+      print('All Gater errror');
 
       print(e);
     }

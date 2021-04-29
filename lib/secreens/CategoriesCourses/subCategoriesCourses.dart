@@ -1,15 +1,16 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/models/categoories.dart';
+import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class SubCategoriesCourses extends StatefulWidget {
-  final Categories categories;
+  final List<SubCategoriesModels> subCategores;
 
-  const SubCategoriesCourses({Key key, this.categories}) : super(key: key);
+  const SubCategoriesCourses({Key key, this.subCategores}) : super(key: key);
   @override
   _SubCategoriesCoursesState createState() => _SubCategoriesCoursesState();
 }
@@ -25,13 +26,16 @@ class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        itemCount: categoriesList.length,
+        itemCount: widget.subCategores.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => CategoriesCoursesPage(),
+                  builder: (_) => CategoriesCoursesPage(
+                    name: widget.subCategores[index].name,
+                    id: widget.subCategores[index].id,
+                  ),
                 ),
               );
             },
@@ -49,8 +53,9 @@ class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: customCachedNetworkImage(
+                        boxFit: BoxFit.cover,
                         context: context,
-                        url: categoriesList[index].image,
+                        url: widget.subCategores[index].image,
                       ),
                     ),
                   ),
@@ -68,7 +73,7 @@ class _SubCategoriesCoursesState extends State<SubCategoriesCourses> {
                       ),
                       child: Center(
                         child: Text(
-                          categoriesList[index].name,
+                          widget.subCategores[index].name,
                           style: AppTheme.heading.copyWith(
                             color: Colors.white,
                           ),
