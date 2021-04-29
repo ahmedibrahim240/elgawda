@@ -70,7 +70,10 @@ class _InstractorListViewState extends State<InstractorListView> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: customCachedNetworkImage(
-                  context: context, url: instructor.image_path),
+                context: context,
+                boxFit: BoxFit.cover,
+                url: instructor.image_path,
+              ),
             ),
           ),
           SizedBox(width: 20),

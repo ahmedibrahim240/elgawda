@@ -31,6 +31,8 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final REGISTERASCONSUL_URL = BASE_URL + "/requests";
   // ignore: non_constant_identifier_names
+  static final Checkout_URL = BASE_URL + "/orders/checkout";
+  // ignore: non_constant_identifier_names
   static final LOGIN_URL = BASE_URL + "/clients/login";
   // ignore: non_constant_identifier_names
   static final GITUSERDATA_URL = BASE_URL + "/clients/profile";

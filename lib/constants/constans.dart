@@ -113,7 +113,8 @@ customCachedNetworkImage({String url, BuildContext context, BoxFit boxFit}) {
 /////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
-Future<void> showMyDialog({BuildContext context, String message}) async {
+Future<void> showMyDialog(
+    {BuildContext context, String message, Function onTap}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -145,9 +146,10 @@ Future<void> showMyDialog({BuildContext context, String message}) async {
                 color: customColor,
               ),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: onTap ??
+                () {
+                  Navigator.of(context).pop();
+                },
           ),
         ],
       );

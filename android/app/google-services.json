@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "848993028597",
+    "project_id": "eljawda-552fd",
+    "storage_bucket": "eljawda-552fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848993028597:android:55d5aa32247145273bb8bc",
+        "android_client_info": {
+          "package_name": "com.jawdaacademy.elgawda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848993028597-ak07fdpa4sseeu590l2ao8u3a35kn2vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jawdaacademy.elgawda",
+            "certificate_hash": "20fb63b4b2a795ed17916828e3bcb3534849dd5f"
+          }
+        },
+        {
+          "client_id": "848993028597-rb36ethf5i0n79s7rjsi0cgnrehlhb6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrp1FEjTi3mLCOvcLDSAij5snHhWA6b4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848993028597-rb36ethf5i0n79s7rjsi0cgnrehlhb6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
