@@ -27,6 +27,8 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final RATE_URL = BASE_URL + "/rates/consultant";
   // ignore: non_constant_identifier_names
+  static final Update_fcm_URL = BASE_URL + "/clients/update_fcm?fcm_token=";
+  // ignore: non_constant_identifier_names
   static final REGISTER_URL = BASE_URL + "/clients/register";
   // ignore: non_constant_identifier_names
   static final REGISTERASCONSUL_URL = BASE_URL + "/requests";
@@ -44,6 +46,8 @@ class Utils {
   static final HOME_URL = BASE_URL + "/home";
   // ignore: non_constant_identifier_names
   static final Categories_URL = BASE_URL + "/categories";
+  // ignore: non_constant_identifier_names
+  static final GOOGLE_URL = BASE_URL + "/social/google";
   // ignore: non_constant_identifier_names
   static final HOMESearch_URL = BASE_URL + "/search";
   // ignore: non_constant_identifier_names

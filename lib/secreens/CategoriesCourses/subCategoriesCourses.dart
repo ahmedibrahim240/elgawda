@@ -1,6 +1,5 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/models/categoories.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPage.dart';
 import 'package:flutter/cupertino.dart';

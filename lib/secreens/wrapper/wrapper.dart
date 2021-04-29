@@ -2,13 +2,16 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/home/home.dart';
 import 'package:elgawda/secreens/more/more.dart';
 import 'package:elgawda/secreens/my%20courses/mycourses.dart';
 import 'package:elgawda/secreens/wishlist/wishlist.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../sharedPreferences.dart';
 
 class Wrapper extends StatefulWidget {
@@ -17,6 +20,8 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+
   int _currentIndex = 0;
   final List<Widget> _children = [
     Home(),
@@ -34,7 +39,35 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     getDateOfUser();
+    gitFCMToken();
     super.initState();
+  }
+
+  gitFCMToken() {
+    try {
+      _fcm.getToken().then(
+        (token) {
+          print("FCmtoken: $token");
+          updateFcmToken(token);
+        },
+      );
+    } catch (e) {
+      print('FCM EROOOR');
+      print(e);
+    }
+  }
+
+  updateFcmToken(var token) async {
+    try {
+      var response = await http.put(Utils.Update_fcm_URL + '$token', headers: {
+        'x-api-key': User.userToken.toString(),
+      });
+      var jsonData = json.decode(response.body);
+      print(jsonData);
+    } catch (e) {
+      print('Cash updateFcmToken');
+      print(e);
+    }
   }
 
   @override

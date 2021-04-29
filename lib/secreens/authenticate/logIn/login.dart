@@ -5,6 +5,7 @@ import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:elgawda/models/utils.dart';
 import 'dart:convert';
@@ -230,16 +231,27 @@ class _LogInState extends State<LogIn> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    FontAwesomeIcons.google,
-                                    color: Colors.redAccent,
-                                    size: 35,
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        loading = !loading;
+                                      });
+                                      _googleLogIn();
+                                    },
+                                    child: Icon(
+                                      FontAwesomeIcons.google,
+                                      color: Colors.redAccent,
+                                      size: 35,
+                                    ),
                                   ),
                                   SizedBox(width: 30),
-                                  Icon(
-                                    FontAwesomeIcons.facebook,
-                                    color: Colors.blueAccent,
-                                    size: 35,
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Icon(
+                                      FontAwesomeIcons.facebook,
+                                      color: Colors.blueAccent,
+                                      size: 35,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -307,6 +319,88 @@ class _LogInState extends State<LogIn> {
         message: getTranslated(context, 'catchError'),
       );
 
+      print(e.toString());
+    }
+  }
+
+  _loginWithGOOGLe({googleID, name}) async {
+    try {
+      var response = await http.post(
+        Utils.GOOGLE_URL,
+        body: {
+          'google_id': googleID,
+          'name': name,
+        },
+        // headers: {
+        //   'lang': User.apiLang,
+        // },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+      setState(
+        () async {
+          // print('this is the userData data ${userData}');
+          if (map['success'] == true) {
+            setState(() {
+              User.userToken = map['data']['api_token'].toString();
+            });
+            MySharedPreferences.saveUserSingIn(true);
+            MySharedPreferences.saveUserSkipLogIn(false);
+            MySharedPreferences.saveUserUserPassword(password);
+
+            MySharedPreferences.saveUserUserName(
+              map['data']['name'].toString(),
+            );
+
+            MySharedPreferences.saveUserUserToken(
+              map['data']['api_token'].toString(),
+            );
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => Wrapper(),
+              ),
+            );
+          } else {
+            setState(() {
+              error = map['message'].toString();
+              loading = !loading;
+            });
+          }
+        },
+      );
+      // Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      print(
+          'Catchhhhhhhhhhhhhhhhhhhhhhh errororororrorrorooroeoreoroeroeorero');
+      print(e.toString());
+    }
+  }
+
+  _googleLogIn() async {
+    try {
+      GoogleSignIn _googleSginIn = GoogleSignIn(scopes: ['email']);
+      await _googleSginIn.signIn();
+      setState(() {
+        loading = !loading;
+      });
+      print(_googleSginIn.currentUser.displayName);
+      print(_googleSginIn.currentUser.id);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => Wrapper(),
+        ),
+      );
+      // _loginWithGOOGLe(
+      //   googleID: _googleSginIn.currentUser.id,
+      //   name: _googleSginIn.currentUser.displayName,
+      // );
+    } catch (e) {
+      print("catssssssssss eroooooooooooooor");
       print(e.toString());
     }
   }
