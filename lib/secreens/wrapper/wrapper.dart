@@ -44,6 +44,7 @@ class _WrapperState extends State<Wrapper> {
     gitFCMToken();
     super.initState();
     print("Cart.totalPraices:${Cart.totalPraices}");
+    print("UaerToken:${User.userToken}");
   }
 
   gitFCMToken() {

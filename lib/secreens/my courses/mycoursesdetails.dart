@@ -1,15 +1,17 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
-import 'package:elgawda/models/courses.dart';
+import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/secreens/chatRome.dart/chatRome.dart';
+import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
+import 'package:elgawda/secreens/my%20courses/components/vidoePage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-import 'components/videoscreens.dart';
-
 class MyCoursesDetails extends StatefulWidget {
-  final Courses courses;
+  final CouresesModels courses;
 
   const MyCoursesDetails({Key key, @required this.courses}) : super(key: key);
   @override
@@ -27,21 +29,42 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
         primary: true,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            child: customCachedNetworkImage(
-              context: context,
-              url: widget.courses.image,
-              boxFit: BoxFit.cover,
-            ),
-          ),
-
-          // Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   height: 200,
-          //   child: ChewieVideo(),
-          // ),
+          (widget.courses.vimeo_code != '' && widget.courses.vimeo_code != null)
+              ? FutureBuilder(
+                  future: CategoriesApi.getVideoMp4Link(
+                      id: widget.courses.vimeo_code),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.data);
+                      return (snapshot.data == null || snapshot.data.isEmpty)
+                          ? Container()
+                          : Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 200,
+                              child: ChewieVideo(
+                                url: snapshot.data,
+                              ),
+                            );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
+              : Container(
+                  height: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: customCachedNetworkImage(
+                      boxFit: BoxFit.cover,
+                      context: context,
+                      url: widget.courses.image_path,
+                    ),
+                  ),
+                ),
+          courseDetail(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
@@ -103,7 +126,9 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                   ? more()
                   : (lecTapped == 2)
                       ? reviewBody()
-                      : ChatRome(),
+                      : ChatRome(
+                          id: widget.courses.id,
+                        ),
         ],
       ),
     );
@@ -123,7 +148,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           ),
         ),
         Text(
-          widget.courses.contant,
+          parseHtmlString(widget.courses.description),
           style: AppTheme.subHeadingColorBlue,
         ),
       ],
@@ -230,104 +255,129 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
     );
   }
 
-  Column lectureBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(
-            'Section 2 -Introduction',
-            style: AppTheme.subHeading.copyWith(
-              color: Colors.grey[400],
+  lectureBody() {
+    return (widget.courses.sections.isEmpty)
+        ? Center(
+            child: Text(
+              getTranslated(context, 'Course_avilable'),
+              style: AppTheme.heading,
+              textAlign: TextAlign.center,
             ),
-          ),
-        ),
-        lectureDetaile(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(
-            'Section 2 -SetUp',
-            style: AppTheme.subHeading.copyWith(
-              color: Colors.grey[400],
-            ),
-          ),
-        ),
-        lectureDetaile(),
-      ],
-    );
-  }
-
-  ListView lectureDetaile() {
-    return ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: 4,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  '${index + 1}',
-                  style: AppTheme.heading.copyWith(
-                    fontSize: 25,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              FontAwesomeIcons.check,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Welcom to 2 course',
-                          style: AppTheme.heading,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Video -10.22 mins-Resources (1)',
+          )
+        : ListView.builder(
+            shrinkWrap: true,
+            primary: false,
+            itemCount: widget.courses.sections.length,
+            itemBuilder: (context, index) {
+              return ListView(
+                shrinkWrap: true,
+                primary: false,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Text(
+                      'Section ${index + 1} - ' +
+                          widget.courses.sections[index]['name'],
                       style: AppTheme.subHeading.copyWith(
                         color: Colors.grey[400],
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Quiz',
-                        style: AppTheme.heading.copyWith(
-                          color: customColorGold,
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
+                  lectureDetaile(
+                    list: widget.courses.sections[index]['lessons'],
+                    quizes: widget.courses.sections[index]['lessons'],
+                  ),
+                ],
+              );
+            },
+          );
+  }
+
+  ListView lectureDetaile({var list, var quizes}) {
+    return ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: list.length,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => MyCoursesVideoPage(
+                  title: list[index]['name'],
+                  videoId: list[index]['vimeo_id'] ?? '',
                 ),
-              ],
-            ),
-            Divider(
-              color: customColorDivider,
-              thickness: 2,
-            ),
-          ],
+              ),
+            );
+          },
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '${index + 1}',
+                    style: AppTheme.heading.copyWith(
+                      fontSize: 25,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.green,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                FontAwesomeIcons.check,
+                                color: Colors.white,
+                                size: 10,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            list[index]['name'],
+                            style: AppTheme.heading,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      // Text(
+                      //   'Video -10.22 '+list[index]['name'],
+                      //   style: AppTheme.subHeading.copyWith(
+                      //     color: Colors.grey[400],
+                      //   ),
+                      // ),
+                      (quizes.isEmpty)
+                          ? Container()
+                          : TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                '${quizes.length} Quizs',
+                                style: AppTheme.heading.copyWith(
+                                  color: customColorGold,
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                ],
+              ),
+              Divider(
+                color: customColorDivider,
+                thickness: 2,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -342,39 +392,37 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text(
-                  'solving problem with your son',
-                  style: AppTheme.heading,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Row(
+          Text(
+            widget.courses.name,
+            style: AppTheme.subHeadingColorBlue,
+          ),
+          (widget.courses.rate == "0")
+              ? Container(
+                  height: 20,
+                )
+              : Row(
                   children: [
-                    Icon(
-                      FontAwesomeIcons.starHalfAlt,
-                      color: Colors.yellow[900],
+                    RatingStar(
+                      rating: double.parse(widget.courses.rate),
                     ),
                     SizedBox(width: 5),
                     Text(
-                      '(${widget.courses.rate}K)',
-                      style: AppTheme.heading,
+                      '${widget.courses.rate}',
+                      style: AppTheme.subHeading.copyWith(
+                        fontSize: 10,
+                        color: customColorGold,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      '(${widget.courses.rate_count})',
+                      style: AppTheme.subHeading.copyWith(
+                        fontSize: 10,
+                        color: customColorGold,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          Text(
-            widget.courses.newPrice.toString() + '\$',
-            style: AppTheme.heading,
-          ),
         ],
       ),
     );

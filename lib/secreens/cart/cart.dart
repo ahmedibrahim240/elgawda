@@ -203,6 +203,15 @@ class _CartState extends State<Cart> {
                                   style: AppTheme.headingColorBlue.copyWith(
                                       fontSize: 16, color: customColorGold),
                                 ),
+                                SizedBox(width: 20),
+                                customRaiseButtom(
+                                    text: 'Check Out',
+                                    onTap: () {
+                                      setState(() {
+                                        loading = !loading;
+                                      });
+                                      checkOut(item: snapshot);
+                                    }),
                               ],
                             ),
                           ],
@@ -214,7 +223,7 @@ class _CartState extends State<Cart> {
   }
 
   checkOut({var item}) async {
-    List courses;
+    List courses = [];
     for (var items in item.data) {
       courses.add(items['CoursesId']);
     }
@@ -236,7 +245,7 @@ class _CartState extends State<Cart> {
 
       var jsonData = json.decode(response.body);
 
-      if (jsonData['status'] == 'success') {
+      if (jsonData['success'] == true) {
         setState(() {
           loading = !loading;
         });
@@ -254,22 +263,7 @@ class _CartState extends State<Cart> {
             );
           },
           context: context,
-          message: jsonData['message'].toString(),
-        );
-      } else if (jsonData['status'] == 'error') {
-        setState(() {
-          loading = !loading;
-        });
-        showMyDialog(
-          onTap: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => Wrapper(),
-              ),
-            );
-          },
-          context: context,
-          message: jsonData['message'].toString(),
+          message: 'success',
         );
       } else {
         setState(() {
@@ -284,7 +278,7 @@ class _CartState extends State<Cart> {
             );
           },
           context: context,
-          message: jsonData['errorArr'].toString(),
+          message: jsonData['message'].toString(),
         );
       }
     } catch (e) {

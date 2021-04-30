@@ -122,7 +122,7 @@ class CategoriesApi {
         }
       }
     } catch (e) {
-      print('home slider errror');
+      print('home CatCourses errror');
 
       print(e);
     }

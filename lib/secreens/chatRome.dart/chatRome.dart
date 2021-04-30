@@ -9,6 +9,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChatRome extends StatefulWidget {
+  final int id;
+
+  const ChatRome({Key key, @required this.id}) : super(key: key);
   @override
   _ChatRomeState createState() => _ChatRomeState();
 }
@@ -19,8 +22,9 @@ class _ChatRomeState extends State<ChatRome> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
+    print('CouresChat Id:${widget.id}');
     return Container(
-      height: MediaQuery.of(context).size.height - 360,
+      height: MediaQuery.of(context).size.height - 430,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -32,7 +36,7 @@ class _ChatRomeState extends State<ChatRome> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               children: [
                 FutureBuilder(
-                  future: ChatApi.fetchAllMyMassege(14),
+                  future: ChatApi.fetchAllMyMassege(widget.id),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return (snapshot.data.isEmpty)
@@ -148,7 +152,7 @@ class _ChatRomeState extends State<ChatRome> {
   sentMessage(String message) async {
     try {
       var response = await http.post(
-        Utils.Chat_URL + "/14/send",
+        Utils.Chat_URL + "/${widget.id}/send",
         body: {
           'message': message,
         },
@@ -160,22 +164,17 @@ class _ChatRomeState extends State<ChatRome> {
 
       Map<String, dynamic> map = json.decode(response.body);
       print(map);
-      setState(
-        () async {
-          if (map['success'] == false) {
-            setState(() {
-              loading = !loading;
-            });
-            showMyDialog(context: context, message: map['message'].toString());
-          } else {
-            setState(() {
-              loading = !loading;
-            });
-            showMyDialog(context: context, message: 'Massge Was Send');
-          }
-        },
-      );
-      // Navigator.pop(context);
+      if (map['success'] == false) {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(context: context, message: map['message'].toString());
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(context: context, message: 'Massge Was Send');
+      }
     } catch (e) {
       setState(() {
         loading = !loading;

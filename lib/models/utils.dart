@@ -22,18 +22,14 @@ class Utils {
 
   // ignore: non_constant_identifier_names
   static final BASE_URL = "http://api.jawda-academy.com/api";
-  // ignore: non_constant_identifier_names
-  static final Consultant_URL = BASE_URL + "/consultants";
-  // ignore: non_constant_identifier_names
-  static final RATE_URL = BASE_URL + "/rates/consultant";
+
   // ignore: non_constant_identifier_names
   static final Update_fcm_URL = BASE_URL + "/clients/update_fcm?fcm_token=";
   // ignore: non_constant_identifier_names
   static final REGISTER_URL = BASE_URL + "/clients/register";
   // ignore: non_constant_identifier_names
   static final Chat_URL = BASE_URL + "/chat";
-  // ignore: non_constant_identifier_names
-  static final REGISTERASCONSUL_URL = BASE_URL + "/requests";
+
   // ignore: non_constant_identifier_names
   static final Checkout_URL = BASE_URL + "/orders/checkout";
   // ignore: non_constant_identifier_names
@@ -42,8 +38,6 @@ class Utils {
   static final GITUSERDATA_URL = BASE_URL + "/clients/profile";
   // ignore: non_constant_identifier_names
   static final UPDATEUSERDATA_URL = BASE_URL + "/clients/update";
-  // ignore: non_constant_identifier_names
-  static final CHANGEPASSWORD_URL = BASE_URL + "/clients/change_password";
   // ignore: non_constant_identifier_names
   static final HOME_URL = BASE_URL + "/home";
   // ignore: non_constant_identifier_names
@@ -55,15 +49,7 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final Instructors_URL = BASE_URL + "/instructors";
   // ignore: non_constant_identifier_names
-  static final VISITS_URL = BASE_URL + "/visits";
-  // ignore: non_constant_identifier_names
-  static final SEARCHBYNAME_URL = BASE_URL + "/search?search=";
-  // ignore: non_constant_identifier_names
-  static final CONSULTFILLTER_URL = BASE_URL + "/filter";
-  // ignore: non_constant_identifier_names
-  static final CONTACTUS_URL = BASE_URL + "/send_message";
-  // ignore: non_constant_identifier_names
-  static final SETTINGES_URL = BASE_URL + "/settings";
+  static final MyCourses_URL = BASE_URL + "/orders";
   // ignore: non_constant_identifier_names
   static final SendForgetCode_URL = BASE_URL + "/clients/send_forget_code";
   // ignore: non_constant_identifier_names
