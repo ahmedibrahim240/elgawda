@@ -6,6 +6,7 @@ import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/prodact.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
+import 'package:elgawda/secreens/my%20courses/mycourses.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/dbhelper.dart';
 import 'package:flutter/cupertino.dart';
@@ -237,7 +238,19 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                         ),
                       ),
                 (cantAdd)
-                    ? Container()
+                    ? (widget.courses.enrolled == 1)
+                        ? iconCouresBoton(
+                            title: getTranslated(context, 'my_courses'),
+                            icon: FontAwesomeIcons.youtube,
+                            onTap: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        MyCourses()),
+                                ModalRoute.withName(Wrapper.route),
+                              );
+                            })
+                        : Container()
                     : Expanded(
                         flex: 1,
                         child: iconCouresBoton(

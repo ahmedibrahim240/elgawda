@@ -27,6 +27,7 @@ class CouresesModels {
   final int id;
   // ignore: non_constant_identifier_names
   final int rate_count;
+  final int enrolled;
   final String name;
   // ignore: non_constant_identifier_names
   final String promo_video;
@@ -56,6 +57,7 @@ class CouresesModels {
   final String price;
 
   CouresesModels({
+    @required this.enrolled,
     // ignore: non_constant_identifier_names
     this.total_quizes,
     // ignore: non_constant_identifier_names
@@ -111,6 +113,7 @@ class InstructorApi {
               in_wish_list: cours['in_wish_list'],
               description: cours['description'],
               rate_count: cours['rate_count'],
+              enrolled: cours['enrolled'],
               name: cours['name'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
@@ -170,6 +173,7 @@ class InstructorApi {
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
+              enrolled: cours['enrolled'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
               instructorName: cours['instructor']['name'],

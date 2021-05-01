@@ -1,4 +1,5 @@
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/routes.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,8 @@ class _MyAppState extends State<MyApp> {
 
         return supportedLocales.first;
       },
-      home: SplashScreen(),
+      initialRoute: SplashScreen.route,
+      routes: routes,
     );
 
     //  StreamProvider<User>.value(

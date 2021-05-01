@@ -1,12 +1,18 @@
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
+import 'package:elgawda/secreens/splashscreen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../sharedPreferences.dart';
 
 class MyCoursesApi {
-  static Future<List<CouresesModels>> fetchMyCourses() async {
+  static Future<List<CouresesModels>> fetchMyCourses(
+      BuildContext context) async {
     List<CouresesModels> listOfCoureses = [];
 
     try {
@@ -23,6 +29,7 @@ class MyCoursesApi {
         for (var cours in jsonData['data']) {
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
+            enrolled: cours['enrolled'],
             in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
@@ -44,9 +51,35 @@ class MyCoursesApi {
           );
           listOfCoureses.add(coureses);
         }
+      } else if (response.statusCode == 401) {
+        print(jsonData);
+        showMyDialog(
+          context: context,
+          message: getTranslated(context, 'catchError') +
+              "\n" +
+              getTranslated(context, 'Or') +
+              "\n" +
+              jsonData['message'].toString() +
+              "\n" +
+              getTranslated(context, 'UserTokenField'),
+          onTap: () {
+            MySharedPreferences.saveUserUserToken(null);
+
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => SplashScreen(),
+              ),
+            );
+          },
+          buttonText: getTranslated(context, 'sign_in'),
+        );
       }
     } catch (e) {
       print('home MyCourses errrrrrrrrrrrrrrrrror');
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
 
       print(e);
     }
@@ -71,6 +104,7 @@ class MyCoursesApi {
             id: cours['id'],
             in_wish_list: cours['in_wish_list'],
             description: cours['description'],
+            enrolled: cours['enrolled'],
             rate_count: cours['rate_count'],
             name: cours['name'],
             discount_message: cours['discount_message'],

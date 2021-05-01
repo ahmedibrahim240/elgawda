@@ -49,6 +49,8 @@
     "log_out"                                         : "تسجيل الخروج",
     "add_to_wishlist"                                 : "إضافة للمفضلة",
     "remove_to_wishlist"                                 : "إزالة للمفضلة",
+  "UserTokenField"                                  :"يرجى محاولة تسجيل الدخول مرة أخرى",
+
     "add_to_cart"                                     : "إضافة الى عربة التسوق",
     "share"                                           : "مشاركة",
     "enroll_now"                                      : "تسجيل الآن",

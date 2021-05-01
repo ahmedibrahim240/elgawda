@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class PaymentMethod extends StatefulWidget {
@@ -14,6 +14,18 @@ class _PaymentMethodState extends State<PaymentMethod> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
+      appBar: new AppBar(
+        title: const Text('Payment Method'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => Wrapper()),
+              (route) => false,
+            );
+          },
+        ),
+      ),
       url: widget.url,
       withJavascript: true,
       supportMultipleWindows: true,

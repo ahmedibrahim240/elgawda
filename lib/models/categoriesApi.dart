@@ -114,6 +114,7 @@ class CategoriesApi {
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
             in_wish_list: cours['in_wish_list'],
+            enrolled: cours['enrolled'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],

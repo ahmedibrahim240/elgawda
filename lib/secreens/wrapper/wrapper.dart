@@ -16,6 +16,8 @@ import 'dart:convert';
 import '../../sharedPreferences.dart';
 
 class Wrapper extends StatefulWidget {
+  static final route = '/Wrapper';
+
   @override
   _WrapperState createState() => _WrapperState();
 }

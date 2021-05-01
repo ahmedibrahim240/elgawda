@@ -114,8 +114,12 @@ customCachedNetworkImage({String url, BuildContext context, BoxFit boxFit}) {
 /////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
-Future<void> showMyDialog(
-    {BuildContext context, String message, Function onTap}) async {
+Future<void> showMyDialog({
+  BuildContext context,
+  String message,
+  Function onTap,
+  String buttonText,
+}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -142,7 +146,7 @@ Future<void> showMyDialog(
         actions: <Widget>[
           TextButton(
             child: Text(
-              getTranslated(context, 'Close'),
+              buttonText ?? getTranslated(context, 'Close'),
               style: AppTheme.heading.copyWith(
                 color: customColor,
               ),

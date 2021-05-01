@@ -270,12 +270,9 @@ class _CartState extends State<Cart> {
       );
 
       var jsonData = json.decode(response.body);
+      print(jsonData);
 
       if (jsonData['success'] == true) {
-        setState(() {
-          loading = !loading;
-        });
-
         await helper.deleteAllProduct();
         decreaseCartTotlaPrice(
           price: Cart.totalPraices,
@@ -384,6 +381,9 @@ class _CartState extends State<Cart> {
         );
       }
     } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
       showMyDialog(
         onTap: () {
           Navigator.of(context).pushReplacement(
@@ -395,9 +395,6 @@ class _CartState extends State<Cart> {
         context: context,
         message: getTranslated(context, 'catchError'),
       );
-      setState(() {
-        loading = !loading;
-      });
 
       print(e);
     }

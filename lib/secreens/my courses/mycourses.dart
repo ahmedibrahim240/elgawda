@@ -33,7 +33,7 @@ class _MyCoursesState extends State<MyCourses> {
         ),
       ),
       body: FutureBuilder(
-        future: MyCoursesApi.fetchMyCourses(),
+        future: MyCoursesApi.fetchMyCourses(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print(snapshot.data);
