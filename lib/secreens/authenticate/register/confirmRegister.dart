@@ -172,6 +172,9 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
         body: {
           'email': widget.email,
         },
+        headers: {
+          'lang': apiLang(),
+        },
       );
 
       Map<String, dynamic> map = json.decode(response.body);
@@ -202,6 +205,9 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
         body: {
           'email': widget.email,
           'code': code,
+        },
+        headers: {
+          'lang': apiLang(),
         },
       );
 

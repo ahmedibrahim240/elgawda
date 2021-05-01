@@ -24,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   getDateOfUser() async {
     User.userToken = await MySharedPreferences.getUserUserToken();
     User.userLogIn = await MySharedPreferences.getUserSingIn();
+    User.appLang = await MySharedPreferences.getAppLang();
   }
 
   @override

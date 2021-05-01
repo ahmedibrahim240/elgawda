@@ -302,17 +302,17 @@ class _RegisterState extends State<Register> {
     try {
       // Dio dio = new Dio();
 
-      var response = await http.post(
-        Utils.REGISTER_URL,
-        // Utils.REGISTER_URL,
-        body: {
-          'name': name,
-          'email': email,
-          'mobile': mobile,
-          'password': password,
-          'password_confirmation': password_confirmation,
-        },
-      );
+      var response = await http.post(Utils.REGISTER_URL,
+          // Utils.REGISTER_URL,
+          body: {
+            'name': name,
+            'email': email,
+            'mobile': mobile,
+            'password': password,
+            'password_confirmation': password_confirmation,
+          }, headers: {
+        'lang': apiLang(),
+      });
 
       Map<String, dynamic> map = json.decode(response.body);
       print('stuates Code:${response.statusCode}');

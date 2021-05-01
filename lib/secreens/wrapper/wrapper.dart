@@ -34,7 +34,6 @@ class _WrapperState extends State<Wrapper> {
     User.userPassword = await MySharedPreferences.getUserUserPassword();
     User.userToken = await MySharedPreferences.getUserUserToken();
     User.appLang = await MySharedPreferences.getAppLang();
-    User.apiLang = await MySharedPreferences.getApiLang();
     Cart.totalPraices = await MySharedPreferences.getTotalPrice();
   }
 
@@ -43,15 +42,14 @@ class _WrapperState extends State<Wrapper> {
     getDateOfUser();
     gitFCMToken();
     super.initState();
-    print("Cart.totalPraices:${Cart.totalPraices}");
-    print("UaerToken:${User.userToken}");
+    print('Applan:' + User.appLang.toString());
+    print('ApplanApi:' + apiLang());
   }
 
   gitFCMToken() {
     try {
       _fcm.getToken().then(
         (token) {
-          print("FCmtoken: $token");
           updateFcmToken(token);
         },
       );

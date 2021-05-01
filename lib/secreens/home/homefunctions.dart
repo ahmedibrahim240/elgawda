@@ -90,11 +90,12 @@ featuredSections({@required BuildContext context}) {
 
 //////////////////////////////////////////////////////////////////////
 
-featuerd(
-    {int index,
-    Function onTap,
-    @required BuildContext context,
-    CouresesModels coures}) {
+featuerd({
+  int index,
+  Function onTap,
+  @required BuildContext context,
+  CouresesModels coures,
+}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -161,7 +162,7 @@ featuerd(
           Row(
             children: [
               Text(
-                'Pri',
+                getTranslated(context, 'price'),
                 style: AppTheme.headingColorBlue.copyWith(
                   fontSize: 12,
                 ),

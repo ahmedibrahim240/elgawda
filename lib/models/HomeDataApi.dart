@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/utils.dart';
@@ -11,7 +12,12 @@ class HomeDaTaApi {
     List<CouresesModels> listOfCoureses = [];
 
     try {
-      var response = await http.get(Utils.HOME_URL);
+      var response = await http.get(
+        Utils.HOME_URL,
+        headers: {
+          'lang': apiLang(),
+        },
+      );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']['featured_courses']) {
@@ -22,7 +28,6 @@ class HomeDaTaApi {
             name: cours['name'],
             discount_message: cours['discount_message'],
             website_link: cours['website_link'],
-            mp4Link: cours['video_qualities'][0]['url'],
             instructorName: cours['instructor']['name'],
             total_files: cours['featured_data']['total_files'],
             total_time: cours['featured_data']['total_time'],
@@ -51,7 +56,12 @@ class HomeDaTaApi {
     List<CouresesModels> listOfCoureses = [];
 
     try {
-      var response = await http.get(Utils.HOME_URL);
+      var response = await http.get(
+        Utils.HOME_URL,
+        headers: {
+          'lang': apiLang(),
+        },
+      );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']['slider']) {
@@ -62,7 +72,6 @@ class HomeDaTaApi {
             name: cours['name'],
             discount_message: cours['discount_message'],
             website_link: cours['website_link'],
-            mp4Link: cours['video_qualities'][0]['url'],
             instructorName: cours['instructor']['name'],
             total_files: cours['featured_data']['total_files'],
             total_time: cours['featured_data']['total_time'],
@@ -92,7 +101,12 @@ class HomeDaTaApi {
     List<SubCategoriesModels> listOfSubCategoriesModels = [];
 
     try {
-      var response = await http.get(Utils.Categories_URL);
+      var response = await http.get(
+        Utils.Categories_URL,
+        headers: {
+          'lang': apiLang(),
+        },
+      );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']) {
@@ -128,6 +142,9 @@ class HomeDaTaApi {
     try {
       var response = await http.get(
         Utils.HOMESearch_URL + "?search=$name",
+        headers: {
+          'lang': apiLang(),
+        },
       );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
@@ -139,7 +156,6 @@ class HomeDaTaApi {
             name: cours['name'],
             discount_message: cours['discount_message'],
             website_link: cours['website_link'],
-            mp4Link: cours['video_qualities'][0]['url'],
             instructorName: cours['instructor']['name'],
             total_files: cours['featured_data']['total_files'],
             total_time: cours['featured_data']['total_time'],

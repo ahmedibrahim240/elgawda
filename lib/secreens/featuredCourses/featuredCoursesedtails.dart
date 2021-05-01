@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/prodact.dart';
@@ -90,7 +91,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             children: [
               Text(
-                'Courses ' + widget.courses.name,
+                getTranslated(context, 'Courses') + ' ' + widget.courses.name,
                 style: AppTheme.headingColorBlue.copyWith(
                   color: customColorGold,
                 ),
@@ -142,7 +143,9 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                   ? Container()
                   : coursesDetaile(
                       iconData: Icons.person,
-                      title: 'Created by' + widget.courses.instructorName,
+                      title: getTranslated(context, 'Createdby') +
+                          ' ' +
+                          widget.courses.instructorName,
                     ),
               SizedBox(height: 10),
               (widget.courses.total_time == '00:00:00' ||
@@ -150,8 +153,8 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                   ? Container()
                   : coursesDetaile(
                       iconData: Icons.play_circle_fill,
-                      title:
-                          '${widget.courses.total_time} total hours on video',
+                      title: '${widget.courses.total_time} ' +
+                          getTranslated(context, 'total_hours_video'),
                     ),
               SizedBox(height: 10),
               (widget.courses.total_files == 0 ||
@@ -159,7 +162,8 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                   ? Container()
                   : coursesDetaile(
                       iconData: FontAwesomeIcons.book,
-                      title: '${widget.courses.total_files} of PDF',
+                      title:
+                          '${widget.courses.total_files} ${getTranslated(context, 'Of')} PDF',
                     ),
               SizedBox(height: 10),
               (widget.courses.total_quizes == 0 ||
@@ -167,7 +171,8 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                   ? Container()
                   : coursesDetaile(
                       iconData: Icons.book,
-                      title: '${widget.courses.total_quizes} Quiz',
+                      title:
+                          '${widget.courses.total_quizes} ${getTranslated(context, 'Quizes')}',
                     ),
               SizedBox(height: 30),
               Row(
@@ -178,7 +183,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                     flex: 1,
                     child: iconCouresBoton(
                       icon: Icons.favorite,
-                      title: 'Add to wachlist',
+                      title: getTranslated(context, 'add_to_wishlist'),
                     ),
                   ),
                   (cantAdd)
@@ -187,7 +192,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                           flex: 1,
                           child: iconCouresBoton(
                             icon: FontAwesomeIcons.shoppingCart,
-                            title: 'Add to Cart',
+                            title: getTranslated(context, 'add_to_cart'),
                             onTap: () async {
                               setState(() {
                                 increaseCartTotlaPrice(
@@ -236,7 +241,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
                         );
                       },
                       icon: FontAwesomeIcons.solidShareSquare,
-                      title: 'Share',
+                      title: getTranslated(context, 'share'),
                     ),
                   ),
                 ],
@@ -298,7 +303,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: customRaiseButtom(
-                  text: 'Enroll Now',
+                  text: getTranslated(context, 'enroll_now'),
                   onTap: () {},
                 ),
               ),
@@ -343,6 +348,7 @@ class _FeaturedCoursesedtailsState extends State<FeaturedCoursesedtails> {
           SizedBox(height: 10),
           Text(
             title,
+            textAlign: TextAlign.center,
             style: AppTheme.headingColorBlue.copyWith(
               fontSize: 10,
             ),

@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/prodact.dart';
@@ -96,7 +97,9 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   Column(
                     children: [
                       Text(
-                        'Courses ' + widget.courses.name,
+                        getTranslated(context, 'Courses') +
+                            " " +
+                            widget.courses.name,
                         style: AppTheme.headingColorBlue.copyWith(
                           color: customColorGold,
                           fontSize: 12,
@@ -133,7 +136,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                     children: [
                       SizedBox(width: 30),
                       Text(
-                        'Pri',
+                        getTranslated(context, 'price'),
                         style: AppTheme.headingColorBlue.copyWith(
                           fontSize: 12,
                         ),
@@ -185,7 +188,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Text(
-                    'About ' + widget.courses.name,
+                    getTranslated(context, 'about') + " " + widget.courses.name,
                     style: AppTheme.heading.copyWith(
                       color: customColorGray,
                     ),
@@ -213,7 +216,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   flex: 1,
                   child: iconCouresBoton(
                     icon: Icons.favorite,
-                    title: 'Add to wachlist',
+                    title: getTranslated(context, 'add_to_wishlist'),
                   ),
                 ),
                 (cantAdd)
@@ -222,7 +225,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                         flex: 1,
                         child: iconCouresBoton(
                           icon: FontAwesomeIcons.shoppingCart,
-                          title: 'Add to Cart',
+                          title: getTranslated(context, 'add_to_cart'),
                           onTap: () async {
                             setState(() {
                               increaseCartTotlaPrice(
@@ -264,7 +267,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   flex: 1,
                   child: iconCouresBoton(
                     icon: FontAwesomeIcons.solidShareSquare,
-                    title: 'Share',
+                    title: getTranslated(context, 'share'),
                     onTap: () {
                       share(
                         url: widget.courses.website_link,
@@ -327,7 +330,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: customRaiseButtom(
-              text: 'Enroll Now',
+              text: getTranslated(context, 'enroll_now'),
               onTap: () {},
             ),
           ),
@@ -413,7 +416,8 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           ),
           SizedBox(height: 10),
           Text(
-            title,
+            (title) ?? '',
+            textAlign: TextAlign.center,
             style: AppTheme.headingColorBlue.copyWith(
               fontSize: 12,
             ),

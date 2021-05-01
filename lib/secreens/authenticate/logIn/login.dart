@@ -273,13 +273,12 @@ class _LogInState extends State<LogIn> {
     String password,
   }) async {
     try {
-      var response = await http.post(
-        Utils.LOGIN_URL,
-        body: {
-          'email': phoneNummber,
-          'password': password,
-        },
-      );
+      var response = await http.post(Utils.LOGIN_URL, body: {
+        'email': phoneNummber,
+        'password': password,
+      }, headers: {
+        'lang': apiLang(),
+      });
 
       Map<String, dynamic> map = json.decode(response.body);
 

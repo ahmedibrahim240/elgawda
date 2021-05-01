@@ -147,7 +147,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                     children: [
                       SizedBox(width: 30),
                       Text(
-                        'Pri',
+                        getTranslated(context, 'price'),
                         style: AppTheme.headingColorBlue.copyWith(
                           fontSize: 12,
                         ),

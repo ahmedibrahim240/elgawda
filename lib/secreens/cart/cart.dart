@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
@@ -240,6 +241,7 @@ class _CartState extends State<Cart> {
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': User.userToken,
+          'lang': apiLang(),
         },
       );
 
@@ -291,7 +293,7 @@ class _CartState extends State<Cart> {
           );
         },
         context: context,
-        message: "حدث خطا اثناء الارسال يرجي المحاوله مجددا",
+        message: getTranslated(context, 'catchError'),
       );
       setState(() {
         loading = !loading;

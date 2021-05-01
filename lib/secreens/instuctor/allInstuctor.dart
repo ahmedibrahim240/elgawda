@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/secreens/instuctor/instructorPageView.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _AllInstuctorState extends State<AllInstuctor> {
               color: customColor,
             ),
             SizedBox(width: 20),
-            Text('instructor'),
+            Text(getTranslated(context, 'instructor')),
           ],
         ),
         actions: [
@@ -45,7 +46,7 @@ class _AllInstuctorState extends State<AllInstuctor> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         children: [
           Text(
-            'instructor',
+            getTranslated(context, 'instructor'),
             style: AppTheme.headingColorBlue.copyWith(
               fontSize: 16,
             ),
@@ -112,7 +113,10 @@ class _AllInstuctorState extends State<AllInstuctor> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: customCachedNetworkImage(
-                  context: context, url: instructor.image_path),
+                context: context,
+                url: instructor.image_path,
+                boxFit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(width: 20),

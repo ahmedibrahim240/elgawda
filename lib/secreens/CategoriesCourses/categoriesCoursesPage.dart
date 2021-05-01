@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
@@ -154,7 +155,7 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
                                         Row(
                                           children: [
                                             Text(
-                                              'Pri',
+                                              getTranslated(context, 'price'),
                                               style: AppTheme.headingColorBlue
                                                   .copyWith(
                                                 fontSize: 12,
@@ -195,8 +196,19 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
                                                   ? AppTheme.headingColorBlue
                                                       .copyWith(
                                                       fontSize: 12,
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
+                                                      decoration: (snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .discount ==
+                                                                  null ||
+                                                              snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .discount ==
+                                                                  '')
+                                                          ? TextDecoration.none
+                                                          : TextDecoration
+                                                              .lineThrough,
                                                       color: customColor
                                                           .withOpacity(.5),
                                                     )

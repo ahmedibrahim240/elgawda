@@ -169,8 +169,6 @@ class _MoreState extends State<More> {
 
     MySharedPreferences.saveAppLang(_locale.toString());
     User.appLang = await MySharedPreferences.getAppLang();
-    MySharedPreferences.saveApiLang(apiLang());
-    User.apiLang = await MySharedPreferences.getApiLang();
   }
 }
 

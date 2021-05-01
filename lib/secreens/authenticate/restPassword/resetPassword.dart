@@ -2,6 +2,7 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
+import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:elgawda/models/utils.dart';
@@ -53,7 +54,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Reset Password",
+                            getTranslated(context, 'Reset_Password'),
                             style: AppTheme.heading.copyWith(
                               color: customColor,
                               fontSize: 15,
@@ -159,6 +160,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           'password': password,
           'password_confirmation': confPassword,
         },
+        headers: {
+          'lang': apiLang(),
+        },
       );
 
       Map<String, dynamic> map = json.decode(response.body);
@@ -194,6 +198,13 @@ class _ResetPasswordState extends State<ResetPassword> {
       showMyDialog(
         context: context,
         message: getTranslated(context, 'catchError'),
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => SplashScreen(),
+            ),
+          );
+        },
       );
 
       print(e.toString());

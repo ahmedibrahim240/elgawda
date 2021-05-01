@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -26,7 +27,6 @@ class CouresesModels {
   // ignore: non_constant_identifier_names
   final int rate_count;
   final String name;
-  final String mp4Link;
   // ignore: non_constant_identifier_names
   final String promo_video;
   final String instructorName;
@@ -66,8 +66,6 @@ class CouresesModels {
     this.id,
     this.name,
     this.description,
-    this.mp4Link,
-    // ignore: non_constant_identifier_names
     this.rate_count,
     this.instructorName,
     this.sections,
@@ -91,7 +89,12 @@ class InstructorApi {
     List<CouresesModels> listOfInstructorCoureses = [];
 
     try {
-      var response = await http.get(Utils.Instructors_URL);
+      var response = await http.get(
+        Utils.Instructors_URL,
+        headers: {
+          'lang': apiLang(),
+        },
+      );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var items in jsonData['data']) {
@@ -104,7 +107,6 @@ class InstructorApi {
               name: cours['name'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
-              mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
               total_files: cours['featured_data']['total_files'],
               total_time: cours['featured_data']['total_time'],
@@ -144,7 +146,12 @@ class InstructorApi {
     List<CouresesModels> listOfInstructorCoureses = [];
 
     try {
-      var response = await http.get(Utils.HOME_URL);
+      var response = await http.get(
+        Utils.HOME_URL,
+        headers: {
+          'lang': apiLang(),
+        },
+      );
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var items in jsonData['data']['instructors']) {
@@ -157,7 +164,6 @@ class InstructorApi {
               name: cours['name'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
-              mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
               total_files: cours['featured_data']['total_files'],
               total_time: cours['featured_data']['total_time'],

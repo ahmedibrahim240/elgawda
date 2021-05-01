@@ -1,10 +1,8 @@
-import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class MyCoursesVideoPage extends StatefulWidget {
   final String title;

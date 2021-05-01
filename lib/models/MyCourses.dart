@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
@@ -13,6 +14,7 @@ class MyCoursesApi {
         Utils.MyCourses_URL,
         headers: {
           'x-api-key': User.userToken,
+          'lang': apiLang(),
         },
       );
       var jsonData = json.decode(response.body);
@@ -26,7 +28,6 @@ class MyCoursesApi {
               name: cours['name'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
-              mp4Link: cours['video_qualities'][0]['url'],
               instructorName: cours['instructor']['name'],
               total_files: cours['featured_data']['total_files'],
               total_time: cours['featured_data']['total_time'],

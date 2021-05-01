@@ -1,3 +1,4 @@
+import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ class ChatApi {
     try {
       var response = await http.get(Utils.Chat_URL + '/$id', headers: {
         'x-api-key': User.userToken,
+        'lang': apiLang(),
       });
       var jsonData = json.decode(response.body);
       print(jsonData);

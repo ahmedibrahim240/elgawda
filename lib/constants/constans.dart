@@ -39,7 +39,8 @@ Future<Null> customOnRefresh(
   return null;
 }
 
-/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
 class LogoContainar extends StatelessWidget {
   const LogoContainar({
     Key key,
@@ -73,7 +74,7 @@ String gitnewPrice({String descaound, String price}) {
   return oldPrice.toString();
 }
 
-apiLang() {
+String apiLang() {
   switch (User.appLang) {
     case 'ar_EG':
       return 'ar';
