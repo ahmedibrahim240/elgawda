@@ -13,6 +13,13 @@
 	<key>CFBundleName</key>
 	<string>elgawda</string>
 	<key>CFBundlePackageType</key>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
 <!-- Google Sign-in Section -->
 	<key>CFBundleURLTypes</key>
 	<array>

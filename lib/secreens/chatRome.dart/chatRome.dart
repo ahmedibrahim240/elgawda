@@ -133,8 +133,10 @@ class _ChatRomeState extends State<ChatRome> {
             onTap: () {
               setState(() {
                 loading = !loading;
+              });
+              sentMessage(_messageController.text);
+              setState(() {
                 _messageController.text = '';
-                sentMessage(_messageController.text);
               });
             },
             child: Container(

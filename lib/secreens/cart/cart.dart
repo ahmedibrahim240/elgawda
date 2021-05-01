@@ -3,6 +3,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
+import 'package:elgawda/secreens/cart/PaymentMethod.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/dbhelper.dart';
 import 'package:flutter/cupertino.dart';
@@ -205,14 +206,37 @@ class _CartState extends State<Cart> {
                                       fontSize: 16, color: customColorGold),
                                 ),
                                 SizedBox(width: 20),
+                              ],
+                            ),
+                            Center(
+                              child: Text(
+                                'Choose Payment Method',
+                                style: AppTheme.heading,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
                                 customRaiseButtom(
-                                    text: 'Check Out',
-                                    onTap: () {
-                                      setState(() {
-                                        loading = !loading;
-                                      });
-                                      checkOut(item: snapshot);
-                                    }),
+                                  text: 'Cash',
+                                  onTap: () {
+                                    setState(() {
+                                      loading = !loading;
+                                    });
+                                    checkOut(item: snapshot);
+                                  },
+                                ),
+                                SizedBox(width: 10),
+                                customRaiseButtom(
+                                  text: 'Credit',
+                                  onTap: () {
+                                    setState(() {
+                                      loading = !loading;
+                                    });
+                                    creditOut(item: snapshot);
+                                  },
+                                ),
                               ],
                             ),
                           ],
@@ -266,6 +290,82 @@ class _CartState extends State<Cart> {
           },
           context: context,
           message: 'success',
+        );
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(
+          onTap: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => Wrapper(),
+              ),
+            );
+          },
+          context: context,
+          message: jsonData['message'].toString(),
+        );
+      }
+    } catch (e) {
+      showMyDialog(
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => Wrapper(),
+            ),
+          );
+        },
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
+      setState(() {
+        loading = !loading;
+      });
+
+      print(e);
+    }
+  }
+
+  creditOut({var item}) async {
+    List courses = [];
+    for (var items in item.data) {
+      courses.add(items['CoursesId']);
+    }
+
+    try {
+      var body = {
+        'courses': courses,
+        'payment_method': 'credit',
+      };
+
+      var response = await http.post(
+        Utils.Checkout_URL,
+        body: json.encode(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': User.userToken,
+          'lang': apiLang(),
+        },
+      );
+
+      var jsonData = json.decode(response.body);
+
+      if (jsonData['success'] == true) {
+        setState(() {
+          loading = !loading;
+        });
+
+        await helper.deleteAllProduct();
+        decreaseCartTotlaPrice(
+          price: Cart.totalPraices,
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => PaymentMethod(
+              url: jsonData['data']['payment_url'],
+            ),
+          ),
         );
       } else {
         setState(() {

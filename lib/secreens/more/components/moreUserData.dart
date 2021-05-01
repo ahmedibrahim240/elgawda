@@ -40,7 +40,7 @@ class _MoreUserDataState extends State<MoreUserData> {
                 return CircleAvatar(
                   maxRadius: 45,
                   backgroundColor: customColor,
-                  backgroundImage: (users.image != '' || users.image != null)
+                  backgroundImage: (users.image != '' && users.image != null)
                       ? NetworkImage(users.image)
                       : AssetImage(
                           'lib/images/man.png',

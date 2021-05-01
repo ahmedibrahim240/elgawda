@@ -135,9 +135,17 @@ class _EditProfileState extends State<EditProfile> {
                                       userToken: User.userToken,
                                       context: context)
                                   .upDateUserData(
-                                email: (email) ?? userData.email,
+                                email: (email) ??
+                                        (userData.email ==
+                                            getTranslated(context, 'addEmail'))
+                                    ? ''
+                                    : userData.email,
                                 name: (name) ?? userData.name,
-                                mobile: (mobile) ?? userData.moblie,
+                                mobile: (mobile) ??
+                                        (userData.moblie ==
+                                            getTranslated(context, 'addPhone'))
+                                    ? ''
+                                    : userData.moblie,
                                 password: (password) ?? '',
                                 images: (UserPorfileImage.image) ?? null,
                                 context: context,
@@ -219,10 +227,10 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
                             _imageFile,
                             fit: BoxFit.cover,
                           )
-                        : (widget.userimgUrl != '')
+                        : (widget.userimgUrl == '' && widget.userimgUrl == null)
                             ? Image(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(widget.userimgUrl),
+                                image: AssetImage('lib/images/man.png'),
                               )
                             : customCachedNetworkImage(
                                 context: context,

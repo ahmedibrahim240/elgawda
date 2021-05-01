@@ -330,51 +330,48 @@ class _LogInState extends State<LogIn> {
           'google_id': googleID,
           'name': name,
         },
-        // headers: {
-        //   'lang': User.apiLang,
-        // },
+        headers: {
+          'lang': apiLang(),
+        },
       );
       print(response.statusCode);
 
       Map<String, dynamic> map = json.decode(response.body);
       print(map);
-      setState(
-        () async {
-          // print('this is the userData data ${userData}');
-          if (map['success'] == true) {
-            setState(() {
-              User.userToken = map['data']['api_token'].toString();
-            });
-            MySharedPreferences.saveUserSingIn(true);
-            MySharedPreferences.saveUserSkipLogIn(false);
-            MySharedPreferences.saveUserUserPassword(password);
 
-            MySharedPreferences.saveUserUserName(
-              map['data']['name'].toString(),
-            );
+      // print('this is the userData data ${userData}');
+      if (map['success'] == true) {
+        setState(() {
+          User.userToken = map['data']['api_token'].toString();
+        });
+        MySharedPreferences.saveUserSingIn(true);
+        MySharedPreferences.saveUserSkipLogIn(false);
 
-            MySharedPreferences.saveUserUserToken(
-              map['data']['api_token'].toString(),
-            );
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => Wrapper(),
-              ),
-            );
-          } else {
-            setState(() {
-              error = map['message'].toString();
-              loading = !loading;
-            });
-          }
-        },
-      );
+        MySharedPreferences.saveUserUserName(
+          map['data']['name'].toString(),
+        );
+
+        MySharedPreferences.saveUserUserToken(
+          map['data']['api_token'].toString(),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+      } else {
+        setState(() {
+          error = map['message'].toString();
+          loading = !loading;
+        });
+      }
+
       // Navigator.pop(context);
     } catch (e) {
       setState(() {
         loading = !loading;
       });
-       showMyDialog(
+      showMyDialog(
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -393,15 +390,11 @@ class _LogInState extends State<LogIn> {
       });
       print(_googleSginIn.currentUser.displayName);
       print(_googleSginIn.currentUser.id);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => Wrapper(),
-        ),
+
+      _loginWithGOOGLe(
+        googleID: _googleSginIn.currentUser.id,
+        name: _googleSginIn.currentUser.displayName,
       );
-      // _loginWithGOOGLe(
-      //   googleID: _googleSginIn.currentUser.id,
-      //   name: _googleSginIn.currentUser.displayName,
-      // );
     } catch (e) {
       print("catssssssssss eroooooooooooooor");
       print(e.toString());

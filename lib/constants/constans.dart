@@ -293,7 +293,7 @@ homeAppBar({BuildContext context, Widget title}) {
                 child: CircleAvatar(
                   maxRadius: 50,
                   backgroundColor: customColor,
-                  backgroundImage: (users.image != '' || users.image != null)
+                  backgroundImage: (users.image != '' && users.image != null)
                       ? NetworkImage(users.image)
                       : AssetImage(
                           'lib/images/man.png',
