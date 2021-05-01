@@ -45,6 +45,13 @@
   "remove_to_wishlist"                              : "Remove from Wishlist",
   "add_to_cart"                                     : "Add To Cart",
   "share"                                           : "Share",
+  "Chat"                                           : "Chat",
+  "Review"                                           : "Review",
+  "Comment"                                           : "Comment",
+  "Rating"                                           : "Rating",
+  "Lectures"                                           : "Lectures",
+  "Description"                                           : "Description",
+  "Section"                                           : "Section",
   "edit_profile"                                    : "Edit profile",
 
   "enroll_now"                                      : "Enroll Now",

@@ -72,7 +72,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
               children: [
                 taps(
                   index: 0,
-                  title: 'Lecture',
+                  title: getTranslated(context, 'Lectures'),
                   onTap: () {
                     setState(
                       () {
@@ -84,7 +84,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                 SizedBox(width: 20),
                 taps(
                   index: 1,
-                  title: 'More',
+                  title: getTranslated(context, 'more'),
                   onTap: () {
                     setState(
                       () {
@@ -96,7 +96,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                 SizedBox(width: 20),
                 taps(
                   index: 2,
-                  title: 'Review',
+                  title: getTranslated(context, 'Review'),
                   onTap: () {
                     setState(
                       () {
@@ -108,7 +108,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                 SizedBox(width: 20),
                 taps(
                   index: 3,
-                  title: 'Chat',
+                  title: getTranslated(context, 'Chat'),
                   onTap: () {
                     setState(
                       () {
@@ -141,7 +141,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       padding: EdgeInsets.symmetric(horizontal: 20),
       children: [
         Text(
-          'Description',
+          getTranslated(context, 'Description'),
           style: AppTheme.heading.copyWith(
             color: customColor,
             fontSize: 20,
@@ -198,7 +198,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                     labelStyle: AppTheme.heading.copyWith(
                       color: customColorGray,
                     ),
-                    labelText: 'Comment',
+                    labelText: getTranslated(context, 'Comment'),
                   ),
                 ),
               ),
@@ -216,7 +216,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                     ),
                     child: Center(
                       child: Text(
-                        'Rating',
+                        getTranslated(context, 'Rating'),
                         style: AppTheme.heading.copyWith(
                           color: Colors.white,
                         ),
@@ -277,8 +277,10 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
                     child: Text(
-                      'Section ${index + 1} - ' +
-                          widget.courses.sections[index]['name'],
+                      getTranslated(context, 'Section') +
+                              ' ${index + 1} - ' +
+                              widget.courses.sections[index]['name'] ??
+                          "",
                       style: AppTheme.subHeading.copyWith(
                         color: Colors.grey[400],
                       ),
@@ -306,7 +308,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => MyCoursesVideoPage(
-                  title: list[index]['name'],
+                  title: list[index]['name'] ?? '',
                   videoId: list[index]['vimeo_id'] ?? '',
                 ),
               ),
@@ -345,7 +347,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            list[index]['name'],
+                            list[index]['name'] ?? "",
                             style: AppTheme.heading,
                           ),
                         ],
@@ -362,7 +364,8 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                           : TextButton(
                               onPressed: () {},
                               child: Text(
-                                '${quizes.length} Quizs',
+                                '${quizes.length}' +
+                                    getTranslated(context, 'Quizes'),
                                 style: AppTheme.heading.copyWith(
                                   color: customColorGold,
                                 ),

@@ -17,6 +17,8 @@
   "Courses"                                             :"الدورة",
   "Createdby"                                             :"انشأ من قبل",
     "send"                                            : "إرسال",
+  "Chat"                                           : "محادثة",
+
     "create"                                           : "إنشاء ",
   "Course_avilable"                                        : "سيكون محتوى الدورة متاحًا قريبًا",
   " total_hours_video "                             :" مجموع الساعات على الفيديو",
@@ -52,6 +54,15 @@
   "UserTokenField"                                  :"يرجى محاولة تسجيل الدخول مرة أخرى",
   "addCourse"                                            : "تم إضافة الدورة",
   "Sending"                                            : "إرسال....",
+  "Review"                                           : "تقييم",
+  "Comment"                                           : "تعليق",
+  "Lectures"                                           : "محاضرات",
+
+  "Description"                                           : "وصف",
+  "Section"                                           : "قسم",
+
+
+  "Rating"                                           : "تقييم",
   "Write_a_message"                                 : "اكتب رسالة....",
   "removeCourse"                                            : "تم حذف الدورة",
 
