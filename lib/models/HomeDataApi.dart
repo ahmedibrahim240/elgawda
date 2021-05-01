@@ -23,6 +23,7 @@ class HomeDaTaApi {
         for (var cours in jsonData['data']['featured_courses']) {
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
+            in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],
@@ -67,6 +68,7 @@ class HomeDaTaApi {
         for (var cours in jsonData['data']['slider']) {
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
+            in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],
@@ -151,6 +153,7 @@ class HomeDaTaApi {
         for (var cours in jsonData['data']) {
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
+            in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],

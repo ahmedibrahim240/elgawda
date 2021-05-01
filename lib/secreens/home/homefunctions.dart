@@ -5,7 +5,6 @@ import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/HomeDataApi.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/secreens/CategoriesCourses/categoriesCoursesPageView.dart';
-import 'package:elgawda/secreens/featuredCourses/featuredCoursesedtails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +68,7 @@ featuredSections({@required BuildContext context}) {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (_) => FeaturedCoursesedtails(
+                                builder: (_) => CategoriesCoursesPageView(
                                   courses: snapshot.data[index],
                                 ),
                               ),
@@ -184,7 +183,7 @@ featuerd({
               SizedBox(width: 5),
               Text(
                 '${coures.price}\$',
-                style: (coures.discount == null || coures.discount == '')
+                style: (coures.discount != null && coures.discount != '')
                     ? AppTheme.headingColorBlue.copyWith(
                         fontSize: 12,
                         decoration: TextDecoration.lineThrough,

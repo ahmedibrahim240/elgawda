@@ -374,6 +374,10 @@ class _LogInState extends State<LogIn> {
       setState(() {
         loading = !loading;
       });
+       showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
       print(
           'Catchhhhhhhhhhhhhhhhhhhhhhh errororororrorrorooroeoreoroeroeorero');
       print(e.toString());

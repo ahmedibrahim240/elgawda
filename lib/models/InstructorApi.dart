@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -31,6 +32,8 @@ class CouresesModels {
   final String promo_video;
   final String instructorName;
   // ignore: non_constant_identifier_names
+  final int in_wish_list;
+  // ignore: non_constant_identifier_names
   final String vimeo_code;
   // ignore: non_constant_identifier_names
   final String image_path;
@@ -56,6 +59,8 @@ class CouresesModels {
     // ignore: non_constant_identifier_names
     this.total_quizes,
     // ignore: non_constant_identifier_names
+    @required this.in_wish_list,
+    // ignore: non_constant_identifier_names
     this.discount_message,
     // ignore: non_constant_identifier_names
     this.website_link,
@@ -66,6 +71,7 @@ class CouresesModels {
     this.id,
     this.name,
     this.description,
+    // ignore: non_constant_identifier_names
     this.rate_count,
     this.instructorName,
     this.sections,
@@ -102,6 +108,7 @@ class InstructorApi {
           for (var cours in items['courses']) {
             CouresesModels coureses = CouresesModels(
               id: cours['id'],
+              in_wish_list: cours['in_wish_list'],
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
@@ -159,6 +166,7 @@ class InstructorApi {
           for (var cours in items['courses']) {
             CouresesModels coureses = CouresesModels(
               id: cours['id'],
+              in_wish_list: cours['in_wish_list'],
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],

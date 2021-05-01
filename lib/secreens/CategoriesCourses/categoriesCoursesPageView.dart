@@ -4,11 +4,16 @@ import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/prodact.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/dbhelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:elgawda/models/utils.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CategoriesCoursesPageView extends StatefulWidget {
   final CouresesModels courses;
@@ -24,6 +29,8 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
   DbHehper helper;
   bool cantAdd = false;
   var courseFromSQL;
+  bool loading = false;
+
   getCouresByIdFlomSQl() async {
     courseFromSQL = await helper.getProductById(widget.courses.id);
 
@@ -212,13 +219,23 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: iconCouresBoton(
-                    icon: Icons.favorite,
-                    title: getTranslated(context, 'add_to_wishlist'),
-                  ),
-                ),
+                (loading)
+                    ? Center(child: CircularProgressIndicator())
+                    : Expanded(
+                        flex: 1,
+                        child: iconCouresBoton(
+                          icon: Icons.favorite,
+                          title: (widget.courses.in_wish_list == 1)
+                              ? getTranslated(context, 'remove_to_wishlist')
+                              : getTranslated(context, 'add_to_wishlist'),
+                          onTap: () {
+                            setState(() {
+                              loading = !loading;
+                            });
+                            addToWishList();
+                          },
+                        ),
+                      ),
                 (cantAdd)
                     ? Container()
                     : Expanded(
@@ -327,14 +344,6 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   },
                 ),
           SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: customRaiseButtom(
-              text: getTranslated(context, 'enroll_now'),
-              onTap: () {},
-            ),
-          ),
-          SizedBox(height: 50),
         ],
       ),
     );
@@ -425,5 +434,72 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
         ],
       ),
     );
+  }
+
+  addToWishList() async {
+    try {
+      var response = await http.post(
+        Utils.MyWishList_URL,
+        body: {
+          'course_id': widget.courses.id.toString(),
+        },
+        headers: {
+          'x-api-key': User.userToken,
+          'lang': apiLang(),
+        },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+      if (map['success'] == false) {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(
+          context: context,
+          message: map['message'].toString(),
+          onTap: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => Wrapper(),
+              ),
+            );
+          },
+        );
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(
+          context: context,
+          message: 'Coures Was Add ',
+          onTap: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => Wrapper(),
+              ),
+            );
+          },
+        );
+      }
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => Wrapper(),
+            ),
+          );
+        },
+      );
+      print('whtis List errororororr');
+      print(e.toString());
+    }
   }
 }

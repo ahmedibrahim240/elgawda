@@ -110,6 +110,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         TextFormField(
                           initialValue: User.userPassword,
+                          obscureText: obscurePassword,
                           onChanged: (val) {
                             setState(() {
                               password = val;

@@ -158,6 +158,7 @@ class _ChatRomeState extends State<ChatRome> {
         },
         headers: {
           'x-api-key': User.userToken,
+          'lang': apiLang(),
         },
       );
       print(response.statusCode);

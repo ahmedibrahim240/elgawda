@@ -206,6 +206,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
             borderRadius: BorderRadius.circular(100),
             child: customCachedNetworkImage(
               context: context,
+              boxFit: BoxFit.cover,
               url: widget.instructor.image_path,
             ),
           ),
