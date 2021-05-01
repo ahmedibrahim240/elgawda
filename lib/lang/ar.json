@@ -50,6 +50,10 @@
     "add_to_wishlist"                                 : "إضافة للمفضلة",
     "remove_to_wishlist"                                 : "إزالة للمفضلة",
   "UserTokenField"                                  :"يرجى محاولة تسجيل الدخول مرة أخرى",
+  "addCourse"                                            : "تم إضافة الدورة",
+  "Sending"                                            : "إرسال....",
+  "Write_a_message"                                 : "اكتب رسالة....",
+  "removeCourse"                                            : "تم حذف الدورة",
 
     "add_to_cart"                                     : "إضافة الى عربة التسوق",
     "share"                                           : "مشاركة",

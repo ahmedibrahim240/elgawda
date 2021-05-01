@@ -347,6 +347,7 @@ class _CartState extends State<Cart> {
       );
 
       var jsonData = json.decode(response.body);
+      print(jsonData);
 
       if (jsonData['success'] == true) {
         setState(() {

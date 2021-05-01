@@ -136,9 +136,11 @@ Future<void> showMyDialog({
                   ),
                 ),
               ),
-              Text(
-                message,
-                style: AppTheme.subHeading,
+              Center(
+                child: Text(
+                  message,
+                  style: AppTheme.subHeading,
+                ),
               ),
             ],
           ),

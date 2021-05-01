@@ -53,6 +53,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
 
   @override
   Widget build(BuildContext context) {
+    print("widget.courses.enrolled:${widget.courses.enrolled}");
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -486,7 +487,9 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
         });
         showMyDialog(
           context: context,
-          message: 'Coures Was Add ',
+          message: (widget.courses.in_wish_list == 1)
+              ? getTranslated(context, 'removeCourse')
+              : getTranslated(context, 'addCourse'),
           onTap: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
