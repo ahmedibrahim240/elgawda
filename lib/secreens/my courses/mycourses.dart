@@ -1,7 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
-import 'package:elgawda/models/MyCourses.dart';
+import 'package:elgawda/models/MyCoursesApi.dart';
 import 'package:elgawda/secreens/my%20courses/mycoursesdetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

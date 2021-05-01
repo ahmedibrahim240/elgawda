@@ -42,8 +42,7 @@ class _WrapperState extends State<Wrapper> {
     getDateOfUser();
     gitFCMToken();
     super.initState();
-    print('Applan:' + User.appLang.toString());
-    print('ApplanApi:' + apiLang());
+    print('UserToken:' + User.userToken.toString());
   }
 
   gitFCMToken() {

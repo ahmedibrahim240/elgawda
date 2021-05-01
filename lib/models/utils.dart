@@ -49,7 +49,7 @@ class Utils {
   // ignore: non_constant_identifier_names
   static final Instructors_URL = BASE_URL + "/instructors";
   // ignore: non_constant_identifier_names
-  static final MyCourses_URL = BASE_URL + "/orders";
+  static final MyCourses_URL = BASE_URL + "/clients/mycourses";
   // ignore: non_constant_identifier_names
   static final SendForgetCode_URL = BASE_URL + "/clients/send_forget_code";
   // ignore: non_constant_identifier_names
