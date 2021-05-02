@@ -29,6 +29,8 @@ class Utils {
   static final REGISTER_URL = BASE_URL + "/clients/register";
   // ignore: non_constant_identifier_names
   static final Chat_URL = BASE_URL + "/chat";
+  // ignore: non_constant_identifier_names
+  static final Notifications_URL = BASE_URL + "/clients/notifications";
 
   // ignore: non_constant_identifier_names
   static final Checkout_URL = BASE_URL + "/orders/checkout";

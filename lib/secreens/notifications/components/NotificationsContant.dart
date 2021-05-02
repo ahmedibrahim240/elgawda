@@ -53,8 +53,17 @@ class NotificationsContant extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 110,
                   child: Text(
+                    title,
+                    style: AppTheme.headingColorBlue.copyWith(
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 110,
+                  child: Text(
                     contant,
-                    style: AppTheme.subHeadingColorBlue.copyWith(
+                    style: AppTheme.subHeading.copyWith(
                       fontSize: 10,
                     ),
                   ),
