@@ -1,7 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
-import 'package:elgawda/models/chetApi.dart';
+import 'package:elgawda/models/chatApi.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,6 @@ class _ChatRomeState extends State<ChatRome> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    print('CouresChat Id:${widget.id}');
     return Container(
       height: MediaQuery.of(context).size.height - 430,
       child: Column(
@@ -44,9 +43,6 @@ class _ChatRomeState extends State<ChatRome> {
                                 primary: false,
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (context, index) {
-                                  print(
-                                      'CouresChat Id:${snapshot.data[index].sender}');
-
                                   return MessageTile(
                                     message: snapshot.data[index].message,
                                     isSendByme:

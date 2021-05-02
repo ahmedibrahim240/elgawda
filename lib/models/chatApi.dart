@@ -44,4 +44,34 @@ class ChatApi {
     }
     return listOfMessage;
   }
+
+  static Future<List<MessageModels>> fetchAllContactUSMessages() async {
+    List<MessageModels> listOfMessage = [];
+
+    try {
+      var response =
+          await http.get(Utils.Contactus_URL + '/get_messages', headers: {
+        'x-api-key': User.userToken,
+        'lang': apiLang(),
+      });
+      var jsonData = json.decode(response.body);
+      print(jsonData);
+      if (response.statusCode == 200) {
+        for (var cours in jsonData['data']) {
+          MessageModels message = MessageModels(
+            id: cours['id'],
+            message: cours['message'],
+            sender: cours['from'],
+            created_at: cours['created_at'],
+          );
+          listOfMessage.add(message);
+        }
+      }
+    } catch (e) {
+      print('Caht errror');
+
+      print(e);
+    }
+    return listOfMessage;
+  }
 }

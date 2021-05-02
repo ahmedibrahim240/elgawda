@@ -1,7 +1,13 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
+import 'package:elgawda/localization/localization_constants.dart';
+import 'package:elgawda/models/chatApi.dart';
+import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/models/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ContactUs extends StatefulWidget {
   @override
@@ -11,54 +17,55 @@ class ContactUs extends StatefulWidget {
 class _ContactUsState extends State<ContactUs> {
   List<String> messageList = [];
   TextEditingController _messageController = TextEditingController();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
+        title: Text(
+          getTranslated(context, 'contact_us'),
+        ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              primary: true,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-              children: [
-                (messageList.isEmpty)
-                    ? Column(
-                        children: [
-                          serviesMessage(
-                            message: 'مرحبا .لسف يوجد احد متصل حاليا',
-                          ),
-                          SizedBox(height: 20),
-                          serviesMessage(
-                            message: 'كيف يمكنا مساعدتك حين معاودها الاتصال ؟',
-                          ),
-                        ],
-                      )
-                    : Container(),
-                ListView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: messageList.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(messageList[index]),
-                        SizedBox(height: 20),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          messageTextFiled(),
-        ],
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            (loading)
+                ? Center(child: CircularProgressIndicator())
+                : Expanded(
+                    child: FutureBuilder(
+                      future: ChatApi.fetchAllContactUSMessages(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return (snapshot.data.isEmpty)
+                              ? Container()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, index) {
+                                    print(
+                                        'CouresChat Id:${snapshot.data[index].sender}');
+                                    return MessageTile(
+                                      message: snapshot.data[index].message,
+                                      isSendByme:
+                                          snapshot.data[index].sender == 'user',
+                                      date: snapshot.data[index].created_at,
+                                    );
+                                  },
+                                );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ),
+            messageTextFiled(),
+            SizedBox(height: 4),
+          ],
+        ),
       ),
     );
   }
@@ -99,7 +106,9 @@ class _ContactUsState extends State<ContactUs> {
               maxLines: null,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
-                hintText: '....write a message',
+                hintText: (loading)
+                    ? getTranslated(context, 'Sending')
+                    : getTranslated(context, 'Write_a_message'),
                 hintStyle: AppTheme.subHeading.copyWith(
                   fontSize: 10,
                   color: customColorIcon,
@@ -125,7 +134,10 @@ class _ContactUsState extends State<ContactUs> {
           GestureDetector(
             onTap: () {
               setState(() {
-                messageList.add(_messageController.text);
+                loading = loading;
+              });
+              sentMessage(_messageController.text);
+              setState(() {
                 _messageController.text = '';
               });
             },
@@ -137,6 +149,118 @@ class _ContactUsState extends State<ContactUs> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  sentMessage(String message) async {
+    try {
+      var response = await http.post(
+        Utils.Contactus_URL + '/send_message',
+        body: {
+          'message': message,
+        },
+        headers: {
+          'x-api-key': User.userToken,
+          'lang': apiLang(),
+        },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+      if (map['success'] == false) {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(context: context, message: map['message'].toString());
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
+      print(
+          'Catchhhhhhhhhhhhhhhhhhhhhhh errororororrorrorooroeoreoroeroeorero');
+      print(e.toString());
+    }
+  }
+}
+
+class MessageTile extends StatefulWidget {
+  final String message;
+  final bool isSendByme;
+  final String date;
+
+  const MessageTile({Key key, this.message, this.isSendByme, this.date})
+      : super(key: key);
+  @override
+  _MessageTileState createState() => _MessageTileState();
+}
+
+class _MessageTileState extends State<MessageTile> {
+  @override
+  Widget build(BuildContext context) {
+    print(widget.isSendByme);
+
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 3),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      alignment:
+          (widget.isSendByme) ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        padding: EdgeInsets.all(8),
+        margin: (widget.isSendByme)
+            ? EdgeInsets.only(left: 100)
+            : EdgeInsets.only(right: 100),
+        decoration: BoxDecoration(
+            color: (widget.isSendByme) ? customColor : Color(0xffff1f1f1),
+            borderRadius: (widget.isSendByme)
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  )
+                : BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.message,
+              style: AppTheme.heading.copyWith(
+                color: (widget.isSendByme) ? Colors.white : customColor,
+                fontSize: 11,
+              ),
+            ),
+            Align(
+              alignment: (User.appLang == 'ar_EG')
+                  ? (widget.isSendByme)
+                      ? Alignment.bottomRight
+                      : Alignment.bottomLeft
+                  : (!widget.isSendByme)
+                      ? Alignment.bottomLeft
+                      : Alignment.bottomRight,
+              child: Text(
+                widget.date,
+                style: AppTheme.heading.copyWith(
+                  color: (widget.isSendByme) ? Colors.white : customColor,
+                  fontSize: 8,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
