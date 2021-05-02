@@ -51,6 +51,8 @@ class _WrapperState extends State<Wrapper> {
     try {
       _fcm.getToken().then(
         (token) {
+          print('FCM Token:$token');
+
           updateFcmToken(token);
         },
       );

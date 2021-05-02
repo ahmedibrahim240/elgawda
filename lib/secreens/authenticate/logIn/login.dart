@@ -2,8 +2,10 @@ import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/secreens/splashscreen.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -246,7 +248,12 @@ class _LogInState extends State<LogIn> {
                                   ),
                                   SizedBox(width: 30),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      setState(() {
+                                        loading = !loading;
+                                      });
+                                      _fblogin();
+                                    },
                                     child: Icon(
                                       FontAwesomeIcons.facebook,
                                       color: Colors.blueAccent,
@@ -396,8 +403,129 @@ class _LogInState extends State<LogIn> {
         name: _googleSginIn.currentUser.displayName,
       );
     } catch (e) {
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
       print("catssssssssss eroooooooooooooor");
       print(e.toString());
+    }
+  }
+
+  _loginWithFB(fbID, name) async {
+    try {
+      var response = await http.post(
+        Utils.FACEBOOK_URL,
+        body: {
+          'fb_id': fbID,
+          'name': name,
+        },
+        headers: {
+          'lang': User.apiLang,
+        },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+
+      if (map['success'] == true) {
+        setState(() {
+          User.userToken = map['data']['api_token'].toString();
+        });
+        MySharedPreferences.saveUserSingIn(true);
+        MySharedPreferences.saveUserSkipLogIn(false);
+
+        MySharedPreferences.saveUserUserName(
+          map['data']['name'].toString(),
+        );
+
+        MySharedPreferences.saveUserUserToken(
+          map['data']['api_token'].toString(),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => SplashScreen(),
+            ),
+          );
+        },
+      );
+      print(
+          'Catchhhhhhhhhhhhhhhhhhhhhhh errororororrorrorooroeoreoroeroeorero');
+      print(e.toString());
+    }
+  }
+
+  final FacebookLogin facebookSignIn = new FacebookLogin();
+  // Future<Null>
+  _fblogin() async {
+    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
+    print('resssssssssssssssssssssssssssssssssult');
+    print(result.status);
+    try {
+      switch (result.status) {
+        case FacebookLoginStatus.loggedIn:
+          final FacebookAccessToken accessToken = result.accessToken;
+          final token = result.accessToken.token;
+
+          final graphResponse = await http.get(
+            'https://graph.facebook.com/v2.12/me?fields=name,email&access_token=$token',
+            headers: {
+              'lang': User.apiLang,
+            },
+          );
+          final profile = json.decode(graphResponse.body);
+          _loginWithFB(
+            accessToken.userId,
+            profile['name'],
+          );
+
+          break;
+        case FacebookLoginStatus.cancelledByUser:
+          print('Login cancelled by the user.');
+          setState(() {
+            loading = !loading;
+          });
+          break;
+        case FacebookLoginStatus.error:
+          setState(() {
+            loading = !loading;
+          });
+          showMyDialog(
+            context: context,
+            message: 'Something went wrong with the login process.\n'
+                'Here\'s the error Facebook gave us: ${result.errorMessage}',
+          );
+
+          break;
+      }
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      showMyDialog(
+        context: context,
+        message: 'Something went wrong with the login process.\n'
+            'Here\'s the error Facebook gave us: ${result.errorMessage}',
+      );
     }
   }
 }
