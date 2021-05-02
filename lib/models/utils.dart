@@ -33,6 +33,8 @@ class Utils {
   static final Contactus_URL = BASE_URL + "/mobile_contact";
   // ignore: non_constant_identifier_names
   static final Notifications_URL = BASE_URL + "/clients/notifications";
+    // ignore: non_constant_identifier_names
+  static final Rate_course_URL = BASE_URL + "/rate_course";
 
   // ignore: non_constant_identifier_names
   static final Checkout_URL = BASE_URL + "/orders/checkout";

@@ -3,12 +3,16 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/chatRome.dart/chatRome.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:elgawda/secreens/my%20courses/components/vidoePage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:elgawda/models/utils.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MyCoursesDetails extends StatefulWidget {
   final CouresesModels courses;
@@ -20,6 +24,9 @@ class MyCoursesDetails extends StatefulWidget {
 
 class _MyCoursesDetailsState extends State<MyCoursesDetails> {
   int lecTapped = 0;
+  double rating = 2.0;
+  String comment;
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +132,9 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
               : (lecTapped == 1)
                   ? more()
                   : (lecTapped == 2)
-                      ? reviewBody()
+                      ? (loading)
+                          ? Center(child: CircularProgressIndicator())
+                          : reviewBody()
                       : ChatRome(
                           id: widget.courses.id,
                         ),
@@ -155,6 +164,48 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
     );
   }
 
+  sentRating() async {
+    try {
+      var response = await http.post(
+        Utils.Rate_course_URL,
+        body: {
+          'comment': comment,
+          'rate': rating,
+          'course_id': widget.courses.id,
+        },
+        headers: {
+          'x-api-key': User.userToken,
+          'lang': apiLang(),
+        },
+      );
+      print(response.statusCode);
+
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map);
+      if (map['success'] == false) {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(context: context, message: map['message'].toString());
+      } else {
+        setState(() {
+          loading = !loading;
+        });
+        showMyDialog(context: context, message: 'success');
+      }
+    } catch (e) {
+      setState(() {
+        loading = !loading;
+      });
+      showMyDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
+      print('Catchhhhhhhhhhhhhhhhhhhhhhh rating');
+      print(e.toString());
+    }
+  }
+
   Container reviewBody() {
     return Container(
       child: Form(
@@ -165,7 +216,12 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SmoothStarRating(
-                rating: 2.5,
+                rating: rating,
+                onRated: (val) {
+                  setState(() {
+                    rating = val;
+                  });
+                },
                 size: 25,
                 filledIconData: Icons.star,
                 color: Colors.yellow[700],
@@ -204,7 +260,12 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
               ),
               SizedBox(height: 20),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    loading = !loading;
+                  });
+                  sentRating();
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

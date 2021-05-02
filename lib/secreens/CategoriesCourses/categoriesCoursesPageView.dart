@@ -53,7 +53,8 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
 
   @override
   Widget build(BuildContext context) {
-    print("widget.courses.enrolled:${widget.courses.enrolled}");
+    print(
+        "widget.courses.enrolledddddddddddddddddddddddddddddddd:${widget.courses.enrolled}");
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
