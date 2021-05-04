@@ -1,5 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/models/quizes.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -100,7 +101,10 @@ class CategoriesApi {
 
   static Future<List<CouresesModels>> fetchCategrsCoursesByid(int id) async {
     List<CouresesModels> listOfCoureses = [];
-
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
     try {
       var response = await http.get(
         Utils.Categories_URL + '/$id',
@@ -111,10 +115,48 @@ class CategoriesApi {
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']['courses']) {
+          listOfSections = [];
+          for (var sec in cours['sections']) {
+            listOfQuizes = [];
+
+            for (var qui in sec['quizes']) {
+              listOfQuestions = [];
+              for (var ques in qui['questions']) {
+                listOfAnswers = [];
+                for (var ans in ques['answers']) {
+                  Answers answers = Answers(
+                    id: ans['id'],
+                    text: ans['text'],
+                  );
+                  listOfAnswers.add(answers);
+                }
+                Questions questions = Questions(
+                  answers: listOfAnswers,
+                  id: ques['id'],
+                  text: ques['text'],
+                  mark: ques['mark'],
+                );
+                listOfQuestions.add(questions);
+              }
+              Quizes quizes = Quizes(
+                id: qui['id'],
+                name: qui['name'],
+                totlaMark: qui['total_mark'],
+                questions: listOfQuestions,
+              );
+              listOfQuizes.add(quizes);
+            }
+            Sections sections = Sections(
+              id: sec['id'],
+              name: sec['name'],
+              quizes: listOfQuizes,
+            );
+            listOfSections.add(sections);
+          }
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
-            in_wish_list: cours['in_wish_list'],
             enrolled: cours['enrolled'],
+            in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],
@@ -128,6 +170,7 @@ class CategoriesApi {
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],
             badges: cours['badges'],
+            sectionsList: listOfSections,
             rate: cours['rate'],
             price: cours['price'],
             sections: cours['sections'],

@@ -24,6 +24,11 @@
   " total_hours_video "                             :" مجموع الساعات على الفيديو",
   "Of"                                             : "من",
   "Quizes"                                             : "الإختبارات",
+  "true"                                      : "صح",
+  "false"                                      : "خطأ",
+  "answers"                                            : "الإجابات",
+  "totalmark"                                            : "مجموع العلامة",
+  "yourmark"                                            : "علامتك",
 
     "an_account"                                      : " حساب",
     "full_name"                                       : "الإسم بالكامل",

@@ -61,7 +61,7 @@ class CouresesModels {
 
   CouresesModels({
     @required this.enrolled,
-    this.sectionsList,
+    @required this.sectionsList,
     // ignore: non_constant_identifier_names
     this.total_quizes,
     // ignore: non_constant_identifier_names
@@ -99,6 +99,10 @@ class InstructorApi {
   static Future<List<InstructorModels>> fetchALLInstructor() async {
     List<InstructorModels> listOfInstructor = [];
     List<CouresesModels> listOfInstructorCoureses = [];
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
 
     try {
       var response = await http.get(
@@ -113,12 +117,50 @@ class InstructorApi {
         for (var items in jsonData['data']) {
           listOfInstructorCoureses = [];
           for (var cours in items['courses']) {
+            listOfSections = [];
+            for (var sec in cours['sections']) {
+              listOfQuizes = [];
+
+              for (var qui in sec['quizes']) {
+                listOfQuestions = [];
+                for (var ques in qui['questions']) {
+                  listOfAnswers = [];
+                  for (var ans in ques['answers']) {
+                    Answers answers = Answers(
+                      id: ans['id'],
+                      text: ans['text'],
+                    );
+                    listOfAnswers.add(answers);
+                  }
+                  Questions questions = Questions(
+                    answers: listOfAnswers,
+                    id: ques['id'],
+                    text: ques['text'],
+                    mark: ques['mark'],
+                  );
+                  listOfQuestions.add(questions);
+                }
+                Quizes quizes = Quizes(
+                  id: qui['id'],
+                  name: qui['name'],
+                  totlaMark: qui['total_mark'],
+                  questions: listOfQuestions,
+                );
+                listOfQuizes.add(quizes);
+              }
+              Sections sections = Sections(
+                id: sec['id'],
+                name: sec['name'],
+                quizes: listOfQuizes,
+              );
+              listOfSections.add(sections);
+            }
             CouresesModels coureses = CouresesModels(
               id: cours['id'],
+              enrolled: cours['enrolled'],
               in_wish_list: cours['in_wish_list'],
               description: cours['description'],
               rate_count: cours['rate_count'],
-              enrolled: cours['enrolled'],
               name: cours['name'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
@@ -130,11 +172,13 @@ class InstructorApi {
               vimeo_code: cours['vimeo_code'],
               promo_video: cours['promo_video'],
               badges: cours['badges'],
+              sectionsList: listOfSections,
               rate: cours['rate'],
               price: cours['price'],
               sections: cours['sections'],
               discount: cours['discount'],
             );
+
             listOfInstructorCoureses.add(coureses);
           }
           InstructorModels instructor = InstructorModels(
@@ -159,6 +203,10 @@ class InstructorApi {
   static Future<List<InstructorModels>> fetchInstructor() async {
     List<InstructorModels> listOfInstructor = [];
     List<CouresesModels> listOfInstructorCoureses = [];
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
 
     try {
       var response = await http.get(
@@ -173,13 +221,51 @@ class InstructorApi {
         for (var items in jsonData['data']['instructors']) {
           listOfInstructorCoureses = [];
           for (var cours in items['courses']) {
+            listOfSections = [];
+            for (var sec in cours['sections']) {
+              listOfQuizes = [];
+
+              for (var qui in sec['quizes']) {
+                listOfQuestions = [];
+                for (var ques in qui['questions']) {
+                  listOfAnswers = [];
+                  for (var ans in ques['answers']) {
+                    Answers answers = Answers(
+                      id: ans['id'],
+                      text: ans['text'],
+                    );
+                    listOfAnswers.add(answers);
+                  }
+                  Questions questions = Questions(
+                    answers: listOfAnswers,
+                    id: ques['id'],
+                    text: ques['text'],
+                    mark: ques['mark'],
+                  );
+                  listOfQuestions.add(questions);
+                }
+                Quizes quizes = Quizes(
+                  id: qui['id'],
+                  name: qui['name'],
+                  totlaMark: qui['total_mark'],
+                  questions: listOfQuestions,
+                );
+                listOfQuizes.add(quizes);
+              }
+              Sections sections = Sections(
+                id: sec['id'],
+                name: sec['name'],
+                quizes: listOfQuizes,
+              );
+              listOfSections.add(sections);
+            }
             CouresesModels coureses = CouresesModels(
               id: cours['id'],
+              enrolled: cours['enrolled'],
               in_wish_list: cours['in_wish_list'],
               description: cours['description'],
               rate_count: cours['rate_count'],
               name: cours['name'],
-              enrolled: cours['enrolled'],
               discount_message: cours['discount_message'],
               website_link: cours['website_link'],
               instructorName: cours['instructor']['name'],
@@ -190,11 +276,13 @@ class InstructorApi {
               vimeo_code: cours['vimeo_code'],
               promo_video: cours['promo_video'],
               badges: cours['badges'],
+              sectionsList: listOfSections,
               rate: cours['rate'],
               price: cours['price'],
               sections: cours['sections'],
               discount: cours['discount'],
             );
+
             listOfInstructorCoureses.add(coureses);
           }
           InstructorModels instructor = InstructorModels(

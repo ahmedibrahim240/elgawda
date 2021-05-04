@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
+import 'package:elgawda/models/quizes.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,10 @@ class HomeDaTaApi {
 
   static Future<List<CouresesModels>> fetchFeaturedCourses() async {
     List<CouresesModels> listOfCoureses = [];
-
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
     try {
       var response = await http.get(
         Utils.HOME_URL,
@@ -23,10 +27,48 @@ class HomeDaTaApi {
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']['featured_courses']) {
+          listOfSections = [];
+          for (var sec in cours['sections']) {
+            listOfQuizes = [];
+
+            for (var qui in sec['quizes']) {
+              listOfQuestions = [];
+              for (var ques in qui['questions']) {
+                listOfAnswers = [];
+                for (var ans in ques['answers']) {
+                  Answers answers = Answers(
+                    id: ans['id'],
+                    text: ans['text'],
+                  );
+                  listOfAnswers.add(answers);
+                }
+                Questions questions = Questions(
+                  answers: listOfAnswers,
+                  id: ques['id'],
+                  text: ques['text'],
+                  mark: ques['mark'],
+                );
+                listOfQuestions.add(questions);
+              }
+              Quizes quizes = Quizes(
+                id: qui['id'],
+                name: qui['name'],
+                totlaMark: qui['total_mark'],
+                questions: listOfQuestions,
+              );
+              listOfQuizes.add(quizes);
+            }
+            Sections sections = Sections(
+              id: sec['id'],
+              name: sec['name'],
+              quizes: listOfQuizes,
+            );
+            listOfSections.add(sections);
+          }
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
-            in_wish_list: cours['in_wish_list'],
             enrolled: cours['enrolled'],
+            in_wish_list: cours['in_wish_list'],
             description: cours['description'],
             rate_count: cours['rate_count'],
             name: cours['name'],
@@ -40,6 +82,7 @@ class HomeDaTaApi {
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],
             badges: cours['badges'],
+            sectionsList: listOfSections,
             rate: cours['rate'],
             price: cours['price'],
             sections: cours['sections'],
@@ -58,7 +101,10 @@ class HomeDaTaApi {
   //HOME SLIDER
   static Future<List<CouresesModels>> fetchHomeSlider() async {
     List<CouresesModels> listOfCoureses = [];
-
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
     try {
       var response = await http.get(
         Utils.HOME_URL,
@@ -70,6 +116,44 @@ class HomeDaTaApi {
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']['slider']) {
+          listOfSections = [];
+          for (var sec in cours['sections']) {
+            listOfQuizes = [];
+
+            for (var qui in sec['quizes']) {
+              listOfQuestions = [];
+              for (var ques in qui['questions']) {
+                listOfAnswers = [];
+                for (var ans in ques['answers']) {
+                  Answers answers = Answers(
+                    id: ans['id'],
+                    text: ans['text'],
+                  );
+                  listOfAnswers.add(answers);
+                }
+                Questions questions = Questions(
+                  answers: listOfAnswers,
+                  id: ques['id'],
+                  text: ques['text'],
+                  mark: ques['mark'],
+                );
+                listOfQuestions.add(questions);
+              }
+              Quizes quizes = Quizes(
+                id: qui['id'],
+                name: qui['name'],
+                totlaMark: qui['total_mark'],
+                questions: listOfQuestions,
+              );
+              listOfQuizes.add(quizes);
+            }
+            Sections sections = Sections(
+              id: sec['id'],
+              name: sec['name'],
+              quizes: listOfQuizes,
+            );
+            listOfSections.add(sections);
+          }
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
             enrolled: cours['enrolled'],
@@ -87,6 +171,7 @@ class HomeDaTaApi {
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],
             badges: cours['badges'],
+            sectionsList: listOfSections,
             rate: cours['rate'],
             price: cours['price'],
             sections: cours['sections'],
@@ -145,8 +230,11 @@ class HomeDaTaApi {
   }
 
   static Future<List<CouresesModels>> cursesSearch(String name) async {
-    List<CouresesModels> listOfCourses = [];
-
+    List<CouresesModels> listOfCoureses = [];
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
     try {
       var response = await http.get(
         Utils.HOMESearch_URL + "?search=$name",
@@ -158,11 +246,49 @@ class HomeDaTaApi {
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']) {
+          listOfSections = [];
+          for (var sec in cours['sections']) {
+            listOfQuizes = [];
+
+            for (var qui in sec['quizes']) {
+              listOfQuestions = [];
+              for (var ques in qui['questions']) {
+                listOfAnswers = [];
+                for (var ans in ques['answers']) {
+                  Answers answers = Answers(
+                    id: ans['id'],
+                    text: ans['text'],
+                  );
+                  listOfAnswers.add(answers);
+                }
+                Questions questions = Questions(
+                  answers: listOfAnswers,
+                  id: ques['id'],
+                  text: ques['text'],
+                  mark: ques['mark'],
+                );
+                listOfQuestions.add(questions);
+              }
+              Quizes quizes = Quizes(
+                id: qui['id'],
+                name: qui['name'],
+                totlaMark: qui['total_mark'],
+                questions: listOfQuestions,
+              );
+              listOfQuizes.add(quizes);
+            }
+            Sections sections = Sections(
+              id: sec['id'],
+              name: sec['name'],
+              quizes: listOfQuizes,
+            );
+            listOfSections.add(sections);
+          }
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
+            enrolled: cours['enrolled'],
             in_wish_list: cours['in_wish_list'],
             description: cours['description'],
-            enrolled: cours['enrolled'],
             rate_count: cours['rate_count'],
             name: cours['name'],
             discount_message: cours['discount_message'],
@@ -175,17 +301,18 @@ class HomeDaTaApi {
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],
             badges: cours['badges'],
+            sectionsList: listOfSections,
             rate: cours['rate'],
             price: cours['price'],
             sections: cours['sections'],
             discount: cours['discount'],
           );
-          listOfCourses.add(coureses);
+          listOfCoureses.add(coureses);
         }
       }
     } catch (e) {
       print(e);
     }
-    return listOfCourses;
+    return listOfCoureses;
   }
 }

@@ -6,7 +6,6 @@ import 'package:elgawda/models/categoriesApi.dart';
 import 'package:elgawda/models/prodact.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
-import 'package:elgawda/secreens/my%20courses/mycourses.dart';
 import 'package:elgawda/secreens/my%20courses/mycoursesdetails.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/dbhelper.dart';
@@ -54,10 +53,10 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "widget.courses.enrolledddddddddddddddddddddddddddddddd:${widget.courses.enrolled}");
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.courses.name),
+      ),
       body: ListView(
         shrinkWrap: true,
         primary: true,

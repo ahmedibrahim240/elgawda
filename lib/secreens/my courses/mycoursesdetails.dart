@@ -32,7 +32,9 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.courses.name),
+      ),
       body: ListView(
         shrinkWrap: true,
         primary: true,

@@ -255,24 +255,6 @@ class _RegisterState extends State<Register> {
                                     ],
                                   ),
                                   SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.google,
-                                        color: Colors.redAccent,
-                                        size: 35,
-                                      ),
-                                      SizedBox(width: 30),
-                                      Icon(
-                                        FontAwesomeIcons.facebook,
-                                        color: Colors.blueAccent,
-                                        size: 35,
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
                             ],
