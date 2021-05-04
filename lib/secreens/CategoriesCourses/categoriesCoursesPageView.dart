@@ -7,6 +7,7 @@ import 'package:elgawda/models/prodact.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:elgawda/secreens/my%20courses/mycourses.dart';
+import 'package:elgawda/secreens/my%20courses/mycoursesdetails.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/dbhelper.dart';
 import 'package:flutter/cupertino.dart';
@@ -239,62 +240,66 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                           },
                         ),
                       ),
-                (cantAdd)
-                    ? (widget.courses.enrolled == 1)
-                        ? iconCouresBoton(
-                            title: getTranslated(context, 'my_courses'),
-                            icon: FontAwesomeIcons.youtube,
-                            onTap: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MyCourses()),
-                                ModalRoute.withName(Wrapper.route),
-                              );
-                            })
-                        : Container()
-                    : Expanded(
-                        flex: 1,
-                        child: iconCouresBoton(
-                          icon: FontAwesomeIcons.shoppingCart,
-                          title: getTranslated(context, 'add_to_cart'),
-                          onTap: () async {
-                            setState(() {
-                              increaseCartTotlaPrice(
-                                price: (widget.courses.discount == null)
-                                    ? double.parse(
-                                        widget.courses.price.toString())
-                                    : newPrice(
-                                        dis: double.parse(
-                                            widget.courses.discount.toString()),
-                                        price: double.parse(
-                                          widget.courses.price.toString(),
+                (widget.courses.enrolled == 1)
+                    ? iconCouresBoton(
+                        title: getTranslated(context, 'course'),
+                        icon: FontAwesomeIcons.youtube,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  MyCoursesDetails(
+                                courses: widget.courses,
+                              ),
+                            ),
+                          );
+                        })
+                    : (cantAdd)
+                        ? Container()
+                        : Expanded(
+                            flex: 1,
+                            child: iconCouresBoton(
+                              icon: FontAwesomeIcons.shoppingCart,
+                              title: getTranslated(context, 'add_to_cart'),
+                              onTap: () async {
+                                setState(() {
+                                  increaseCartTotlaPrice(
+                                    price: (widget.courses.discount == null)
+                                        ? double.parse(
+                                            widget.courses.price.toString())
+                                        : newPrice(
+                                            dis: double.parse(widget
+                                                .courses.discount
+                                                .toString()),
+                                            price: double.parse(
+                                              widget.courses.price.toString(),
+                                            ),
+                                          ),
+                                  );
+                                });
+                                CoursesProdect prodect = CoursesProdect({
+                                  'CoursesId': widget.courses.id,
+                                  'title': widget.courses.name,
+                                  'price': (widget.courses.discount == null)
+                                      ? double.parse(
+                                          widget.courses.price.toString())
+                                      : newPrice(
+                                          dis: double.parse(widget
+                                              .courses.discount
+                                              .toString()),
+                                          price: double.parse(
+                                            widget.courses.price.toString(),
+                                          ),
                                         ),
-                                      ),
-                              );
-                            });
-                            CoursesProdect prodect = CoursesProdect({
-                              'CoursesId': widget.courses.id,
-                              'title': widget.courses.name,
-                              'price': (widget.courses.discount == null)
-                                  ? double.parse(
-                                      widget.courses.price.toString())
-                                  : newPrice(
-                                      dis: double.parse(
-                                          widget.courses.discount.toString()),
-                                      price: double.parse(
-                                        widget.courses.price.toString(),
-                                      ),
-                                    ),
-                              'proImageUrl': widget.courses.image_path,
-                            });
-                            // ignore: unused_local_variable
-                            int id = await helper.createProduct(prodect);
-                            cardDialog(
-                                context: context, message: 'Item Was Add');
-                          },
-                        ),
-                      ),
+                                  'proImageUrl': widget.courses.image_path,
+                                });
+                                // ignore: unused_local_variable
+                                int id = await helper.createProduct(prodect);
+                                cardDialog(
+                                    context: context, message: 'Item Was Add');
+                              },
+                            ),
+                          ),
                 Expanded(
                   flex: 1,
                   child: iconCouresBoton(

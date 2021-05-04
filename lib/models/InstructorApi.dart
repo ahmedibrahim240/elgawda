@@ -1,4 +1,6 @@
 import 'package:elgawda/constants/constans.dart';
+import 'package:elgawda/models/quizes.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -31,6 +33,7 @@ class CouresesModels {
   final String name;
   // ignore: non_constant_identifier_names
   final String promo_video;
+  final List<Sections> sectionsList;
   final String instructorName;
   // ignore: non_constant_identifier_names
   final int in_wish_list;
@@ -58,6 +61,7 @@ class CouresesModels {
 
   CouresesModels({
     @required this.enrolled,
+    this.sectionsList,
     // ignore: non_constant_identifier_names
     this.total_quizes,
     // ignore: non_constant_identifier_names
@@ -101,6 +105,7 @@ class InstructorApi {
         Utils.Instructors_URL,
         headers: {
           'lang': apiLang(),
+          'x-api-key': User.userToken,
         },
       );
       var jsonData = json.decode(response.body);
@@ -160,6 +165,7 @@ class InstructorApi {
         Utils.HOME_URL,
         headers: {
           'lang': apiLang(),
+          'x-api-key': User.userToken,
         },
       );
       var jsonData = json.decode(response.body);

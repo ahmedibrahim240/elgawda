@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
+import 'package:elgawda/models/quizes.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
@@ -14,6 +15,10 @@ class MyCoursesApi {
   static Future<List<CouresesModels>> fetchMyCourses(
       BuildContext context) async {
     List<CouresesModels> listOfCoureses = [];
+    List<Answers> listOfAnswers = [];
+    List<Questions> listOfQuestions = [];
+    List<Quizes> listOfQuizes = [];
+    List<Sections> listOfSections = [];
 
     try {
       var response = await http.get(
@@ -27,6 +32,44 @@ class MyCoursesApi {
       print('MyCourses:${response.statusCode}');
       if (response.statusCode == 200) {
         for (var cours in jsonData['data']) {
+          listOfSections = [];
+          for (var sec in cours['sections']) {
+            listOfQuizes = [];
+
+            for (var qui in sec['quizes']) {
+              listOfQuestions = [];
+              for (var ques in qui['questions']) {
+                listOfAnswers = [];
+                for (var ans in ques['answers']) {
+                  Answers answers = Answers(
+                    id: ans['id'],
+                    text: ans['text'],
+                  );
+                  listOfAnswers.add(answers);
+                }
+                Questions questions = Questions(
+                  answers: listOfAnswers,
+                  id: ques['id'],
+                  text: ques['text'],
+                  mark: ques['mark'],
+                );
+                listOfQuestions.add(questions);
+              }
+              Quizes quizes = Quizes(
+                id: qui['id'],
+                name: qui['name'],
+                totlaMark: qui['total_mark'],
+                questions: listOfQuestions,
+              );
+              listOfQuizes.add(quizes);
+            }
+            Sections sections = Sections(
+              id: sec['id'],
+              name: sec['name'],
+              quizes: listOfQuizes,
+            );
+            listOfSections.add(sections);
+          }
           CouresesModels coureses = CouresesModels(
             id: cours['id'],
             enrolled: cours['enrolled'],
@@ -44,6 +87,7 @@ class MyCoursesApi {
             vimeo_code: cours['vimeo_code'],
             promo_video: cours['promo_video'],
             badges: cours['badges'],
+            sectionsList: listOfSections,
             rate: cours['rate'],
             price: cours['price'],
             sections: cours['sections'],
@@ -76,10 +120,6 @@ class MyCoursesApi {
       }
     } catch (e) {
       print('home MyCourses errrrrrrrrrrrrrrrrror');
-      showMyDialog(
-        context: context,
-        message: getTranslated(context, 'catchError'),
-      );
 
       print(e);
     }

@@ -3,8 +3,10 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
+import 'package:elgawda/models/quizes.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/chatRome.dart/chatRome.dart';
+import 'package:elgawda/secreens/my%20courses/QuizesPage.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:elgawda/secreens/my%20courses/components/vidoePage.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,6 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                       id: widget.courses.vimeo_code),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      print(snapshot.data);
                       return (snapshot.data == null || snapshot.data.isEmpty)
                           ? Container()
                           : Container(
@@ -169,9 +170,9 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       var response = await http.post(
         Utils.Rate_course_URL,
         body: {
-          'comment': comment,
-          'rate': rating,
-          'course_id': widget.courses.id,
+          'comment': 'comment',
+          'rate': rating.toString(),
+          'course_id': widget.courses.id.toString(),
         },
         headers: {
           'x-api-key': User.userToken,
@@ -180,19 +181,25 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       );
       print(response.statusCode);
 
-      Map<String, dynamic> map = json.decode(response.body);
-      print(map);
+      var map = json.decode(response.body);
       if (map['success'] == false) {
         setState(() {
           loading = !loading;
         });
-        showMyDialog(context: context, message: map['message'].toString());
+        showMyDialog(
+          context: context,
+          message: map['message'].toString(),
+        );
       } else {
         setState(() {
           loading = !loading;
         });
-        showMyDialog(context: context, message: 'success');
+        showMyDialog(
+          context: context,
+          message: 'success',
+        );
       }
+      print(map);
     } catch (e) {
       setState(() {
         loading = !loading;
@@ -201,8 +208,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
         context: context,
         message: getTranslated(context, 'catchError'),
       );
-      print('Catchhhhhhhhhhhhhhhhhhhhhhh rating');
-      print(e.toString());
+      print(e);
     }
   }
 
@@ -340,7 +346,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                     child: Text(
                       getTranslated(context, 'Section') +
                               ' ${index + 1} - ' +
-                              widget.courses.sections[index]['name'] ??
+                              widget.courses.sectionsList[index].name ??
                           "",
                       style: AppTheme.subHeading.copyWith(
                         color: Colors.grey[400],
@@ -349,7 +355,8 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                   ),
                   lectureDetaile(
                     list: widget.courses.sections[index]['lessons'],
-                    quizes: widget.courses.sections[index]['lessons'],
+                    quizes: widget.courses.sectionsList[index].quizes,
+                    i: index,
                   ),
                 ],
               );
@@ -357,91 +364,140 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           );
   }
 
-  ListView lectureDetaile({var list, var quizes}) {
+  ListView lectureDetaile({var list, List<Quizes> quizes, int i}) {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: list.length,
+      itemCount: list.length + 1,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => MyCoursesVideoPage(
-                  title: list[index]['name'] ?? '',
-                  videoId: list[index]['vimeo_id'] ?? '',
+            if (index == list.length) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => QuizesPage(
+                    quizes: quizes,
+                  ),
                 ),
-              ),
-            );
+              );
+            } else {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => MyCoursesVideoPage(
+                    title: list[index]['name'] ?? '',
+                    videoId: list[index]['vimeo_id'] ?? '',
+                  ),
+                ),
+              );
+            }
           },
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    '${index + 1}',
-                    style: AppTheme.heading.copyWith(
-                      fontSize: 25,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green,
-                            ),
-                            child: Center(
-                              child: Icon(
-                                FontAwesomeIcons.check,
-                                color: Colors.white,
-                                size: 10,
+          child: (index == list.length)
+              ? (i > quizes.length - 1)
+                  ? Container()
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '${index + 1}',
+                              style: AppTheme.heading.copyWith(
+                                fontSize: 25,
                               ),
                             ),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            list[index]['name'] ?? "",
-                            style: AppTheme.heading,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      // Text(
-                      //   'Video -10.22 '+list[index]['name'],
-                      //   style: AppTheme.subHeading.copyWith(
-                      //     color: Colors.grey[400],
-                      //   ),
-                      // ),
-                      (quizes.isEmpty)
-                          ? Container()
-                          : TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                '${quizes.length}' +
-                                    getTranslated(context, 'Quizes'),
-                                style: AppTheme.heading.copyWith(
-                                  color: customColorGold,
+                            SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.green,
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          FontAwesomeIcons.check,
+                                          color: Colors.white,
+                                          size: 10,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      getTranslated(context, 'Quizes'),
+                                      style: AppTheme.heading,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            )
-                    ],
-                  ),
-                ],
-              ),
-              Divider(
-                color: customColorDivider,
-                thickness: 2,
-              ),
-            ],
-          ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: customColorDivider,
+                          thickness: 2,
+                        ),
+                      ],
+                    )
+              : Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '${index + 1}',
+                          style: AppTheme.heading.copyWith(
+                            fontSize: 25,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.green,
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      FontAwesomeIcons.check,
+                                      color: Colors.white,
+                                      size: 10,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  list[index]['name'] ?? "",
+                                  style: AppTheme.heading,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            // Text(
+                            //   'Video -10.22 '+list[index]['name'],
+                            //   style: AppTheme.subHeading.copyWith(
+                            //     color: Colors.grey[400],
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: customColorDivider,
+                      thickness: 2,
+                    ),
+                  ],
+                ),
         );
       },
     );

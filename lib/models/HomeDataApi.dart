@@ -1,6 +1,7 @@
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/InstructorApi.dart';
 import 'package:elgawda/models/categoriesApi.dart';
+import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,6 +17,7 @@ class HomeDaTaApi {
         Utils.HOME_URL,
         headers: {
           'lang': apiLang(),
+          'x-api-key': User.userToken,
         },
       );
       var jsonData = json.decode(response.body);
@@ -62,6 +64,7 @@ class HomeDaTaApi {
         Utils.HOME_URL,
         headers: {
           'lang': apiLang(),
+          'x-api-key': User.userToken,
         },
       );
       var jsonData = json.decode(response.body);
@@ -108,6 +111,7 @@ class HomeDaTaApi {
       var response = await http.get(
         Utils.Categories_URL,
         headers: {
+          'x-api-key': User.userToken,
           'lang': apiLang(),
         },
       );
@@ -147,6 +151,7 @@ class HomeDaTaApi {
       var response = await http.get(
         Utils.HOMESearch_URL + "?search=$name",
         headers: {
+          'x-api-key': User.userToken,
           'lang': apiLang(),
         },
       );
