@@ -29,17 +29,25 @@ class _InstructorPageViewState extends State<InstructorPageView> {
           instructorImage(),
           (widget.instructor.bio == '' || widget.instructor.bio == null)
               ? Container()
-              : Text(
-                  getTranslated(context, 'bio'),
-                  style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+              : Column(
+                  children: [
+                    Text(
+                      getTranslated(context, 'bio'),
+                      textAlign: TextAlign.center,
+                      style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Text(
+                        (widget.instructor.bio) ?? '',
+                        textAlign: TextAlign.center,
+                        style:
+                            AppTheme.subHeadingColorBlue.copyWith(fontSize: 14),
+                      ),
+                    ),
+                  ],
                 ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text(
-              (widget.instructor.bio) ?? '',
-              style: AppTheme.subHeadingColorBlue.copyWith(fontSize: 14),
-            ),
-          ),
           (widget.instructor.courses.isEmpty)
               ? Container()
               : Text(
@@ -52,18 +60,26 @@ class _InstructorPageViewState extends State<InstructorPageView> {
             itemCount: widget.instructor.courses.length,
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             itemBuilder: (context, index) {
-              return trainingCourses(
-                index: index,
-                course: widget.instructor.courses[index],
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => CategoriesCoursesPageView(
-                        courses: widget.instructor.courses[index],
-                      ),
-                    ),
-                  );
-                },
+              return Column(
+                children: [
+                  trainingCourses(
+                    index: index,
+                    course: widget.instructor.courses[index],
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => CategoriesCoursesPageView(
+                            courses: widget.instructor.courses[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  Divider(
+                    color: customColorDivider,
+                    thickness: 2,
+                  ),
+                ],
               );
             },
           ),
@@ -90,6 +106,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: customCachedNetworkImage(
+                  boxFit: BoxFit.cover,
                   context: context,
                   url: course.image_path,
                 ),
@@ -120,6 +137,8 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                 (course.rate == '0')
                     ? Container()
                     : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RatingStar(
                             rating: double.parse(course.rate),
@@ -144,15 +163,9 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                       ),
                 Align(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 30),
-                      Text(
-                        getTranslated(context, 'price'),
-                        style: AppTheme.headingColorBlue.copyWith(
-                          fontSize: 12,
-                        ),
-                      ),
-                      SizedBox(width: 10),
                       (course.discount == null || course.discount == '')
                           ? Container()
                           : Text(
@@ -168,11 +181,12 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                             ),
                       SizedBox(width: 5),
                       Text(
-                        '${course.price}\$',
+                        '${course.price} ' + getTranslated(context, 'KD'),
                         style:
                             (course.discount == null || course.discount == '')
                                 ? AppTheme.headingColorBlue.copyWith(
                                     fontSize: 12,
+                                    fontWeight: FontWeight.w700,
                                     decoration: (course.discount == null ||
                                             course.discount == '')
                                         ? TextDecoration.none
@@ -181,6 +195,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
                                   )
                                 : AppTheme.headingColorBlue.copyWith(
                                     fontSize: 12,
+                                    fontWeight: FontWeight.w700,
                                   ),
                       ),
                     ],
@@ -197,6 +212,7 @@ class _InstructorPageViewState extends State<InstructorPageView> {
   instructorImage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           height: 150,
@@ -214,15 +230,17 @@ class _InstructorPageViewState extends State<InstructorPageView> {
         SizedBox(width: 20),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               widget.instructor.name,
+              textAlign: TextAlign.center,
               style: AppTheme.headingColorBlue.copyWith(fontSize: 16),
             ),
             Text(
               widget.instructor.job,
-              style: AppTheme.subHeadingColorBlue.copyWith(fontSize: 14),
+              textAlign: TextAlign.center,
+              style: AppTheme.subHeadingColorBlue.copyWith(fontSize: 12),
             ),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/models/utils.dart';
+import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -105,18 +106,60 @@ class DatabaseServices {
 
       Response response = await dio.post(Utils.UPDATEUSERDATA_URL, data: data);
 
-      if (response.data['success'] == true) {
-        if (password != User.userPassword) {
-          MySharedPreferences.saveUserUserPassword(password);
+      if (response.statusCode == 200) {
+        if (response.data['success'] == true) {
+          if (password != User.userPassword) {
+            MySharedPreferences.saveUserUserPassword(password);
+          }
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => Wrapper(),
+            ),
+          );
+          showEDITDialog(
+              context: context, message: getTranslated(context, 'toeditPro'));
+        } else {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => Wrapper(),
+            ),
+          );
+          showEDITDialog(
+            context: context,
+            message: response.data['message'].toString(),
+          );
         }
-        showMyDialog(context: context, message: 'تم حفظ التغير بنجاح');
+      } else if (response.statusCode == 429) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+
+        showEDITDialog(
+            context: context, message: getTranslated(context, 'failededitPro'));
       } else {
-        showMyDialog(
-            context: context, message: response.data['message'].toString());
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+        showEDITDialog(
+          context: context,
+          message: getTranslated(context, 'catchError'),
+        );
       }
     } catch (e) {
       print('errrrroe Upadata Data');
-      showMyDialog(context: context, message: 'فشل التغير.....');
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => Wrapper(),
+        ),
+      );
+      showEDITDialog(
+        context: context,
+        message: getTranslated(context, 'catchError'),
+      );
 
       print(e.toString());
     }
@@ -128,37 +171,40 @@ class DatabaseServices {
   }
 }
 
-Future<void> showMyDialog({BuildContext context, var message}) async {
+Future<void> showEDITDialog({BuildContext context, var message}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
         content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                message,
-                style: AppTheme.heading.copyWith(
-                  color: customColor,
+          child: Container(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
-              ),
-            ],
+                ListBody(
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        message,
+                        textAlign: TextAlign.center,
+                        style: AppTheme.heading.copyWith(),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              'الغاء',
-              style: AppTheme.heading.copyWith(
-                color: customColor,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       );
     },
   );

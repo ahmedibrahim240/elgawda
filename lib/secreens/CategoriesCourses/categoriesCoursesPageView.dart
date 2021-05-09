@@ -145,12 +145,6 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   Row(
                     children: [
                       SizedBox(width: 30),
-                      Text(
-                        getTranslated(context, 'price'),
-                        style: AppTheme.headingColorBlue.copyWith(
-                          fontSize: 12,
-                        ),
-                      ),
                       SizedBox(width: 10),
                       (widget.courses.discount == '0' ||
                               widget.courses.discount == null)
@@ -168,7 +162,8 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                             ),
                       SizedBox(width: 5),
                       Text(
-                        '${widget.courses.price}\$',
+                        '${widget.courses.price} ' +
+                            getTranslated(context, 'KD'),
                         style: (widget.courses.discount == '0' ||
                                 widget.courses.discount == null)
                             ? AppTheme.headingColorBlue.copyWith(

@@ -27,7 +27,25 @@ class _NotificatiosState extends State<Notificatios> {
           if (snapshot.hasData) {
             print(snapshot.data);
             return (snapshot.data.isEmpty)
-                ? Container()
+                ? Container(
+                    child: Center(
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: customColor,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.notifications,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 : ListView.builder(
                     shrinkWrap: true,
                     primary: true,

@@ -478,8 +478,7 @@ class _LogInState extends State<LogIn> {
   // Future<Null>
   _fblogin() async {
     final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
-    print('resssssssssssssssssssssssssssssssssult');
-    print(result.status);
+
     try {
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:
@@ -509,6 +508,7 @@ class _LogInState extends State<LogIn> {
           setState(() {
             loading = !loading;
           });
+
           showMyDialog(
             context: context,
             message: 'Something went wrong with the login process.\n'

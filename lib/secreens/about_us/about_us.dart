@@ -11,8 +11,6 @@ class AboutUs extends StatefulWidget {
 }
 
 class _AboutUsState extends State<AboutUs> {
-  String conatant =
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,29 +34,26 @@ class _AboutUsState extends State<AboutUs> {
               primary: true,
               children: [
                 Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    child: (snapshot.data.imageUrl == null)
-                        ? Container(
-                            child: Icon(
-                              Icons.image,
-                              color: Colors.lightBlueAccent,
-                            ),
-                          )
-                        : customCachedNetworkImage(
-                            context: context,
-                            url: snapshot.data.imageUrl,
-                          )),
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  child: (snapshot.data.imageUrl == null)
+                      ? Container(
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.lightBlueAccent,
+                          ),
+                        )
+                      : customCachedNetworkImage(
+                          boxFit: BoxFit.cover,
+                          context: context,
+                          url: snapshot.data.imageUrl,
+                        ),
+                ),
+                SizedBox(height: 20),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: Text(
-                    parseHtmlString(snapshot.data.contant),
-                    style: AppTheme.subHeading.copyWith(
-                      height: 1.5,
-                      letterSpacing: .07,
-                    ),
-                  ),
+                  child: cutomHttpWidget(data: snapshot.data.contant),
                 ),
               ],
             );

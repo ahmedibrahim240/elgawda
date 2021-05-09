@@ -160,13 +160,6 @@ featuerd({
                 ),
           Row(
             children: [
-              Text(
-                getTranslated(context, 'price'),
-                style: AppTheme.headingColorBlue.copyWith(
-                  fontSize: 12,
-                ),
-              ),
-              SizedBox(width: 10),
               (coures.discount == null || coures.discount == '')
                   ? Container()
                   : Text(
@@ -182,7 +175,7 @@ featuerd({
                     ),
               SizedBox(width: 5),
               Text(
-                '${coures.price}\$',
+                '${coures.price} ' + getTranslated(context, 'KD'),
                 style: (coures.discount != null && coures.discount != '')
                     ? AppTheme.headingColorBlue.copyWith(
                         fontSize: 12,
@@ -230,10 +223,10 @@ Container coursesSilder({
           options: CarouselOptions(
             autoPlayInterval: Duration(seconds: 2),
             autoPlay: true,
-            // reverse: widget.reverse,
             aspectRatio: 2.0,
             enlargeCenterPage: true,
             enlargeStrategy: CenterPageEnlargeStrategy.scale,
+            viewportFraction: 1,
           ),
           items: list
               .map(
@@ -259,7 +252,7 @@ Container coursesSilder({
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20.0)),
                                 child: Container(
-                                  width: 300,
+                                  width: 500,
                                   height: 140,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(
@@ -274,7 +267,7 @@ Container coursesSilder({
                                 ),
                               ),
                               Container(
-                                width: 300,
+                                width: 500,
                                 height: 140,
                                 decoration: BoxDecoration(
                                   borderRadius:

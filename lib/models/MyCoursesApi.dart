@@ -135,7 +135,7 @@ class MyCoursesApi {
 
     try {
       var response = await http.get(
-        Utils.MyCourses_URL,
+        Utils.MyWishList_URL,
         headers: {
           'x-api-key': User.userToken,
           'lang': apiLang(),

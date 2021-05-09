@@ -10,11 +10,14 @@ import 'package:elgawda/secreens/wrapper/wrapper.dart';
 import 'package:elgawda/services/UserData.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 
 import '../sharedPreferences.dart';
 // import 'package:flutter_share/flutter_share.dart';
@@ -66,6 +69,45 @@ String parseHtmlString(String htmlString) {
   final String parsedString = parse(document.body.text).documentElement.text;
 
   return parsedString;
+}
+
+cutomHttpWidget({String data}) {
+  return Html(
+    data: data,
+    style: {
+      "tr": Style(
+        border: Border(bottom: BorderSide(color: Colors.grey)),
+      ),
+      "th": Style(
+        padding: EdgeInsets.all(6),
+        backgroundColor: Colors.grey,
+      ),
+      "td": Style(
+        padding: EdgeInsets.all(6),
+      ),
+      "var": Style(fontFamily: 'serif'),
+    },
+    customRender: {
+      "flutter": (RenderContext context, Widget child, attributes, _) {
+        return FlutterLogo(
+          style: (attributes['horizontal'] != null)
+              ? FlutterLogoStyle.horizontal
+              : FlutterLogoStyle.markOnly,
+          textColor: context.style.color,
+          size: context.style.fontSize.size * 5,
+        );
+      },
+    },
+    onLinkTap: (url) {
+      print("Opening $url...");
+    },
+    onImageTap: (src) {
+      launchInBrowser(src);
+    },
+    onImageError: (exception, stackTrace) {
+      print(exception);
+    },
+  );
 }
 
 String gitnewPrice({String descaound, String price}) {

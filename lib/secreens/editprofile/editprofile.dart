@@ -79,6 +79,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         TextFormField(
                           initialValue: userData.moblie,
+                          keyboardType: TextInputType.phone,
                           onChanged: (val) {
                             setState(() {
                               mobile = val;
@@ -131,27 +132,34 @@ class _EditProfileState extends State<EditProfile> {
                         Center(
                           child: CustomButton(
                             onPress: () {
+                              setState(() {
+                                loading = !loading;
+                              });
                               DatabaseServices(
                                       userToken: User.userToken,
                                       context: context)
                                   .upDateUserData(
-                                email: (email) ??
-                                        (userData.email ==
+                                email: (email != null)
+                                    ? email
+                                    : (userData.email ==
                                             getTranslated(context, 'addEmail'))
-                                    ? ''
-                                    : userData.email,
-                                name: (name) ?? userData.name,
-                                mobile: (mobile) ??
-                                        (userData.moblie ==
+                                        ? ''
+                                        : userData.email,
+                                name: (name != null) ? name : userData.name,
+                                mobile: (mobile != null)
+                                    ? mobile
+                                    : (userData.moblie ==
                                             getTranslated(context, 'addPhone'))
-                                    ? ''
-                                    : userData.moblie,
-                                password: (password) ?? '',
+                                        ? ''
+                                        : userData.moblie,
+                                password: (password != null) ? password : '',
                                 images: (UserPorfileImage.image) ?? null,
                                 context: context,
                               );
                             },
-                            text: getTranslated(context, 'save'),
+                            text: (loading)
+                                ? getTranslated(context, 'saving')
+                                : getTranslated(context, 'save'),
                           ),
                         ),
                       ],
@@ -291,13 +299,13 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Text("Pick from Gallery"),
+              title: Text(getTranslated(context, 'Gallery')),
               onTap: () {
                 _loadPicker(ImageSource.gallery, context);
               },
             ),
             ListTile(
-              title: Text("Take a pictuer"),
+              title: Text(getTranslated(context, 'takepictuer')),
               onTap: () {
                 _loadPicker(ImageSource.camera, context);
               },

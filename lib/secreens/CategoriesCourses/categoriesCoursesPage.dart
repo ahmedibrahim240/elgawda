@@ -154,13 +154,6 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
                                         SizedBox(height: 10),
                                         Row(
                                           children: [
-                                            Text(
-                                              getTranslated(context, 'price'),
-                                              style: AppTheme.headingColorBlue
-                                                  .copyWith(
-                                                fontSize: 12,
-                                              ),
-                                            ),
                                             SizedBox(width: 10),
                                             (snapshot.data[index].discount ==
                                                         null ||
@@ -186,7 +179,8 @@ class _CategoriesCoursesPageState extends State<CategoriesCoursesPage> {
                                                   ),
                                             SizedBox(width: 5),
                                             Text(
-                                              '${snapshot.data[index].price}\$',
+                                              '${snapshot.data[index].price} ' +
+                                                  getTranslated(context, 'KD'),
                                               style: (snapshot.data[index]
                                                               .discount ==
                                                           null ||

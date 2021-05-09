@@ -150,7 +150,8 @@ class _CartState extends State<Cart> {
                                                     snapshot.data[index]
                                                                 ['price']
                                                             .toString() +
-                                                        '\$',
+                                                        getTranslated(
+                                                            context, 'KD'),
                                                     style: AppTheme.subHeading
                                                         .copyWith(
                                                       fontSize: 12,
@@ -195,7 +196,7 @@ class _CartState extends State<Cart> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Total',
+                                  getTranslated(context, 'total'),
                                   style: AppTheme.headingColorBlue
                                       .copyWith(fontSize: 16),
                                 ),
@@ -210,7 +211,7 @@ class _CartState extends State<Cart> {
                             ),
                             Center(
                               child: Text(
-                                'Choose Payment Method',
+                                getTranslated(context, 'Choose_Payment'),
                                 style: AppTheme.heading,
                               ),
                             ),
@@ -219,7 +220,7 @@ class _CartState extends State<Cart> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 customRaiseButtom(
-                                  text: 'Cash',
+                                  text: getTranslated(context, 'Cash'),
                                   onTap: () {
                                     setState(() {
                                       loading = !loading;
@@ -229,7 +230,7 @@ class _CartState extends State<Cart> {
                                 ),
                                 SizedBox(width: 10),
                                 customRaiseButtom(
-                                  text: 'Credit',
+                                  text: getTranslated(context, 'Credit'),
                                   onTap: () {
                                     setState(() {
                                       loading = !loading;
