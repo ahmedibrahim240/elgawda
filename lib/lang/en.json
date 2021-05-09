@@ -21,6 +21,8 @@
   "an_account"                                      : " An Account",
   "full_name"                                       : "Full Name",
   "name"                                             : " Name",
+"interNet"                                           :"No internet connection",
+
   "phone_numer"                                     : "Phone Numer",
   "confirm_the_password"                            : "Confirm he Password",
   "already_have_an_account"                         : "Already Have An Account",

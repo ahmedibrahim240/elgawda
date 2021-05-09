@@ -32,6 +32,7 @@ dependencies:
   flutter_datetime_picker: ^1.4.0
   flutter_time_date_picker: ^0.0.2
   carousel_slider: ^3.0.0
+  connectivity: ^0.4.3+1
   flutter_svg:
   dio:
   flutter_spinkit: "^4.1.2"
@@ -61,7 +62,7 @@ dependencies:
   shared_preferences:
   # firebase_auth: ^0.14.0+5
   # cloud_firestore: ^0.12.9+4
-  provider: ^3.1.0
+  provider: ^2.0.1
   # flutter_spinkit:
   image_picker:
   image_cropper:

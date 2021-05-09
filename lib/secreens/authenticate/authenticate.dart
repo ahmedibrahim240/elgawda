@@ -1,6 +1,7 @@
 import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/authenticate/register/register.dart';
 import 'package:elgawda/secreens/wrapper/wrapper.dart';
+import 'package:elgawda/services/network_sensitive.dart';
 import 'package:flutter/material.dart';
 
 import 'logIn/login.dart';
@@ -25,12 +26,20 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
     if (User.userToken == null) {
       if (showSignIn) {
-        return Container(
-          child: LogIn(toggleView: toggleView),
+        return NetworkSensitive(
+          child: Scaffold(
+            body: Container(
+              child: LogIn(toggleView: toggleView),
+            ),
+          ),
         );
       } else {
-        return Container(
-          child: Register(toggleView: toggleView),
+        return NetworkSensitive(
+          child: Scaffold(
+            body: Container(
+              child: Register(toggleView: toggleView),
+            ),
+          ),
         );
       }
     } else {

@@ -8,6 +8,7 @@ import 'package:elgawda/secreens/home/home.dart';
 import 'package:elgawda/secreens/more/more.dart';
 import 'package:elgawda/secreens/my%20courses/mycourses.dart';
 import 'package:elgawda/secreens/wishlist/wishlist.dart';
+import 'package:elgawda/services/network_sensitive.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,10 +28,10 @@ class _WrapperState extends State<Wrapper> {
 
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Home(),
-    MyCourses(),
-    Wishlist(),
-    More(),
+    NetworkSensitive(child: Home()),
+    NetworkSensitive(child: MyCourses()),
+    NetworkSensitive(child: Wishlist()),
+    NetworkSensitive(child: More()),
   ];
   getDateOfUser() async {
     User.userPassword = await MySharedPreferences.getUserUserPassword();

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/models/userData.dart';
@@ -117,7 +116,10 @@ class DatabaseServices {
             ),
           );
           showEDITDialog(
-              context: context, message: getTranslated(context, 'toeditPro'));
+            context: context,
+            message: getTranslated(context, 'toeditPro'),
+            isTrue: true,
+          );
         } else {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -137,7 +139,10 @@ class DatabaseServices {
         );
 
         showEDITDialog(
-            context: context, message: getTranslated(context, 'failededitPro'));
+          isTrue: false,
+          context: context,
+          message: getTranslated(context, 'failededitPro'),
+        );
       } else {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -146,6 +151,7 @@ class DatabaseServices {
         );
         showEDITDialog(
           context: context,
+          isTrue: false,
           message: getTranslated(context, 'catchError'),
         );
       }
@@ -158,6 +164,7 @@ class DatabaseServices {
       );
       showEDITDialog(
         context: context,
+        isTrue: false,
         message: getTranslated(context, 'catchError'),
       );
 
@@ -171,7 +178,8 @@ class DatabaseServices {
   }
 }
 
-Future<void> showEDITDialog({BuildContext context, var message}) async {
+Future<void> showEDITDialog(
+    {BuildContext context, var message, bool isTrue}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -190,6 +198,18 @@ Future<void> showEDITDialog({BuildContext context, var message}) async {
                     },
                   ),
                 ),
+                (isTrue)
+                    ? Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('lib/images/profileture.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : Container(),
                 ListBody(
                   children: <Widget>[
                     Center(

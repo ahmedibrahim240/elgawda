@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/models/userData.dart';
+import 'package:elgawda/services/network_sensitive.dart';
 
 import 'package:flutter/material.dart';
 
@@ -56,14 +57,16 @@ class _SplashScreenState extends State<SplashScreen> {
         toolbarHeight: 0,
         backgroundColor: customColor,
       ),
-      body: Center(
-        child: Container(
-          height: 400,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('lib/images/logo.png'),
-              fit: BoxFit.fitHeight,
+      body: NetworkSensitive(
+        child: Center(
+          child: Container(
+            height: 400,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/images/logo.png'),
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
         ),
