@@ -99,6 +99,7 @@ class MyCoursesApi {
         print(jsonData);
         showMyDialog(
           context: context,
+          isTrue: false,
           message: getTranslated(context, 'catchError') +
               "\n" +
               getTranslated(context, 'Or') +
