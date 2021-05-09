@@ -242,6 +242,7 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
                               )
                             : customCachedNetworkImage(
                                 context: context,
+                                boxFit: BoxFit.cover,
                                 url: widget.userimgUrl,
                               ),
                   ),

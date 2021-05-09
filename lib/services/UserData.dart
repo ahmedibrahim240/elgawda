@@ -204,7 +204,7 @@ Future<void> showEDITDialog(
                         width: 100,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('lib/images/profileture.jpg'),
+                            image: AssetImage('lib/images/profiletrue.jpg'),
                             fit: BoxFit.cover,
                           ),
                         ),
