@@ -10,7 +10,6 @@ import 'package:elgawda/secreens/my%20courses/QuizesPage.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
 import 'package:elgawda/secreens/my%20courses/components/vidoePage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:elgawda/models/utils.dart';
 import 'package:http/http.dart' as http;
