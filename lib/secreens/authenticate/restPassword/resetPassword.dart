@@ -3,6 +3,7 @@ import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
 import 'package:elgawda/secreens/authenticate/authenticate.dart';
 import 'package:elgawda/secreens/splashscreen.dart';
+import 'package:elgawda/services/network_sensitive.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:elgawda/models/utils.dart';
@@ -39,89 +40,91 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : ListView(
-                shrinkWrap: true,
-                primary: true,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                children: [
-                  LogoContainar(),
-                  SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            getTranslated(context, 'Reset_Password'),
-                            style: AppTheme.heading.copyWith(
-                              color: customColor,
-                              fontSize: 15,
+            : NetworkSensitive(
+                child: ListView(
+                  shrinkWrap: true,
+                  primary: true,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  children: [
+                    LogoContainar(),
+                    SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              getTranslated(context, 'Reset_Password'),
+                              style: AppTheme.heading.copyWith(
+                                color: customColor,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 40),
-                          TextFormField(
-                            style: TextStyle(color: Colors.black),
-                            decoration: textFormInputDecorationForPassword(
-                              Icons.visibility_off,
-                              getTranslated(context, 'password'),
-                              () {
+                            SizedBox(height: 40),
+                            TextFormField(
+                              style: TextStyle(color: Colors.black),
+                              decoration: textFormInputDecorationForPassword(
+                                Icons.visibility_off,
+                                getTranslated(context, 'password'),
+                                () {
+                                  setState(() {
+                                    obscurePassword = !obscurePassword;
+                                  });
+                                },
+                                obscurePassword,
+                              ),
+                              validator: (val) => validatePassord(val),
+                              obscureText: obscurePassword,
+                              onChanged: (val) {
                                 setState(() {
-                                  obscurePassword = !obscurePassword;
+                                  password = val;
                                 });
                               },
-                              obscurePassword,
                             ),
-                            validator: (val) => validatePassord(val),
-                            obscureText: obscurePassword,
-                            onChanged: (val) {
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            style: TextStyle(color: Colors.black),
-                            decoration: textFormInputDecorationForPassword(
-                              Icons.visibility_off,
-                              getTranslated(context, 'confirm_the_password'),
-                              () {
+                            SizedBox(height: 10),
+                            TextFormField(
+                              style: TextStyle(color: Colors.black),
+                              decoration: textFormInputDecorationForPassword(
+                                Icons.visibility_off,
+                                getTranslated(context, 'confirm_the_password'),
+                                () {
+                                  setState(() {
+                                    obscureconPassword = !obscureconPassword;
+                                  });
+                                },
+                                obscureconPassword,
+                              ),
+                              validator: (val) => validateConfrimPassord(
+                                val,
+                                password,
+                                confPassword,
+                              ),
+                              obscureText: obscureconPassword,
+                              onChanged: (val) {
                                 setState(() {
-                                  obscureconPassword = !obscureconPassword;
+                                  confPassword = val;
                                 });
                               },
-                              obscureconPassword,
                             ),
-                            validator: (val) => validateConfrimPassord(
-                              val,
-                              password,
-                              confPassword,
+                            CustomButton(
+                              text: getTranslated(context, 'send'),
+                              onPress: () {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    loading = !loading;
+                                  });
+                                  changePassword();
+                                }
+                              },
                             ),
-                            obscureText: obscureconPassword,
-                            onChanged: (val) {
-                              setState(() {
-                                confPassword = val;
-                              });
-                            },
-                          ),
-                          CustomButton(
-                            text: getTranslated(context, 'send'),
-                            onPress: () {
-                              if (_formKey.currentState.validate()) {
-                                setState(() {
-                                  loading = !loading;
-                                });
-                                changePassword();
-                              }
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
       ),
     );
@@ -172,6 +175,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'],
         );
@@ -185,6 +189,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'],
         );
@@ -196,6 +201,7 @@ class _ResetPasswordState extends State<ResetPassword> {
       print('Cash Forgtin  Password Errro');
 
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
         onTap: () {

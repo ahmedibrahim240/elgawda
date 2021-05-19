@@ -74,49 +74,28 @@ class _QuizesPageState extends State<QuizesPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        getTranslated(context, 'totalmark') + ': ',
-                        style: AppTheme.subHeadingColorBlue.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        quizes.data[index].quizes.totlaMark.toString(),
-                        style: AppTheme.subHeading.copyWith(
-                          color: customColorGold,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  getTranslated(context, 'yourmark') + ': ',
+                  style: AppTheme.subHeadingColorBlue.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        getTranslated(context, 'yourmark') + ': ',
-                        style: AppTheme.subHeadingColorBlue.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        quizes.data[index].quizes.userMark.toString(),
-                        style: AppTheme.subHeading.copyWith(
-                          fontSize: 15,
-                          color: customColorGold,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+                ),
+                Text(
+                  quizes.data[index].quizes.userMark.toString() +
+                      ' / ' +
+                      quizes.data[index].quizes.totlaMark.toString(),
+                  style: AppTheme.subHeading.copyWith(
+                    fontSize: 15,
+                    color: customColorGold,
+                    fontWeight: FontWeight.w700,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             ListView.builder(
               shrinkWrap: true,
@@ -146,14 +125,6 @@ class _QuizesPageState extends State<QuizesPage> {
                         ),
                       ],
                     ),
-                    Text(
-                      getTranslated(context, 'answers') + ': ',
-                      style: AppTheme.headingColorBlue.copyWith(
-                        fontSize: 15,
-                        color: customColorGold,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
                     ListView.builder(
                       shrinkWrap: true,
                       primary: false,
@@ -162,29 +133,25 @@ class _QuizesPageState extends State<QuizesPage> {
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                       itemBuilder: (context, ansindex) {
-                        return Row(
-                          children: [
-                            Text(
-                              quizes.data[index].quizes.questions[qindex]
-                                  .answers[ansindex].text,
-                              style: AppTheme.subHeading,
-                            ),
-                            SizedBox(width: 10),
-                            (quizes.data[index].quizes.questions[qindex]
-                                        .answers[ansindex].correct ==
-                                    '1')
-                                ? Text(
+                        return (quizes.data[index].quizes.questions[qindex]
+                                    .answers[ansindex].correct !=
+                                '1')
+                            ? Container()
+                            : Row(
+                                children: [
+                                  Text(
+                                    quizes.data[index].quizes.questions[qindex]
+                                        .answers[ansindex].text,
+                                    style: AppTheme.subHeading,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
                                     "( ${getTranslated(context, 'true')} )",
                                     style: AppTheme.heading
                                         .copyWith(color: customColor),
                                   )
-                                : Text(
-                                    "( ${getTranslated(context, 'false')} )",
-                                    style: AppTheme.heading
-                                        .copyWith(color: customColorGold),
-                                  ),
-                          ],
-                        );
+                                ],
+                              );
                       },
                     ),
                   ],
@@ -312,6 +279,7 @@ class _QuizesPageState extends State<QuizesPage> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: true,
           context: context,
           message: response.body.toString(),
         );
@@ -321,6 +289,7 @@ class _QuizesPageState extends State<QuizesPage> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: jsonData['message'].toString(),
         );
@@ -330,6 +299,7 @@ class _QuizesPageState extends State<QuizesPage> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         onTap: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

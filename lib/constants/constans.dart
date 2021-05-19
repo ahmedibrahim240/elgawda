@@ -161,6 +161,7 @@ Future<void> showMyDialog({
   String message,
   Function onTap,
   String buttonText,
+  @required bool isTrue,
 }) async {
   return showDialog<void>(
     context: context,
@@ -168,39 +169,53 @@ Future<void> showMyDialog({
     builder: (BuildContext context) {
       return AlertDialog(
         content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Center(
-                child: Text(
-                  getTranslated(context, 'AdministrativeMessage'),
-                  style: AppTheme.heading.copyWith(
-                    color: customColor,
+          child: Container(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: onTap ??
+                        () {
+                          Navigator.of(context).pop();
+                        },
                   ),
                 ),
-              ),
-              Center(
-                child: Text(
-                  message,
-                  style: AppTheme.subHeading,
+                (isTrue)
+                    ? Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('lib/images/profiletrue.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : Container(),
+                ListBody(
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        getTranslated(context, 'AdministrativeMessage'),
+                        style: AppTheme.heading.copyWith(
+                          color: customColor,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        message,
+                        style: AppTheme.subHeading,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              buttonText ?? getTranslated(context, 'Close'),
-              style: AppTheme.heading.copyWith(
-                color: customColor,
-              ),
-            ),
-            onPressed: onTap ??
-                () {
-                  Navigator.of(context).pop();
-                },
-          ),
-        ],
       );
     },
   );

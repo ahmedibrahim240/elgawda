@@ -307,7 +307,11 @@ class _LogInState extends State<LogIn> {
         );
       } else {
         setState(() {
-          showMyDialog(context: context, message: map['message'].toString());
+          showMyDialog(
+            context: context,
+            message: map['message'].toString(),
+            isTrue: false,
+          );
 
           loading = false;
         });
@@ -321,6 +325,7 @@ class _LogInState extends State<LogIn> {
         loading = false;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -379,6 +384,7 @@ class _LogInState extends State<LogIn> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -404,6 +410,7 @@ class _LogInState extends State<LogIn> {
       );
     } catch (e) {
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -458,6 +465,7 @@ class _LogInState extends State<LogIn> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
         onTap: () {
@@ -510,6 +518,7 @@ class _LogInState extends State<LogIn> {
           });
 
           showMyDialog(
+            isTrue: false,
             context: context,
             message: 'Something went wrong with the login process.\n'
                 'Here\'s the error Facebook gave us: ${result.errorMessage}',
@@ -522,6 +531,7 @@ class _LogInState extends State<LogIn> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: 'Something went wrong with the login process.\n'
             'Here\'s the error Facebook gave us: ${result.errorMessage}',

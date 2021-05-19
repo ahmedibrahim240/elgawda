@@ -182,6 +182,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
       if (map['success'] == true) {
       } else {
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'],
         );
@@ -190,6 +191,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
       print('Cash Forgtin  Password Errro');
 
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -229,6 +231,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'],
         );
@@ -240,6 +243,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
       print('Cash Forgtin  Password Errro');
 
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );

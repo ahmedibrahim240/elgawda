@@ -18,7 +18,6 @@ class ChatRome extends StatefulWidget {
 }
 
 class _ChatRomeState extends State<ChatRome> {
-  List<String> messageList = [];
   TextEditingController _messageController = TextEditingController();
   bool loading = false;
   @override
@@ -166,7 +165,10 @@ class _ChatRomeState extends State<ChatRome> {
         setState(() {
           loading = !loading;
         });
-        showMyDialog(context: context, message: map['message'].toString());
+        showMyDialog(
+            isTrue: false,
+            context: context,
+            message: map['message'].toString());
       } else {
         setState(() {
           loading = !loading;
@@ -177,6 +179,7 @@ class _ChatRomeState extends State<ChatRome> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );

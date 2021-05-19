@@ -279,6 +279,7 @@ class _CartState extends State<Cart> {
           price: Cart.totalPraices,
         );
         showMyDialog(
+          isTrue: false,
           onTap: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -294,6 +295,7 @@ class _CartState extends State<Cart> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           onTap: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -307,6 +309,7 @@ class _CartState extends State<Cart> {
       }
     } catch (e) {
       showMyDialog(
+        isTrue: false,
         onTap: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -371,6 +374,7 @@ class _CartState extends State<Cart> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           onTap: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -387,6 +391,7 @@ class _CartState extends State<Cart> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         onTap: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

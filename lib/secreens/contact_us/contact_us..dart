@@ -173,7 +173,10 @@ class _ContactUsState extends State<ContactUs> {
         setState(() {
           loading = !loading;
         });
-        showMyDialog(context: context, message: map['message'].toString());
+        showMyDialog(
+            isTrue: false,
+            context: context,
+            message: map['message'].toString());
       } else {
         setState(() {
           loading = !loading;
@@ -184,6 +187,7 @@ class _ContactUsState extends State<ContactUs> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );

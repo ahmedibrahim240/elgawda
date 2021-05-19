@@ -186,7 +186,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            color: customColorbottomBar,
+            color: customColorbottomBar.withOpacity(.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -320,39 +320,45 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        ListTile(
-                          title: Text(
-                            (widget.courses.sections[index]['name']) ?? '',
-                            style: AppTheme.headingColorBlue,
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Video -${widget.courses.sections[index]['featured_data']["total_time"]} mins-',
-                                  style: AppTheme.subHeading.copyWith(
-                                    color: Colors.grey[400],
-                                  ),
+                        widget.courses.sections[index]['lessons'].isEmpty
+                            ? Container()
+                            : ListTile(
+                                title: Text(
+                                  (widget.courses.sections[index]['name']) ??
+                                      '',
+                                  style: AppTheme.headingColorBlue,
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'Video -${widget.courses.sections[index]['featured_data']["total_time"]} mins-',
+                                        style: AppTheme.subHeading.copyWith(
+                                          color: Colors.grey[400],
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'Resources (${widget.courses.sections[index]['featured_data']["total_files"]})',
+                                        style: AppTheme.subHeading.copyWith(
+                                          color: Colors.grey[400],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Resources (${widget.courses.sections[index]['featured_data']["total_files"]})',
-                                  style: AppTheme.subHeading.copyWith(
-                                    color: Colors.grey[400],
-                                  ),
-                                ),
+                        widget.courses.sections[index]['lessons'].isEmpty
+                            ? Container()
+                            : Container(
+                                // color: customColorbottomBar,
+                                child: lectureDetaile(
+                                    list: widget.courses.sections[index]
+                                        ['lessons']),
                               ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          color: customColorbottomBar,
-                          child: lectureDetaile(
-                              list: widget.courses.sections[index]['lessons']),
-                        ),
                       ],
                     );
                   },
@@ -368,11 +374,13 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
       shrinkWrap: true,
       primary: false,
       itemCount: list.length,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       itemBuilder: (context, index) {
         return Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   '${index + 1}',
@@ -380,35 +388,21 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                     fontSize: 25,
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 110,
+                          child: Text(
+                            list[index]['name'],
+                            style: AppTheme.heading,
                           ),
-                          child: Center(
-                            child: Icon(
-                              FontAwesomeIcons.check,
-                              color: Colors.white,
-                              size: 10,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          list[index]['name'],
-                          style: AppTheme.heading,
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
                     Text(
                       'Video -${list[index]["duration"]}',
                       style: AppTheme.subHeading.copyWith(
@@ -418,6 +412,10 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
                   ],
                 ),
               ],
+            ),
+            Divider(
+              color: customColorDivider,
+              thickness: 1,
             ),
           ],
         );
@@ -471,6 +469,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'].toString(),
           onTap: () {
@@ -486,6 +485,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: (widget.courses.in_wish_list == 1) ? false : true,
           context: context,
           message: (widget.courses.in_wish_list == 1)
               ? getTranslated(context, 'removeCourse')
@@ -504,6 +504,7 @@ class _CategoriesCoursesPageViewState extends State<CategoriesCoursesPageView> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
         onTap: () {

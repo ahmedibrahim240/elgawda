@@ -253,7 +253,7 @@ Container coursesSilder({
                                     BorderRadius.all(Radius.circular(20.0)),
                                 child: Container(
                                   width: 500,
-                                  height: 140,
+                                  height: 200,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(20.0),
@@ -268,13 +268,13 @@ Container coursesSilder({
                               ),
                               Container(
                                 width: 500,
-                                height: 140,
+                                height: 200,
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0)),
                                 ),
                                 child: Container(
-                                  height: 100,
+                                  height: 200,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(

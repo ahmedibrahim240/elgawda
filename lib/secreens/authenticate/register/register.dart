@@ -322,7 +322,10 @@ class _RegisterState extends State<Register> {
         setState(() {
           loading = false;
         });
-        showMyDialog(context: context, message: map['message'].toString());
+        showMyDialog(
+            isTrue: false,
+            context: context,
+            message: map['message'].toString());
       }
 
       // Navigator.pop(context);
@@ -332,6 +335,7 @@ class _RegisterState extends State<Register> {
         loading = false;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );

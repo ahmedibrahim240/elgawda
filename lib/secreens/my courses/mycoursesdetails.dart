@@ -189,6 +189,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: false,
           context: context,
           message: map['message'].toString(),
         );
@@ -197,6 +198,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           loading = !loading;
         });
         showMyDialog(
+          isTrue: true,
           context: context,
           message: 'success',
         );
@@ -207,6 +209,7 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
         loading = !loading;
       });
       showMyDialog(
+        isTrue: false,
         context: context,
         message: getTranslated(context, 'catchError'),
       );
@@ -338,30 +341,35 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
             primary: false,
             itemCount: widget.courses.sections.length,
             itemBuilder: (context, index) {
-              return ListView(
-                shrinkWrap: true,
-                primary: false,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Text(
-                      getTranslated(context, 'Section') +
-                              ' ${index + 1} - ' +
-                              widget.courses.sectionsList[index].name ??
-                          "",
-                      style: AppTheme.subHeading.copyWith(
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ),
-                  lectureDetaile(
-                    list: widget.courses.sections[index]['lessons'],
-                    quizes: widget.courses.sectionsList[index].quizes,
-                    i: index,
-                  ),
-                ],
-              );
+              return widget.courses.sections[index]['lessons'].isEmpty
+                  ? Container()
+                  : ListView(
+                      shrinkWrap: true,
+                      primary: false,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            getTranslated(context, 'Section') +
+                                    ' ${index + 1} - ' +
+                                    widget.courses.sectionsList[index].name ??
+                                "",
+                            style: AppTheme.subHeading.copyWith(
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ),
+                        widget.courses.sections[index]['lessons'].isEmpty
+                            ? Container()
+                            : lectureDetaile(
+                                list: widget.courses.sections[index]['lessons'],
+                                quizes:
+                                    widget.courses.sectionsList[index].quizes,
+                                i: index,
+                              ),
+                      ],
+                    );
             },
           );
   }
@@ -413,21 +421,21 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.green,
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          FontAwesomeIcons.check,
-                                          color: Colors.white,
-                                          size: 10,
-                                        ),
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   height: 20,
+                                    //   width: 20,
+                                    //   decoration: BoxDecoration(
+                                    //     shape: BoxShape.circle,
+                                    //     color: Colors.green,
+                                    //   ),
+                                    //   child: Center(
+                                    //     child: Icon(
+                                    //       FontAwesomeIcons.check,
+                                    //       color: Colors.white,
+                                    //       size: 10,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     SizedBox(width: 5),
                                     Text(
                                       getTranslated(context, 'Quizes'),
@@ -461,21 +469,21 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                           children: [
                             Row(
                               children: [
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.green,
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      FontAwesomeIcons.check,
-                                      color: Colors.white,
-                                      size: 10,
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   height: 20,
+                                //   width: 20,
+                                //   decoration: BoxDecoration(
+                                //     shape: BoxShape.circle,
+                                //     color: Colors.green,
+                                //   ),
+                                //   child: Center(
+                                //     child: Icon(
+                                //       FontAwesomeIcons.check,
+                                //       color: Colors.white,
+                                //       size: 10,
+                                //     ),
+                                //   ),
+                                // ),
                                 SizedBox(width: 5),
                                 Text(
                                   list[index]['name'] ?? "",
