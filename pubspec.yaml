@@ -57,16 +57,10 @@ dependencies:
   geolocator:
   flutter_html:
   flutter_facebook_login: ^3.0.0
-
-  # flutter_phone_direct_caller: ^1.0.1
   shared_preferences:
-  # firebase_auth: ^0.14.0+5
-  # cloud_firestore: ^0.12.9+4
-  provider: ^2.0.1
-  # flutter_spinkit:
+  provider: ^5.0.0
   image_picker:
   image_cropper:
-  # firebase_storage:
   
 
 

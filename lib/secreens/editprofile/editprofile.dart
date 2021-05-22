@@ -257,14 +257,15 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
 
   _loadPicker(ImageSource source, BuildContext context) async {
     // ignore: deprecated_member_use
-    File picked = await ImagePicker.pickImage(source: source);
+    ImagePicker pickeder = ImagePicker();
+    PickedFile picked = await pickeder.getImage(source: source);
     if (picked != null) {
       _cropImage(picked, context);
     }
     Navigator.of(context).pop();
   }
 
-  _cropImage(File picked, BuildContext context) async {
+  _cropImage(PickedFile picked, BuildContext context) async {
     try {
       File cropped = await ImageCropper.cropImage(
         androidUiSettings: AndroidUiSettings(

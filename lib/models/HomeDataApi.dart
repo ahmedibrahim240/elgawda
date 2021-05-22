@@ -237,7 +237,7 @@ class HomeDaTaApi {
     List<Sections> listOfSections = [];
     try {
       var response = await http.get(
-        Utils.HOMESearch_URL + "?search=$name",
+        Uri.parse(Utils.HOMESearch_URL.toString() + "?search=$name"),
         headers: {
           'x-api-key': User.userToken,
           'lang': apiLang(),

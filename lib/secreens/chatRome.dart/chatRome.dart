@@ -148,7 +148,7 @@ class _ChatRomeState extends State<ChatRome> {
   sentMessage(String message) async {
     try {
       var response = await http.post(
-        Utils.Chat_URL + "/${widget.id}/send",
+        Uri.parse(Utils.Chat_URL.toString() + "/${widget.id}/send"),
         body: {
           'message': message,
         },

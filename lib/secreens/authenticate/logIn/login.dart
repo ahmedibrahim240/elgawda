@@ -494,7 +494,8 @@ class _LogInState extends State<LogIn> {
           final token = result.accessToken.token;
 
           final graphResponse = await http.get(
-            'https://graph.facebook.com/v2.12/me?fields=name,email&access_token=$token',
+            Uri.parse(
+                'https://graph.facebook.com/v2.12/me?fields=name,email&access_token=$token'),
             headers: {
               'lang': User.apiLang,
             },

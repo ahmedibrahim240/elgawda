@@ -94,8 +94,8 @@ class DatabaseServices {
 
       Dio dio = new Dio();
 
-      dio.interceptors
-          .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      dio.interceptors.add(
+          InterceptorsWrapper(onRequest: (RequestOptions options, res) async {
         var customHeaders = {
           'x-api-key': userToken,
         };
@@ -103,7 +103,8 @@ class DatabaseServices {
         return options;
       }));
 
-      Response response = await dio.post(Utils.UPDATEUSERDATA_URL, data: data);
+      Response response =
+          await dio.post(Utils.UPDATEUSERDATA_URL.toString(), data: data);
 
       if (response.statusCode == 200) {
         if (response.data['success'] == true) {

@@ -156,7 +156,7 @@ class _ContactUsState extends State<ContactUs> {
   sentMessage(String message) async {
     try {
       var response = await http.post(
-        Utils.Contactus_URL + '/send_message',
+        Uri.parse(Utils.Contactus_URL.toString() + '/send_message'),
         body: {
           'message': message,
         },

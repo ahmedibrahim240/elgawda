@@ -65,7 +65,8 @@ class _WrapperState extends State<Wrapper> {
 
   updateFcmToken(var token) async {
     try {
-      var response = await http.put(Utils.Update_fcm_URL + '$token', headers: {
+      var response = await http
+          .put(Uri.parse(Utils.Update_fcm_URL.toString() + '$token'), headers: {
         'x-api-key': User.userToken.toString(),
       });
       var jsonData = json.decode(response.body);

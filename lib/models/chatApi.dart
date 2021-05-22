@@ -20,7 +20,8 @@ class ChatApi {
     List<MessageModels> listOfMessage = [];
 
     try {
-      var response = await http.get(Utils.Chat_URL + '/$id', headers: {
+      var response = await http
+          .get(Uri.parse(Utils.Chat_URL.toString() + '/$id'), headers: {
         'x-api-key': User.userToken,
         'lang': apiLang(),
       });
@@ -49,11 +50,12 @@ class ChatApi {
     List<MessageModels> listOfMessage = [];
 
     try {
-      var response =
-          await http.get(Utils.Contactus_URL + '/get_messages', headers: {
-        'x-api-key': User.userToken,
-        'lang': apiLang(),
-      });
+      var response = await http.get(
+          Uri.parse(Utils.Contactus_URL.toString() + '/get_messages'),
+          headers: {
+            'x-api-key': User.userToken,
+            'lang': apiLang(),
+          });
       var jsonData = json.decode(response.body);
       print(jsonData);
       if (response.statusCode == 200) {

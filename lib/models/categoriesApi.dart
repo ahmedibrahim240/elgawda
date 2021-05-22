@@ -36,7 +36,7 @@ class CategoriesApi {
     String link;
     try {
       var response = await http.get(
-        'https://player.vimeo.com/video/$id/config',
+        Uri.parse('https://player.vimeo.com/video/$id/config'),
         headers: {
           'lang': apiLang(),
         },
@@ -107,7 +107,7 @@ class CategoriesApi {
     List<Sections> listOfSections = [];
     try {
       var response = await http.get(
-        Utils.Categories_URL + '/$id',
+        Uri.parse(Utils.Categories_URL.toString() + '/$id'),
         headers: {
           'lang': apiLang(),
         },
