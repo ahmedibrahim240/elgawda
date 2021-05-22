@@ -202,6 +202,7 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.userimgUrl == '');
     return InkWell(
       onTap: () {
         _showPickOptionsDialog(context);
@@ -235,7 +236,7 @@ class _UserPorfileImageState extends State<UserPorfileImage> {
                             _imageFile,
                             fit: BoxFit.cover,
                           )
-                        : (widget.userimgUrl == '' && widget.userimgUrl == null)
+                        : (widget.userimgUrl == '' || widget.userimgUrl == null)
                             ? Image(
                                 fit: BoxFit.cover,
                                 image: AssetImage('lib/images/man.png'),

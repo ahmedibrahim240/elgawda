@@ -77,6 +77,8 @@ class DatabaseServices {
           "image": null,
           'mobile': "$mobile",
         });
+
+        print("dataNull:$data");
       } else {
         String image = images.path.split('/').last;
         data = FormData.fromMap({
@@ -90,24 +92,20 @@ class DatabaseServices {
           ),
           'mobile': "$mobile",
         });
+        print("data:$data");
       }
 
       Dio dio = new Dio();
-
-      dio.interceptors.add(
-          InterceptorsWrapper(onRequest: (RequestOptions options, res) async {
-        var customHeaders = {
-          'x-api-key': userToken,
-        };
-        options.headers.addAll(customHeaders);
-        return options;
-      }));
+      dio.options.headers['x-api-key'] = userToken;
 
       Response response =
           await dio.post(Utils.UPDATEUSERDATA_URL.toString(), data: data);
+      print('response:$response');
 
       if (response.statusCode == 200) {
+        print('response.statusCode:200');
         if (response.data['success'] == true) {
+          print('profile: success');
           if (password != User.userPassword) {
             MySharedPreferences.saveUserUserPassword(password);
           }
@@ -122,6 +120,8 @@ class DatabaseServices {
             isTrue: true,
           );
         } else {
+          print('profile: false');
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (_) => Wrapper(),
@@ -133,6 +133,8 @@ class DatabaseServices {
           );
         }
       } else if (response.statusCode == 429) {
+        print('profile: 429');
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => Wrapper(),
@@ -145,6 +147,8 @@ class DatabaseServices {
           message: getTranslated(context, 'failededitPro'),
         );
       } else {
+        print('profile: 500');
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => Wrapper(),
