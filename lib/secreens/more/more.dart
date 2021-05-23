@@ -99,7 +99,7 @@ class _MoreState extends State<More> {
               onPress: () {
                 setState(
                   () {
-                    MySharedPreferences.saveUserUserToken(null);
+                    MySharedPreferences.saveUserUserToken("null");
                   },
                 );
                 Navigator.of(context).pushReplacement(

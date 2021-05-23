@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:elgawda/constants/constans.dart';
 import 'package:elgawda/constants/themes.dart';
 import 'package:elgawda/localization/localization_constants.dart';
@@ -8,7 +10,6 @@ import 'package:elgawda/models/userData.dart';
 import 'package:elgawda/secreens/chatRome.dart/chatRome.dart';
 import 'package:elgawda/secreens/my%20courses/QuizesPage.dart';
 import 'package:elgawda/secreens/my%20courses/components/videoscreens.dart';
-import 'package:elgawda/secreens/my%20courses/components/vidoePage.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:elgawda/models/utils.dart';
@@ -28,6 +29,58 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
   double rating = 2.0;
   String comment;
   bool loading = false;
+  String videoId;
+  int taped = 0;
+  int counter = 3;
+  Timer _timer;
+  getVideoID({int id}) {
+    if (widget.courses.sections.isEmpty) {
+      print('isEmpaty');
+      setState(() {
+        videoId = widget.courses.vimeo_code;
+      });
+    } else {
+      print(id);
+      if (id == null) {
+        setState(() {
+          videoId = widget.courses.sections[0]['lessons'][0]['vimeo_id'];
+        });
+      } else {
+        print(
+            'widget.courses.sections[0][lessons][id][vimeo_id]:${widget.courses.sections[0]['lessons'][id]['vimeo_id']}');
+        setState(() {
+          videoId = widget.courses.sections[0]['lessons'][id]['vimeo_id'];
+        });
+        startTimer();
+      }
+    }
+  }
+
+  startTimer() {
+    counter = 3;
+    _timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          if (counter > 0) {
+            counter--;
+          } else {
+            _timer.cancel();
+            setState(() {
+              loading = false;
+            });
+          }
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    getVideoID();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,42 +90,46 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       body: ListView(
         shrinkWrap: true,
         primary: true,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         children: [
-          (widget.courses.vimeo_code != '' && widget.courses.vimeo_code != null)
-              ? FutureBuilder(
-                  future: CategoriesApi.getVideoMp4Link(
-                      id: widget.courses.vimeo_code),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return (snapshot.data == null || snapshot.data.isEmpty)
-                          ? Container()
-                          : Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 200,
-                              child: ChewieVideo(
-                                url: snapshot.data,
-                              ),
-                            );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                )
-              : Container(
-                  height: 160,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: customCachedNetworkImage(
-                      boxFit: BoxFit.cover,
-                      context: context,
-                      url: widget.courses.image_path,
+          (loading == true)
+              ? Center(child: CircularProgressIndicator())
+              : (videoId != '' && videoId != null)
+                  ? FutureBuilder(
+                      future: CategoriesApi.getVideoMp4Link(
+                        id: videoId,
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return (snapshot.data == null ||
+                                  snapshot.data.isEmpty)
+                              ? Container()
+                              : Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 200,
+                                  child: ChewieVideo(
+                                    url: snapshot.data,
+                                  ),
+                                );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    )
+                  : Container(
+                      height: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: customCachedNetworkImage(
+                          boxFit: BoxFit.cover,
+                          context: context,
+                          url: widget.courses.image_path,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
           courseDetail(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -378,7 +435,6 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
       shrinkWrap: true,
       primary: false,
       itemCount: list.length + 1,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
@@ -391,121 +447,137 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                 ),
               );
             } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => MyCoursesVideoPage(
-                    title: list[index]['name'] ?? '',
-                    videoId: list[index]['vimeo_id'] ?? '',
-                  ),
-                ),
-              );
+              setState(() {
+                loading = true;
+                getVideoID(id: index);
+                taped = index;
+              });
+
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (_) => MyCoursesVideoPage(
+              //       title: list[index]['name'] ?? '',
+              //       videoId: list[index]['vimeo_id'] ?? '',
+              //     ),
+              //   ),
+              // );
             }
           },
           child: (index == list.length)
               ? (i > quizes.length - 1)
                   ? Container()
-                  : Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '${index + 1}',
-                              style: AppTheme.heading.copyWith(
-                                fontSize: 25,
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${index + 1}',
+                                style: AppTheme.heading.copyWith(
+                                  fontSize: 25,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    // Container(
-                                    //   height: 20,
-                                    //   width: 20,
-                                    //   decoration: BoxDecoration(
-                                    //     shape: BoxShape.circle,
-                                    //     color: Colors.green,
-                                    //   ),
-                                    //   child: Center(
-                                    //     child: Icon(
-                                    //       FontAwesomeIcons.check,
-                                    //       color: Colors.white,
-                                    //       size: 10,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      getTranslated(context, 'Quizes'),
-                                      style: AppTheme.heading,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: customColorDivider,
-                          thickness: 2,
-                        ),
-                      ],
-                    )
-              : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${index + 1}',
-                          style: AppTheme.heading.copyWith(
-                            fontSize: 25,
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      // Container(
+                                      //   height: 20,
+                                      //   width: 20,
+                                      //   decoration: BoxDecoration(
+                                      //     shape: BoxShape.circle,
+                                      //     color: Colors.green,
+                                      //   ),
+                                      //   child: Center(
+                                      //     child: Icon(
+                                      //       FontAwesomeIcons.check,
+                                      //       color: Colors.white,
+                                      //       size: 10,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        getTranslated(context, 'Quizes'),
+                                        style: AppTheme.heading,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                // Container(
-                                //   height: 20,
-                                //   width: 20,
-                                //   decoration: BoxDecoration(
-                                //     shape: BoxShape.circle,
-                                //     color: Colors.green,
-                                //   ),
-                                //   child: Center(
-                                //     child: Icon(
-                                //       FontAwesomeIcons.check,
-                                //       color: Colors.white,
-                                //       size: 10,
-                                //     ),
-                                //   ),
-                                // ),
-                                SizedBox(width: 5),
-                                Text(
-                                  list[index]['name'] ?? "",
-                                  style: AppTheme.heading,
-                                ),
-                              ],
+                          Divider(
+                            color: customColorDivider,
+                            thickness: 2,
+                          ),
+                        ],
+                      ),
+                    )
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  color: (taped == index)
+                      ? Color(0xfff85f3e5).withOpacity(.2)
+                      : Colors.white,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${index + 1}',
+                            style: AppTheme.heading.copyWith(
+                              fontSize: 25,
                             ),
-                            SizedBox(height: 10),
-                            // Text(
-                            //   'Video -10.22 '+list[index]['name'],
-                            //   style: AppTheme.subHeading.copyWith(
-                            //     color: Colors.grey[400],
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: customColorDivider,
-                      thickness: 2,
-                    ),
-                  ],
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  // Container(
+                                  //   height: 20,
+                                  //   width: 20,
+                                  //   decoration: BoxDecoration(
+                                  //     shape: BoxShape.circle,
+                                  //     color: Colors.green,
+                                  //   ),
+                                  //   child: Center(
+                                  //     child: Icon(
+                                  //       FontAwesomeIcons.check,
+                                  //       color: Colors.white,
+                                  //       size: 10,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    list[index]['name'] ?? "",
+                                    style: AppTheme.heading,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              // Text(
+                              //   'Video -10.22 '+list[index]['name'],
+                              //   style: AppTheme.subHeading.copyWith(
+                              //     color: Colors.grey[400],
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: customColorDivider,
+                        thickness: 2,
+                      ),
+                    ],
+                  ),
                 ),
         );
       },
@@ -554,6 +626,174 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
                 ),
         ],
       ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class LectureDetaile extends StatefulWidget {
+  var list;
+  final List<Quizes> quizes;
+  final int i;
+
+  LectureDetaile({Key key, this.list, this.quizes, this.i}) : super(key: key);
+  @override
+  _LectureDetaileState createState() => _LectureDetaileState();
+}
+
+class _LectureDetaileState extends State<LectureDetaile> {
+  int taped = 0;
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: widget.list.length + 1,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            if (index == widget.list.length) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => QuizesPage(
+                    quizes: widget.quizes,
+                  ),
+                ),
+              );
+            } else {
+              setState(() {
+                taped = index;
+              });
+              print(taped);
+
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (_) => MyCoursesVideoPage(
+              //       title: widget. list[index]['name'] ?? '',
+              //       videoId: widget. list[index]['vimeo_id'] ?? '',
+              //     ),
+              //   ),
+              // );
+            }
+          },
+          child: (index == widget.list.length)
+              ? (widget.i > widget.quizes.length - 1)
+                  ? Container()
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${index + 1}',
+                                style: AppTheme.heading.copyWith(
+                                  fontSize: 25,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      // Container(
+                                      //   height: 20,
+                                      //   width: 20,
+                                      //   decoration: BoxDecoration(
+                                      //     shape: BoxShape.circle,
+                                      //     color: Colors.green,
+                                      //   ),
+                                      //   child: Center(
+                                      //     child: Icon(
+                                      //       FontAwesomeIcons.check,
+                                      //       color: Colors.white,
+                                      //       size: 10,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        getTranslated(context, 'Quizes'),
+                                        style: AppTheme.heading,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: customColorDivider,
+                            thickness: 2,
+                          ),
+                        ],
+                      ),
+                    )
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  color: (taped == index)
+                      ? Color(0xfff85f3e5).withOpacity(.2)
+                      : Colors.white,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${index + 1}',
+                            style: AppTheme.heading.copyWith(
+                              fontSize: 25,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  // Container(
+                                  //   height: 20,
+                                  //   width: 20,
+                                  //   decoration: BoxDecoration(
+                                  //     shape: BoxShape.circle,
+                                  //     color: Colors.green,
+                                  //   ),
+                                  //   child: Center(
+                                  //     child: Icon(
+                                  //       FontAwesomeIcons.check,
+                                  //       color: Colors.white,
+                                  //       size: 10,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    widget.list[index]['name'] ?? "",
+                                    style: AppTheme.heading,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              // Text(
+                              //   'Video -10.22 '+list[index]['name'],
+                              //   style: AppTheme.subHeading.copyWith(
+                              //     color: Colors.grey[400],
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: customColorDivider,
+                        thickness: 2,
+                      ),
+                    ],
+                  ),
+                ),
+        );
+      },
     );
   }
 }

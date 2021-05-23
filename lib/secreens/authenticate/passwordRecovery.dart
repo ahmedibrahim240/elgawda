@@ -107,7 +107,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
       var response = await http.post(
         Utils.SendForgetCode_URL,
         body: {
-          'email': email,
+          'email': email.toString(),
         },
       );
 
