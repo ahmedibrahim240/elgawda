@@ -35,7 +35,6 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
   Timer _timer;
   getVideoID({int id}) {
     if (widget.courses.sections.isEmpty) {
-      print('isEmpaty');
       setState(() {
         videoId = widget.courses.vimeo_code;
       });
@@ -46,8 +45,6 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
           videoId = widget.courses.sections[0]['lessons'][0]['vimeo_id'];
         });
       } else {
-        print(
-            'widget.courses.sections[0][lessons][id][vimeo_id]:${widget.courses.sections[0]['lessons'][id]['vimeo_id']}');
         setState(() {
           videoId = widget.courses.sections[0]['lessons'][id]['vimeo_id'];
         });
@@ -631,169 +628,169 @@ class _MyCoursesDetailsState extends State<MyCoursesDetails> {
 }
 
 // ignore: must_be_immutable
-class LectureDetaile extends StatefulWidget {
-  var list;
-  final List<Quizes> quizes;
-  final int i;
+// class LectureDetaile extends StatefulWidget {
+//   var list;
+//   final List<Quizes> quizes;
+//   final int i;
 
-  LectureDetaile({Key key, this.list, this.quizes, this.i}) : super(key: key);
-  @override
-  _LectureDetaileState createState() => _LectureDetaileState();
-}
+//   LectureDetaile({Key key, this.list, this.quizes, this.i}) : super(key: key);
+//   @override
+//   _LectureDetaileState createState() => _LectureDetaileState();
+// }
 
-class _LectureDetaileState extends State<LectureDetaile> {
-  int taped = 0;
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: widget.list.length + 1,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () {
-            if (index == widget.list.length) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => QuizesPage(
-                    quizes: widget.quizes,
-                  ),
-                ),
-              );
-            } else {
-              setState(() {
-                taped = index;
-              });
-              print(taped);
+// class _LectureDetaileState extends State<LectureDetaile> {
+//   int taped = 0;
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       shrinkWrap: true,
+//       primary: false,
+//       itemCount: widget.list.length + 1,
+//       itemBuilder: (context, index) {
+//         return InkWell(
+//           onTap: () {
+//             if (index == widget.list.length) {
+//               Navigator.of(context).push(
+//                 MaterialPageRoute(
+//                   builder: (_) => QuizesPage(
+//                     quizes: widget.quizes,
+//                   ),
+//                 ),
+//               );
+//             } else {
+//               setState(() {
+//                 taped = index;
+//               });
+//               print(taped);
 
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) => MyCoursesVideoPage(
-              //       title: widget. list[index]['name'] ?? '',
-              //       videoId: widget. list[index]['vimeo_id'] ?? '',
-              //     ),
-              //   ),
-              // );
-            }
-          },
-          child: (index == widget.list.length)
-              ? (widget.i > widget.quizes.length - 1)
-                  ? Container()
-                  : Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '${index + 1}',
-                                style: AppTheme.heading.copyWith(
-                                  fontSize: 25,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      // Container(
-                                      //   height: 20,
-                                      //   width: 20,
-                                      //   decoration: BoxDecoration(
-                                      //     shape: BoxShape.circle,
-                                      //     color: Colors.green,
-                                      //   ),
-                                      //   child: Center(
-                                      //     child: Icon(
-                                      //       FontAwesomeIcons.check,
-                                      //       color: Colors.white,
-                                      //       size: 10,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        getTranslated(context, 'Quizes'),
-                                        style: AppTheme.heading,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: customColorDivider,
-                            thickness: 2,
-                          ),
-                        ],
-                      ),
-                    )
-              : Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color: (taped == index)
-                      ? Color(0xfff85f3e5).withOpacity(.2)
-                      : Colors.white,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            '${index + 1}',
-                            style: AppTheme.heading.copyWith(
-                              fontSize: 25,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  // Container(
-                                  //   height: 20,
-                                  //   width: 20,
-                                  //   decoration: BoxDecoration(
-                                  //     shape: BoxShape.circle,
-                                  //     color: Colors.green,
-                                  //   ),
-                                  //   child: Center(
-                                  //     child: Icon(
-                                  //       FontAwesomeIcons.check,
-                                  //       color: Colors.white,
-                                  //       size: 10,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    widget.list[index]['name'] ?? "",
-                                    style: AppTheme.heading,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              // Text(
-                              //   'Video -10.22 '+list[index]['name'],
-                              //   style: AppTheme.subHeading.copyWith(
-                              //     color: Colors.grey[400],
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: customColorDivider,
-                        thickness: 2,
-                      ),
-                    ],
-                  ),
-                ),
-        );
-      },
-    );
-  }
-}
+//               // Navigator.of(context).push(
+//               //   MaterialPageRoute(
+//               //     builder: (_) => MyCoursesVideoPage(
+//               //       title: widget. list[index]['name'] ?? '',
+//               //       videoId: widget. list[index]['vimeo_id'] ?? '',
+//               //     ),
+//               //   ),
+//               // );
+//             }
+//           },
+//           child: (index == widget.list.length)
+//               ? (widget.i > widget.quizes.length - 1)
+//                   ? Container()
+//                   : Container(
+//                       padding:
+//                           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                       child: Column(
+//                         children: [
+//                           Row(
+//                             children: [
+//                               Text(
+//                                 '${index + 1}',
+//                                 style: AppTheme.heading.copyWith(
+//                                   fontSize: 25,
+//                                 ),
+//                               ),
+//                               SizedBox(width: 10),
+//                               Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   Row(
+//                                     children: [
+//                                       // Container(
+//                                       //   height: 20,
+//                                       //   width: 20,
+//                                       //   decoration: BoxDecoration(
+//                                       //     shape: BoxShape.circle,
+//                                       //     color: Colors.green,
+//                                       //   ),
+//                                       //   child: Center(
+//                                       //     child: Icon(
+//                                       //       FontAwesomeIcons.check,
+//                                       //       color: Colors.white,
+//                                       //       size: 10,
+//                                       //     ),
+//                                       //   ),
+//                                       // ),
+//                                       SizedBox(width: 5),
+//                                       Text(
+//                                         getTranslated(context, 'Quizes'),
+//                                         style: AppTheme.heading,
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ],
+//                               ),
+//                             ],
+//                           ),
+//                           Divider(
+//                             color: customColorDivider,
+//                             thickness: 2,
+//                           ),
+//                         ],
+//                       ),
+//                     )
+//               : Container(
+//                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                   color: (taped == index)
+//                       ? Color(0xfff85f3e5).withOpacity(.2)
+//                       : Colors.white,
+//                   child: Column(
+//                     children: [
+//                       Row(
+//                         children: [
+//                           Text(
+//                             '${index + 1}',
+//                             style: AppTheme.heading.copyWith(
+//                               fontSize: 25,
+//                             ),
+//                           ),
+//                           SizedBox(width: 10),
+//                           Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: [
+//                               Row(
+//                                 children: [
+//                                   // Container(
+//                                   //   height: 20,
+//                                   //   width: 20,
+//                                   //   decoration: BoxDecoration(
+//                                   //     shape: BoxShape.circle,
+//                                   //     color: Colors.green,
+//                                   //   ),
+//                                   //   child: Center(
+//                                   //     child: Icon(
+//                                   //       FontAwesomeIcons.check,
+//                                   //       color: Colors.white,
+//                                   //       size: 10,
+//                                   //     ),
+//                                   //   ),
+//                                   // ),
+//                                   SizedBox(width: 5),
+//                                   Text(
+//                                     widget.list[index]['name'] ?? "",
+//                                     style: AppTheme.heading,
+//                                   ),
+//                                 ],
+//                               ),
+//                               SizedBox(height: 10),
+//                               // Text(
+//                               //   'Video -10.22 '+list[index]['name'],
+//                               //   style: AppTheme.subHeading.copyWith(
+//                               //     color: Colors.grey[400],
+//                               //   ),
+//                               // ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                       Divider(
+//                         color: customColorDivider,
+//                         thickness: 2,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//         );
+//       },
+//     );
+//   }
+// }
