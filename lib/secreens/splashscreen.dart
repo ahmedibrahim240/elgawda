@@ -23,9 +23,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   getDateOfUser() async {
-    User.userToken = await MySharedPreferences.getUserUserToken();
+    User.userToken = await MySharedPreferences.getUserUserToken() ?? 'null';
     User.userLogIn = await MySharedPreferences.getUserSingIn();
     User.appLang = await MySharedPreferences.getAppLang();
+    User.userSkipLogIn = await MySharedPreferences.getUserSkipLogIn();
   }
 
   @override
