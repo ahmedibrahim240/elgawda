@@ -24,7 +24,7 @@ class _AuthenticateState extends State<Authenticate> {
 
   @override
   Widget build(BuildContext context) {
-    if (User.userToken == "null") {
+    if (User.userToken == 'null') {
       if (showSignIn) {
         return NetworkSensitive(
           child: Scaffold(

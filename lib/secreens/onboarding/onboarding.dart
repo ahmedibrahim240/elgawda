@@ -17,6 +17,7 @@ class _OnBoardState extends State<OnBoard> {
   getDateOfUser() async {
     User.userToken = await MySharedPreferences.getUserUserToken();
     User.userLogIn = await MySharedPreferences.getUserSingIn();
+    User.userSkipLogIn = await MySharedPreferences.getUserSkipLogIn();
   }
 
   @override
@@ -143,6 +144,7 @@ class SliderContoler extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
+                  MySharedPreferences.saveUserSkipLogIn(true);
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (_) => Authenticate(),

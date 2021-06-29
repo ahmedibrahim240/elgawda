@@ -293,6 +293,7 @@ class _LogInState extends State<LogIn> {
         setState(() {
           User.userToken = map['data']['api_token'].toString();
         });
+        print("tokkkken:${map['data']['api_token']}");
         MySharedPreferences.saveUserSingIn(true);
         MySharedPreferences.saveUserSkipLogIn(false);
         MySharedPreferences.saveUserUserPassword(password);
