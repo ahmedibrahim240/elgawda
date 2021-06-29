@@ -15,7 +15,7 @@ class OnBoard extends StatefulWidget {
 
 class _OnBoardState extends State<OnBoard> {
   getDateOfUser() async {
-    User.userToken = await MySharedPreferences.getUserUserToken();
+    User.userToken = await MySharedPreferences.getUserUserToken() ?? 'null';
     User.userLogIn = await MySharedPreferences.getUserSingIn();
     User.userSkipLogIn = await MySharedPreferences.getUserSkipLogIn();
   }
